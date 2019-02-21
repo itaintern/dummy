@@ -22,10 +22,6 @@ CREATE TABLE `add_questions` (
   CONSTRAINT `add_questions_ibfk_6` FOREIGN KEY (`qs_id`) REFERENCES `question_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `add_questions` (`id`, `qb_id`, `qs_id`, `is_deleted`, `secret`) VALUES
-(5,	2,	2,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	2,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	1,	2,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `alerts`;
 CREATE TABLE `alerts` (
@@ -41,10 +37,6 @@ CREATE TABLE `alerts` (
   CONSTRAINT `alerts_ibfk_1` FOREIGN KEY (`alerts_modules_operators_id`) REFERENCES `alerts_modules_operators` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `alerts` (`id`, `alerts_modules_operators_id`, `to_email`, `cc_email`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	'admin1,admin2',	'user1,user2,user3',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(13,	1,	'abc@yopmail.com',	'xyz@yopmail.com,pqr@yopmail.com,alpha@yopmail.com',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(14,	3,	'mymail.yopmail.com',	'nomail.yopmail.com',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `alerts_conditions`;
 CREATE TABLE `alerts_conditions` (
@@ -61,13 +53,6 @@ CREATE TABLE `alerts_conditions` (
   CONSTRAINT `alerts_conditions_ibfk_1` FOREIGN KEY (`alerts_id`) REFERENCES `alerts` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `alerts_conditions` (`id`, `alerts_id`, `field`, `operator`, `compare_value`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	13,	'project_name',	'14',	'PERFEQTA',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	13,	'estimated_end_date',	'14',	'02-12-2020',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	14,	'release_date',	'14',	'1224555',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	14,	'status',	'14',	'done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	14,	'holiday_date',	'14',	'31-12-18',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	14,	'status',	'14',	'pending',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `alerts_modules_operators`;
 CREATE TABLE `alerts_modules_operators` (
@@ -116,8 +101,6 @@ CREATE TABLE `appreciations` (
   CONSTRAINT `appreciations_ibfk_4` FOREIGN KEY (`to_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `appreciations` (`id`, `to_id`, `from_id`, `type`, `comment`, `appreciation_date`, `is_active_comment`, `status`, `is_deleted`, `secret`) VALUES
-(1,	8,	6,	'xyz',	'nothing',	'2018-10-06',	1,	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `assign_projects`;
 CREATE TABLE `assign_projects` (
@@ -179,12 +162,6 @@ CREATE TABLE `clients` (
   CONSTRAINT `clients_ibfk_2` FOREIGN KEY (`companies_id`) REFERENCES `organization_profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `clients` (`id`, `companies_id`, `name`, `tie_up_date`, `contact_person`, `email`, `primary_contact_no`, `secondary_contact_no`, `address`, `city`, `state`, `country`, `zip_code`, `status`, `is_deleted`, `secret`) VALUES
-(4,	13,	'ProTSystem Pvt.Ltd',	'2018-01-05',	'Sahin Pathan',	'Sahinpathan@gmail.com',	'76568965',	'76568968',	'maninager',	'nadiad',	'gujarat',	'India',	26556,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	14,	'Ilink',	'2018-03-03',	'pooja',	'pooja@gmail.com',	'7545555555',	'7545555555',	'ahmedabad',	'ahmedabad',	'Gujrate',	'UK',	2655611,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	13,	'AaBb',	'2018-02-13',	'Rechal',	'Rechal1234@gmail.com',	'1236547895',	'8974563215',	'Alaska',	'Alaska',	'Ocla Hama',	'US',	356856,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(9,	13,	'Sigma Blood',	'2018-03-03',	'Max',	'max@gmail.com',	'9585555646',	'1235686565',	'Green Place',	'ahmedabad',	'gujarat',	'India',	3568552,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(10,	20,	'im',	'2018-10-30',	'contact person',	'mail@mail.com',	'987654321',	'9988776655',	'address',	'city',	'state',	'india',	112233,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `company_holidays`;
 CREATE TABLE `company_holidays` (
@@ -203,15 +180,7 @@ CREATE TABLE `company_holidays` (
   CONSTRAINT `company_holidays_ibfk_1` FOREIGN KEY (`companies_id`) REFERENCES `organization_profile` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `company_holidays` (`id`, `companies_id`, `holiday_date`, `discription`, `subject`, `message`, `type`, `status`, `is_deleted`, `secret`) VALUES
-(6,	14,	'2018-04-14',	'Enjoy1',	'uttarayan',	'Take care your self',	'half DAy',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	18,	'2018-11-11',	'celebration',	'Gandhi Jayanti',	'National holiday',	'Full Day',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	18,	'2018-10-10',	'password',	'password change',	'password',	'password',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(9,	13,	'2018-10-10',	'organizationName',	'organizationName',	'organizationName',	'organizationName',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(10,	14,	'2018-11-07',	'date test edit',	'date test edit',	'date test edit',	'date test edit',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(11,	21,	'2018-11-13',	'date done',	'date done',	'date work done',	'date done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(12,	20,	'2018-10-23',	'bbjbb',	'jhbjlbhb',	'hjbjbhbhj',	'bhjbhblblhbh',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(13,	16,	'2018-10-03',	'hse lo',	'hmmm',	'pass',	'planned',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
+
 
 DROP TABLE IF EXISTS `company_modules`;
 CREATE TABLE `company_modules` (
@@ -232,12 +201,6 @@ CREATE TABLE `company_modules` (
   CONSTRAINT `company_modules_ibfk_3` FOREIGN KEY (`sub_modules_id`) REFERENCES `sub_modules` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `company_modules` (`id`, `companies_id`, `sub_modules_id`, `modules_id`, `display_title`, `status`, `is_deleted`, `secret`) VALUES
-(2,	13,	3,	6,	'WeLearn',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	13,	3,	6,	'WeTrack',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	18,	6,	9,	'moduuules',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	20,	5,	6,	'my done',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	19,	6,	6,	'checkes',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `course_modules`;
 CREATE TABLE `course_modules` (
@@ -254,10 +217,6 @@ CREATE TABLE `course_modules` (
   CONSTRAINT `course_modules_ibfk_2` FOREIGN KEY (`learning_modules_Id`) REFERENCES `learning_modules` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `course_modules` (`id`, `manage_courses_id`, `learning_modules_Id`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	2,	1,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	2,	1,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `departments`;
 CREATE TABLE `departments` (
@@ -293,9 +252,7 @@ CREATE TABLE `designations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `designations` (`id`, `companies_id`, `title`, `status`, `is_deleted`, `secret`) VALUES
-(4,	13,	'Business Analyst',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	14,	'Developer',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	17,	'tum muje khun do',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
+(4,	13,	'Business Analyst',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `documents`;
 CREATE TABLE `documents` (
@@ -315,9 +272,7 @@ CREATE TABLE `documents` (
   CONSTRAINT `documents_ibfk_2` FOREIGN KEY (`companies_id`) REFERENCES `organization_profile` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `documents` (`id`, `employees_id`, `companies_id`, `title`, `type`, `file`, `status`, `is_deleted`, `secret`) VALUES
-(6,	6,	14,	'title',	'Full Day',	'full file',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	8,	21,	'Myra The Boutique',	'feshion',	'feshion.mayra.txt',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
+
 
 DROP TABLE IF EXISTS `duration_types`;
 CREATE TABLE `duration_types` (
@@ -345,9 +300,6 @@ CREATE TABLE `email_templates` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `email_templates` (`id`, `type`, `subject`, `body`, `is_active`, `is_deleted`, `secret`) VALUES
-(3,	'internal',	'leave application',	'hello, here by i \'m writing this email <<enter your reason>>',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	'internal',	'emergency leave',	'hello, here by i \'m writing this email <<enter your reason>>',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
@@ -389,11 +341,6 @@ CREATE TABLE `employees` (
   CONSTRAINT `employees_ibfk_4` FOREIGN KEY (`companies_id`) REFERENCES `organization_profile` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `employees` (`id`, `departments_id`, `designations_id`, `roles_id`, `companies_id`, `employee_number`, `last_name`, `first_name`, `display_name`, `join_date`, `leave_date`, `birth_date`, `contact_number`, `emergency_number`, `primary_email`, `secondary_email`, `address`, `password`, `state`, `country`, `zipcode`, `city`, `is_primary`, `profile_picture`, `status`, `is_deleted`, `secret`) VALUES
-(6,	3,	4,	6,	13,	'E-99',	'Pathan',	'Sahin',	'sahu',	'2017-12-13',	'2018-01-13',	'1996-04-12',	'1234567895',	'7896541235',	'sahin123@gmail.com',	'sahu123@gmail.com',	'vadgam',	'12345678',	'gujrat',	'india',	'384510',	'vadgam',	1,	'xyz',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	4,	5,	6,	13,	'123452',	'Bhati',	'Pooja',	'pinu',	'2018-04-13',	'2018-04-20',	'2018-04-06',	'1147544444',	'7777788877',	'pooja123@gmail.com',	'pinu@gmail.com',	'Green Place',	'123456',	'gujarat',	'India',	'6655455',	'ahmedabad',	NULL,	NULL,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(10,	3,	4,	7,	14,	'E-89',	'rechal',	'max',	'max@gmail.com',	'2018-04-01',	'2018-04-26',	'1998-05-01',	'7888555686',	'5556869545',	'max@gmail.com',	'max@gmail.com',	'Green Place',	'xyz1234564',	'Gujrate',	'India',	'6655455',	'Ahemedabad',	NULL,	NULL,	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(11,	4,	5,	7,	20,	'emp93',	'kadchha',	'ud',	'ud',	'2018-10-12',	'2018-10-19',	'2018-10-26',	'8866008907',	'8866008907',	'kadchhaud@gmail.comm',	'kadchhaud@gmail.com',	'drive in road',	'udkadchha',	'done',	'India',	'380015',	'ahmedabad',	1,	'ud.png',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files` (
@@ -403,8 +350,6 @@ CREATE TABLE `files` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `files` (`id`, `file`, `secret`) VALUES
-(1,	'uploads/files/1-test',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups` (
@@ -416,10 +361,6 @@ CREATE TABLE `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `groups` (`id`, `title`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	'PERFEQTA',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	'VC4',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	'My Group',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `learning_modules`;
 CREATE TABLE `learning_modules` (
@@ -436,8 +377,6 @@ CREATE TABLE `learning_modules` (
   CONSTRAINT `learning_modules_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `learning_modules` (`id`, `status_id`, `title`, `content`, `link`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	'abc',	'abc',	'abc',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `leave_requests`;
 CREATE TABLE `leave_requests` (
@@ -462,11 +401,6 @@ CREATE TABLE `leave_requests` (
   CONSTRAINT `leave_requests_ibfk_2` FOREIGN KEY (`to_id`) REFERENCES `employees` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `leave_requests` (`id`, `from_id`, `to_id`, `cc_email`, `message`, `start_date`, `end_date`, `type`, `leave_status`, `reason`, `is_paid`, `status`, `is_deleted`, `secret`) VALUES
-(1,	6,	6,	NULL,	'Apply for leave',	'2018-04-01',	'2017-12-13',	'Full Day',	'Reject',	'you take lot of leaves',	1,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	8,	6,	'megnapatel@gmail.com',	'attending friend\'s wedding',	'2018-04-01',	'2018-04-02',	'Full Day',	'pending',	'',	1,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	6,	8,	NULL,	'sick leave',	'2018-04-29',	NULL,	'First Half',	'Approve',	'This is your last unpaid leave. take care',	0,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	10,	11,	'ccemail@mail.com',	'new message',	'2018-10-11 18:30:00',	'2018-10-11 18:30:00',	'half day',	'Approve',	'function',	0,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `manage_batches`;
 CREATE TABLE `manage_batches` (
@@ -486,11 +420,6 @@ CREATE TABLE `manage_batches` (
   CONSTRAINT `manage_batches_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `manage_batches` (`id`, `manage_courses_id`, `status_id`, `title`, `start_date`, `end_date`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	'abcd',	'2017-12-13',	'2018-04-06',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	2,	1,	'Myra The Boutique',	'2018-10-19',	'2018-10-31',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	2,	1,	'Myra The Boutique',	'2018-11-13',	'2018-11-29',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	1,	1,	'abcd',	'2017-12-13',	'2018-11-13',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `manage_courses`;
 CREATE TABLE `manage_courses` (
@@ -514,11 +443,6 @@ CREATE TABLE `manage_courses` (
   CONSTRAINT `manage_courses_ibfk_4` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `manage_courses` (`id`, `learning_modules_id`, `duration_types_id`, `status_id`, `title`, `description`, `duration`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	2,	'xyz',	'abcd',	1,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	1,	2,	1,	'ewrewr',	'sdsas',	5,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	1,	1,	1,	'Myra The Boutique',	'beautique shop & cloths',	1234567890,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	1,	3,	1,	'change',	'changes is done',	10,	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `manage_quizes`;
 CREATE TABLE `manage_quizes` (
@@ -536,10 +460,6 @@ CREATE TABLE `manage_quizes` (
   CONSTRAINT `manage_quizes_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `manage_quizes` (`id`, `question_sets_id`, `users_id`, `date`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	'2018-03-03',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	2,	4,	'2018-10-31',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	2,	3,	'2018-10-30',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE `modules` (
@@ -551,18 +471,6 @@ CREATE TABLE `modules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `modules` (`id`, `title`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	'Tasks',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	'Releases',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	'Test Execution',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	'Manage Batches',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	'Schedule Quizes',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	'Holidays',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	'WeLearn',	1,	1,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	'WeTrack',	1,	1,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(9,	'WeTest',	1,	1,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(10,	'Myra The Boutiques',	1,	1,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(11,	'Projects',	1,	1,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `organizations`;
 CREATE TABLE `organizations` (
@@ -579,10 +487,6 @@ CREATE TABLE `organizations` (
   UNIQUE KEY `org_secret` (`org_secret`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `organizations` (`id`, `name`, `email`, `license`, `validity`, `org_secret`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	'Default Organization',	'superadmin@example.com',	'super',	'0001-01-01 00:00:00',	'206b2dbe-ecc9-490b-b81b-83767288bc5e',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	'ncashkd',	'jdcdsjfsa@yopmail.com',	'basic',	'2018-10-03 18:30:00',	'666962a1-5f17-4ec5-9546-7defc610a8ad',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	'ProT',	'prot@yopmail.com',	'basic',	'2018-10-05 18:30:00',	'0cf3c7c4-58de-4937-84d5-a5b6a6915bf4',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `organization_profile`;
 CREATE TABLE `organization_profile` (
@@ -607,15 +511,6 @@ CREATE TABLE `organization_profile` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `organization_profile` (`id`, `domain_code`, `primary_contact_person`, `secondary_contact_person`, `primary_contact_no`, `secondary_contact_no`, `address`, `state`, `city`, `country`, `zip_code`, `logo`, `display_title`, `sn_no`, `gst_no`, `status`, `is_deleted`, `secret`) VALUES
-(13,	'toptech.com',	'sahin pathan',	'Dhaval Patel',	'7778044598',	'9784268565',	'govind vadi',	'Gujrate',	'nadiad',	'US',	26556,	'toptech.jpg',	'Top Technologies',	'SN65855',	'6E845566',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(14,	'prot.com',	'Meghna Vyash',	'Om Talsania',	'9598989895',	'7685474855',	'S.G.Road',	'gujarat',	'ahmedabad',	'India',	382445,	'prot.png',	'ProTSystems',	'SN655484',	'6E845587',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(16,	'prot',	'prot',	'kjhgfds',	'kjhgfrds',	'kjhgfd',	',kjhgf',	'Rajasthan',	'ahmedabad',	'UK',	55,	'prot',	'iuytre',	'14',	'55',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(17,	'ertyu',	'oiuy',	'oiuytre',	'kjuytr',	'likuyhtgf',	'klijhyg',	'Gujrate',	'ahmedabad',	'US',	656,	NULL,	'ytre',	'55',	'85',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(18,	'myfriend',	'uday',	'chirag',	'8866008907',	'8866008907',	'iscon',	'gujarat',	'ahmedabad',	'india',	380015,	'NO logo',	'UD company',	'8907',	'8907008907',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(19,	'organization code',	'i am',	'you are',	'123456789',	'987654321',	'iscon baleshwar 303',	'gujarat',	'ahmedabad',	'india',	380015,	'imlogo',	'organization company',	'SN112233',	'112233',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(20,	'98765',	'myCOMPANY',	'myCOMPANY',	'9876543210',	'9876543210',	'myCOMPANY',	'myCOMPANY',	'myCOMPANY',	'myCOMPANY',	987654,	'myCOMPANY',	'myCOMPANY',	'987',	'987654',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(21,	'1641',	'kjnjjkn',	'kjnkjknj',	'1564554520',	'2589631470',	'njnnn',	'jbjbjb',	'jbjbbjb',	'jbbjbj',	255882,	'bjbjbjb',	'jbjbjbjj',	'58924',	'13165468',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
@@ -685,10 +580,6 @@ CREATE TABLE `profiles` (
   CONSTRAINT `profiles_ibfk_5` FOREIGN KEY (`companies_id`) REFERENCES `organization_profile` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `profiles` (`id`, `users_id`, `departments_id`, `designations_id`, `roles_id`, `companies_id`, `employee_number`, `first_name`, `last_name`, `display_name`, `join_date`, `leave_date`, `birth_date`, `contact_number`, `emergency_number`, `primary_email`, `secondary_email`, `address`, `password`, `state`, `country`, `zipCode`, `city`, `is_primary`, `profile_picture`, `status`, `is_deleted`, `secret`) VALUES
-(6,	1,	3,	4,	6,	13,	'E-99',	'Sahin',	'Pathan',	'sahu',	'2017-12-13',	'2018-01-13',	'1996-04-12',	'1234567895',	'7896541235',	'sahin123@gmail.com',	'sahu123@gmail.com',	'vadgam',	'12345678',	'gujrat',	'india',	'384510',	'vadgam',	1,	'xyz',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	1,	4,	5,	6,	13,	'123452',	'Pooja',	'Bhati',	'pinu',	'2018-04-13',	'2018-04-20',	'2018-04-06',	'1147544444',	'7777788877',	'pooja123@gmail.com',	'pinu@gmail.com',	'Green Place',	'123456',	'gujarat',	'India',	'6655455',	'ahmedabad',	NULL,	NULL,	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(10,	1,	3,	4,	7,	14,	'E-89',	'max',	'rechal',	'max@gmail.com',	'2018-04-01',	'2018-04-26',	'1998-05-01',	'7888555686',	'5556869545',	'max@gmail.com',	'max@gmail.com',	'Green Place',	'xyz1234564',	'Gujrate',	'India',	'6655455',	'Ahemedabad',	NULL,	NULL,	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
@@ -715,12 +606,6 @@ CREATE TABLE `projects` (
   CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`clients_id`) REFERENCES `clients` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `projects` (`id`, `clients_id`, `project_name`, `project_description`, `estimated_start_date`, `estimated_hours`, `daily_estimated_hours`, `estimated_end_date`, `dev_url`, `qa_url`, `po_url`, `demo_url`, `live_url`, `version`, `type`, `is_active`, `is_deleted`, `secret`) VALUES
-(5,	4,	'YouSocial',	'Saas base multi tenant web application',	'2018-02-12',	89,	5,	'2018-08-25',	'test.dev.yousocial.com',	'test.qa.yousocial.com',	'test.po.yousocial.com',	'test.domo.yousocial.com',	'www.yousocial.com',	6,	'internal',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	4,	'WeTrack',	'Saas base multi tenant web application',	'2018-02-12',	84,	5,	'2018-02-17',	'test.dev.wetrack.com',	'test.qa.wetrack.com',	'test.po.wetrack.com',	'test.demo.wetrack.com',	'www.wetrack.com',	8,	'External',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	8,	'Bio Market Place',	'poiuytrf',	'2018-04-01',	300,	9,	'2018-11-30',	'dev.biomaketpalce.com',	'nbeqa.biomarketplace.com',	'nbepo.biomarketplace.com',	'demonbe.biomarketplace.com',	'Live.niomarketplace.com',	0,	'External',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	8,	'blood do-do',	'tum muje khun do',	'2018-10-11',	30,	6,	'2018-10-22',	'i don\'t know dev url.com',	'i don\'t know qa url.com',	'i don\'t know po url.com',	'i don\'t know demo url.com',	'i don\'t know demo url.com',	19,	'unknown',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(9,	8,	'aabbcc',	'aabbcc',	'2018-10-25',	25,	3,	'2018-10-25',	'dfghjkl@mail.com',	'redtfyhuijo@mail.com',	'xdfcgvhbnm@mail.com',	'trfgyuhjk@mail.com',	'cfgvhbjnkm@mail.com',	334455,	'my type',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `question_banks`;
 CREATE TABLE `question_banks` (
@@ -740,11 +625,6 @@ CREATE TABLE `question_banks` (
   CONSTRAINT `question_banks_ibfk_1` FOREIGN KEY (`manage_courses_id`) REFERENCES `manage_courses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `question_banks` (`id`, `manage_courses_id`, `qus`, `option1`, `option2`, `option3`, `option4`, `ans`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	'abc',	'as',	'ft',	'fgf',	'fthj',	'as',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	2,	'secound',	'secound',	'secound',	'secound',	'secound',	'secound',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	1,	'question',	'option1',	'option2',	'option3',	'option4',	'answer',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	4,	'how much option is given in KBC',	'1',	'2',	'3',	'4',	'4',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `question_sets`;
 CREATE TABLE `question_sets` (
@@ -756,11 +636,6 @@ CREATE TABLE `question_sets` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `question_sets` (`id`, `title`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	'abc',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	'set secound',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	'new course set',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	'my question set',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `releases`;
 CREATE TABLE `releases` (
@@ -777,13 +652,6 @@ CREATE TABLE `releases` (
   CONSTRAINT `releases_ibfk_1` FOREIGN KEY (`projects_id`) REFERENCES `projects` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `releases` (`id`, `projects_id`, `release_no`, `version_no`, `release_date`, `status`, `is_deleted`, `secret`) VALUES
-(1,	5,	'r01',	'1.2',	'2018-04-05',	'upcoming',	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	6,	'11',	'11',	'2018-07-15',	'Done',	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	7,	'6659',	'VN436',	'2018-10-18',	'done',	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	8,	'RN34',	'vn978',	'2018-10-29',	'done',	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	9,	'RN34',	'vn978',	'2018-11-13',	'done',	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	5,	'RN34',	'vn978',	'2018-11-22',	'done',	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -795,12 +663,6 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `roles` (`id`, `title`, `status`, `is_deleted`, `secret`) VALUES
-(6,	'intern',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(7,	'Super Admin',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(8,	'Manager',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(9,	'User',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(10,	'Company Manager',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `schedule_quizes`;
 CREATE TABLE `schedule_quizes` (
@@ -818,11 +680,6 @@ CREATE TABLE `schedule_quizes` (
   CONSTRAINT `schedule_quizes_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `schedule_quizes` (`id`, `question_sets_id`, `users_id`, `date`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	'2018-03-03',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	3,	3,	'2018-11-14',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	4,	4,	'2018-10-30',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	3,	3,	'2018-11-13',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
@@ -834,9 +691,6 @@ CREATE TABLE `status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `status` (`id`, `title`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	'running',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	'pending',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `sub_modules`;
 CREATE TABLE `sub_modules` (
@@ -851,11 +705,6 @@ CREATE TABLE `sub_modules` (
   CONSTRAINT `sub_modules_ibfk_1` FOREIGN KEY (`modules_id`) REFERENCES `modules` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `sub_modules` (`id`, `modules_id`, `title`, `status`, `is_deleted`, `secret`) VALUES
-(3,	7,	'leave management',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	6,	'employee managment',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	8,	'Holiday',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	9,	'Quiz',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
@@ -877,10 +726,6 @@ CREATE TABLE `tasks` (
   CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`reporter_id`) REFERENCES `employees` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `tasks` (`id`, `assignee_id`, `reporter_id`, `task_details`, `start_date`, `end_date`, `priority`, `status`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	6,	10,	'details',	'23-10-2018',	'23-10-2018',	'low',	'Done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	6,	10,	'details',	'2018-11-13',	'2018-11-23',	'low',	'Done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(6,	8,	11,	'no details',	'2018-10-13',	'2018-11-13',	'high',	'Done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `test_cases`;
 CREATE TABLE `test_cases` (
@@ -907,12 +752,6 @@ CREATE TABLE `test_cases` (
   CONSTRAINT `test_cases_ibfk_2` FOREIGN KEY (`test_status_id`) REFERENCES `test_status` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `test_cases` (`id`, `backlog_id`, `test_status_id`, `testcase_no`, `testcase_description`, `access_path`, `precondition`, `test_step`, `test_data`, `expected_result`, `creation_date`, `execution_date`, `remark`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	3,	't01',	'login',	'home',	'username',	'check username and pwd',	'username',	'successfully login',	'2018-04-05',	'2018-04-05',	'done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	1,	2,	'P1',	'ccds',	'DCFSduuserdufk',	'DCSDF',	'FES',	'FSSD',	'DSDCDSV',	'2018-04-05',	'2018-04-05',	'NONE',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	1,	2,	'101',	'qwq',	'wdsds',	'ssad',	'asdd',	'asdd',	'sad',	'2018-06-29',	'2018-07-27',	'dsasd',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(4,	1,	3,	'134',	'AaBbCcDd',	'AaBbCcDd',	'AaBbCcDd',	'AaBbCcDd',	'AaBbCcDd',	'AaBbCcDd',	'2018-10-17',	'2018-10-30',	'AaBbCcDd',	0,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(5,	2,	3,	'57968',	'case done',	'path/access.com',	'nothing',	'step by step',	'no data',	'unexpected',	'2018-10-28',	'2018-10-28',	'0mark',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `test_executions`;
 CREATE TABLE `test_executions` (
@@ -937,10 +776,6 @@ CREATE TABLE `test_executions` (
   CONSTRAINT `test_executions_ibfk_5` FOREIGN KEY (`test_status_id`) REFERENCES `test_status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `test_executions` (`id`, `test_cases_id`, `backlog_id`, `test_plans_id`, `test_status_id`, `estimated_hours`, `comments`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	1,	1,	24,	'good',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	3,	1,	2,	3,	32,	'no comments plz',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	5,	2,	2,	3,	58,	'nooooooooo',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `test_plans`;
 CREATE TABLE `test_plans` (
@@ -964,10 +799,6 @@ CREATE TABLE `test_plans` (
   CONSTRAINT `test_plans_ibfk_4` FOREIGN KEY (`test_status_id`) REFERENCES `test_status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `test_plans` (`id`, `backlog_id`, `test_cases_id`, `test_status_id`, `estimated_hours`, `version_name`, `release_date`, `bug_verification`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	1,	2,	24,	'1.02',	'2018-04-05',	'cleared',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	1,	3,	1,	25,	'vr56',	'2018-10-10',	'27verify',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	2,	3,	2,	59,	'V507',	'2018-10-28',	'done',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `test_status`;
 CREATE TABLE `test_status` (
@@ -977,10 +808,6 @@ CREATE TABLE `test_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `test_status` (`id`, `name`, `secret`) VALUES
-(1,	'pending',	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	'pass',	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(3,	'fail',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -1044,9 +871,6 @@ CREATE TABLE `user_stories` (
   CONSTRAINT `user_stories_ibfk_2` FOREIGN KEY (`test_status_id`) REFERENCES `test_status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `user_stories` (`id`, `test_status_id`, `title`, `user_story`, `is_active`, `is_deleted`, `secret`) VALUES
-(1,	1,	'screen',	'us1',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
-(2,	1,	'i\'m title',	'nothing',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 -- 2019-01-23 06:34:04
 
