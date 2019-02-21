@@ -1,0 +1,101 @@
+<form name="forms.leave_requestsForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	 <md-input-container  class="md-block">
+          <label for="from_id" class="active">{{M.LEAVE_REQUESTS_FIELD_FROMID}}:</label>
+          <md-select ng-model="data.single.from_id" id="from_id" name="from_id" class="validate" ng-disabled="locked">
+             <md-option><em>None</em></md-option>
+            <md-option ng-repeat="eddata in EmployeeData" ng-selected="{{data.single.from.first_name === eddata.first_name && data.single.form.last_name === eddata.last_name}}"
+            ng-value="eddata.id">
+              {{eddata.first_name}} {{eddata.last_name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.leave_requestsForm.from_id.$error" ng-show="forms.leave_requestsForm.from_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container  class="md-block">
+          <label for="to_id" class="active">{{M.LEAVE_REQUESTS_FIELD_TOID}}:</label>
+          <md-select ng-model="data.single.to_id" id="to_id" name="to_id" class="validate" ng-disabled="locked">
+             <md-option><em>None</em></md-option>
+            <md-option ng-repeat="eddata2 in EmployeeData" ng-selected="{{data.single.to.first_name === eddata2.first_name}}"
+            ng-value="eddata2.id">
+              {{eddata2.first_name}} {{eddata2.last_name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.leave_requestsForm.to_id.$error" ng-show="forms.leave_requestsForm.to_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="cc_email" class="active">{{M.LEAVE_REQUESTS_FIELD_CCEMAIL}}:</label>
+    <input id="cc_email" name="cc_email" type="text" class="validate" ng-model="data.single.cc_email" required ng-disabled="locked">
+    <div ng-messages="forms.leave_requestsForm.cc_email.$error" ng-show="forms.leave_requestsForm.cc_email.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+ <md-input-container class="md-block">
+    <label for="message" class="active">{{M.LEAVE_REQUESTS_FIELD_MESSAGE}}:</label>
+    <input id="message" name="message" type="text" class="validate" ng-model="data.single.message" required ng-disabled="locked">
+    <div ng-messages="forms.leave_requestsForm.message.$error" ng-show="forms.leave_requestsForm.message.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+ <md-input-container class="md-block">
+  	   <label for="start_date" class="active">{{M.LEAVE_REQUESTS_FIELD_STARTDATE}}:</label>
+	 <md-datepicker ng-model="data.single.start_date" ng-change="newstart_date(data.single.start_date)" id="start_date" name="start_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.leave_requestsForm.start_date.$error" ng-show="forms.leave_requestsForm.start_date.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+ </md-input-container>
+ <md-input-container class="md-block">
+  	   <label for="end_date" class="active">{{M.LEAVE_REQUESTS_FIELD_ENDDATE}}:</label>
+	 <md-datepicker ng-model="data.single.end_date" ng-change="newend_date(data.single.end_date)" id="end_date" name="end_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.leave_requestsForm.end_date.$error" ng-show="forms.leave_requestsForm.end_date.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+ </md-input-container>
+ <md-input-container class="md-block">
+    <label for="type" class="active">{{M.LEAVE_REQUESTS_FIELD_TYPE}}:</label>
+    <input id="type" name="type" type="text" class="validate" ng-model="data.single.type" required ng-disabled="locked">
+    <div ng-messages="forms.leave_requestsForm.type.$error" ng-show="forms.leave_requestsForm.type.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+    <md-input-container class="md-block">
+  <md-checkbox class="active" ng-model="data.single.status" ng-true-value="1" ng-false-value="0" ng-checked="data.single.status" id="status" name="status" ng-disabled="locked">
+		{{M.LEAVE_REQUESTS_FIELD_STATUS}} 
+          </md-checkbox>
+   </md-input-container>
+  <!--THIS FOR A LEAVE STATUS APPROVE/UN APPROVE, REASON, PAID/UNPAID.-->
+ <md-input-container class="md-block"  ng-if="currentUser.role == 'admin'">
+    <label for="leave_status" class="active">{{M.LEAVE_REQUESTS_FIELD_LEAVESTATUS}}:</label>
+    <input id="leave_status" name="leave_status" type="text" class="validate" ng-model="data.single.leave_status" required ng-disabled="locked">
+    <div ng-messages="forms.leave_requestsForm.leave_status.$error" ng-show="forms.leave_requestsForm.leave_status.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+   <md-input-container class="md-block"  ng-if="currentUser.role == 'admin'">
+    <label for="reason" class="active">{{M.LEAVE_REQUESTS_FIELD_REASON}}:</label>
+    <input id="reason" name="reason" type="text" class="validate" ng-model="data.single.reason" required ng-disabled="locked">
+    <div ng-messages="forms.leave_requestsForm.reason.$error" ng-show="forms.leave_requestsForm.reason.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block"  ng-if="currentUser.role == 'admin'">
+  <md-checkbox class="active" ng-model="data.single.isPaid" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isPaid" id="isPaid" name="isPaid" ng-disabled="locked">
+		{{M.LEAVE_REQUESTS_FIELD_ISPAID}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

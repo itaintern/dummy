@@ -1,0 +1,28 @@
+<td>
+	<a href=#!/{{currentRoute}}/{{item.id}}> {{item.first_name}}</a> 
+</td>
+<td>
+	{{item.last_name}} 
+</td>
+<td>
+	{{item.contact_number}}
+</td>
+<td>
+	{{item.primary_email}}
+</td>
+<td>
+	{{item.departments.title}} 
+</td>
+<td>
+	{{item.designations.title}}
+</td>
+<td>
+	{{item.roles.title}}
+</td>
+<td>
+	<span>
+		<a class="btn-floating red darken-4" ng-click="softDelete(item)">
+			<i class="material-icons">delete</i>
+		</a>
+	</span>
+</td>

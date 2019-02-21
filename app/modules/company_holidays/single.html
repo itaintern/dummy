@@ -1,0 +1,98 @@
+<form name="forms.company_holidaysForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <!--<!--<md-input-container ng-if="data.single.role != 'superadmin'" ng-if="data.single.role != 'superadmin'" class="md-block">-->
+  <!--  <label for="holiday_date" class="active">{{M.COMPANY_HOLIDAYS_FIELD_holiday_date}}:</label>-->
+  <!--  <input id="holiday_date" name="holiday_date" type="text" class="validate" ng-model="data.single.holiday_date" required ng-disabled="locked">-->
+  <!--<!--  <div ng-messages="forms.company_holidaysForm.holiday_date.$error" ng-show="forms.company_holidaysForm.holiday_date.$dirty">-->
+  <!--    <div ng-message="required">{{M.REQUIRED}}</div>-->
+  <!--  </div>-->
+  <!--</md-input-container>-->
+  <md-input-container class="md-block">
+  	   <label for="holiday_date" class="active">{{M.COMPANY_HOLIDAYS_FIELD_HOLIDAY_DATE}}:</label>
+	 <md-datepicker ng-model="data.single.holiday_date" ng-change="newDate(data.single.holiday_date)" id="holiday_date" name="holiday_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.company_holidaysForm.holiday_date.$error" ng-show="forms.company_holidaysForm.holiday_date.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+ </md-input-container>
+   <md-input-container class="md-block">
+    <label for="discription" ass="active">{{M.COMPANY_HOLIDAYS_FIELD_DISCRIPTION}}:</label>
+    <input id="discription" name="discription" type="text" class="validate" ng-model="data.single.discription" quired ng-disabled="locked">
+    <div ng-messages="forms.company_holidaysForm.discription.$error" ng-show="forms.company_holidaysForm.discription.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+      <!--<div ng-message="domainCode">{{M.INVALID_EMAIL}}</div>-->
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="subject" class="active">{{M.COMPANY_HOLIDAYS_FIELD_SUBJECT}}:</label>
+    <input id="subject" name="subject" type="text" class="validate" ng-model="data.single.subject" required ng-disabled="locked">
+    <div ng-messages="forms.company_holidaysForm.subject.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+ <md-input-container class="md-block">
+    <label for="message" class="active">{{M.COMPANY_HOLIDAYS_FIELD_MESSAGE}}:</label>
+    <input id="message" name="message" type="text" class="validate" ng-model="data.single.message" required ng-disabled="locked">
+    <div ng-messages="forms.company_holidaysForm.message.$error" ng-show="forms.company_holidaysForm.message.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>          
+    </div>
+   </md-input-container>
+  <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.status" ng-true-value="1" ng-false-value="0" ng-checked="data.single.status" id="status" name="status" ng-disabled="locked">
+		{{M.COMPANY_HOLIDAYS_FIELD_STATUS}} 
+          </md-checkbox>
+   </md-input-container>
+  <!--<md-input-container class="md-block">-->
+  <!--  <label for="status" class="active">{{M.COMPANY_HOLIDAYS_FIELD_STATUS}}:</label>-->
+  <!--  <input id="status" name="status" type="text" class="validate" ng-model="data.single.status" required ng-disabled="locked">-->
+  <!--  <div ng-messages="forms.company_holidaysForm.status.$error" ng-show="forms.company_holidaysForm.status.$dirty">-->
+  <!--    <div ng-message="required">{{M.REQUIRED}}</div>-->
+  <!--  </div>-->
+  <!--</md-input-container>-->
+  <!--<md-input-container class="md-block">-->
+  <!--  <label for="isDeleted" class="active">{{M.COMPANY_HOLIDAYS_FIELD_ISDELETED}}:</label>-->
+  <!--  <input id="isDeleted" name="isDeleted" type="text" class="validate" ng-model="data.single.isDeleted" required ng-disabled="locked">-->
+  <!--  <div ng-messages="forms.company_holidaysForm.isDeleted.$error" ng-show="forms.company_holidaysForm.isDeleted.$dirty">-->
+  <!--    <div ng-message="required">{{M.REQUIRED}}</div>     -->
+  <!--  </div>-->
+  <!--</md-input-container>-->
+  <md-input-container  class="md-block">
+          <label for="companies_id" class="active">{{M.COMPANY_HOLIDAYS_FIELD_COMPANY}}:</label>
+          <md-select ng-model="data.single.companies_id" id="companies_id" name="companies_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <!--<md-option ng-selected><em>test</em></md-option>-->
+            <md-option ng-repeat="company in companyname" ng-selected="{{data.single.companies.organization_name === company.organization_name}}"
+            ng-value="company.id">
+              {{company.organization_name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.company_holidaysForm.company.$error" ng-show="forms.company_holidaysForm.company.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <!--<md-input-container class="md-block">-->
+  <!--  <label for="companies_id" class="active">{{M.COMPANY_HOLIDAYS_FIELD_COMPANY}}:</label>-->
+  <!--  <input id="companies_id" name="companies_id" type="text" class="validate" ng-model="data.single.company.organizationName" required ng-disabled="locked">-->
+  <!--  <div ng-messages="forms.company_holidaysForm.company.$error" ng-show="forms.company_holidaysForm.company.$dirty">-->
+  <!--    <div ng-message="required">{{M.REQUIRED}}</div>     -->
+  <!--  </div>-->
+  <!--</md-input-container>-->
+  <md-input-container class="md-block">
+    <label for="type" class="active">{{M.COMPANY_HOLIDAYS_FIELD_TYPE}}:</label>
+    <input id="type" name="type" type="text" class="validate" ng-model="data.single.type" required ng-disabled="locked">
+    <div ng-messages="forms.company_holidaysForm.type.$error" ng-show="forms.company_holidaysForm.type.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

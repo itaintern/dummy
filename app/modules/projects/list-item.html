@@ -1,0 +1,58 @@
+<td>
+	<a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')"
+	href="#!/{{currentRoute}}/{{item.id}}">{{item.project_name}}</a>
+	<!--<span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.organizationName}}</span>-->
+</td>
+<td>
+    <span>{{item.project_description}}</span>
+</td>
+<td>
+    <span>{{item.estimated_start_date}}</span>
+</td>
+<td>
+    <span>{{item.estimated_hours}}</span>
+</td>
+<td>
+    <span>{{item.daily_estimated_hours}}</span>
+</td>
+<td>
+    <span>{{item.estimated_end_date}}</span>
+</td>
+<td>
+    <span>{{item.dev_url}}</span>
+</td>
+<td>
+    <span>{{item.qa_url}}</span>
+</td>
+<td>
+    <span>{{item.po_url}}</span>
+</td>
+<td>
+    <span>{{item.demo_url}}</span>
+</td>
+<td>
+    <span>{{item.live_url}}</span>
+</td>
+<td>
+    <span>{{item.version}}</span>
+</td>
+<td>
+    <span>{{item.type}}</span>
+</td>
+<td>
+    <span>{{item.is_active == 1 ? 'Yes' : 'No'}}</span>
+</td>
+<!--<td>-->
+<!--    <span>{{item.companies.organization_name}}</span>-->
+<!--</td>-->
+<td>
+    <span>{{item.clients.name}}</span>
+</td>
+<td>
+	<span>
+		<a class="btn-floating red darken-4" ng-click="softDelete(item)">
+			<i class="material-icons">delete</i>
+		</a>
+	</span>
+</td>
+

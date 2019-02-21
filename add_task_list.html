@@ -1,0 +1,41 @@
+<style>
+md-dialog{width:50%}
+</style>
+
+<md-dialog aria-lebel="Welcome">
+	<div style="margin-left:10px">
+		<h6 >New Task List</h6>
+	</div>
+	<md-dialog-content>
+		<form id="mytasklist" name="forms.taskListForm" style="margin-left:10px" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	     
+	<md-input-container class="md-block">
+		<label for="list" class="active">Task List:</label>
+		<input autocomplete="off"  name="task_list" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" ng-model="$root.task_list" required >
+		<span style="color:red" ng-if="forms.taskListForm.task_list.$invalid && forms.taskListForm.task_list.$dirty">Only alphanumerics are allowed!</span>
+		<div ng-messages="forms.taskListForm.project_name.$error" ng-show="forms.taskListForm.task_list.$dirty">
+			<div ng-message="required">{{M.REQUIRED}}</div>
+		</div>
+	</md-input-container>
+	
+</form>
+
+
+
+<md-dialog-actions layout="row">
+	
+	<md-button  class = "md-primary md-raised"  ng-click = "addTaskList($event)"
+	ng-disabled="forms.taskListForm.$invalid">
+	Add 
+</md-button>
+<md-button  class = "md-primary md-raised"  ng-click = "cancel($event)">
+	Cancel 
+</md-button>
+</md-dialog-actions>
+
+</form>
+
+</md-dialog-content> 
+</md-dialog> 
+
+

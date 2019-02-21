@@ -1,0 +1,56 @@
+<form name="forms.releasesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container class="md-block">
+    <label for="release_no" class="active">{{M.RELEASES_FIELD_RELEASENO}}:</label>
+    <input id="release_no" name="release_no" type="text" maxlength="4" class="validate" ng-model="data.single.release_no" required ng-disabled="locked">
+    <div ng-messages="forms.releasesForm.release_no.$error" ng-show="forms.releasesForm.release_no.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+ <md-input-container class="md-block">
+    <label for="version_no" class="active">{{M.RELEASES_FIELD_VERSIONNO}}:</label>
+    <input id="version_no" name="version_no" type="text" class="validate" ng-model="data.single.version_no" required ng-disabled="locked">
+    <div ng-messages="forms.releasesForm.version_no.$error" ng-show="forms.releasesForm.version_no.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+<md-input-container class="md-block">
+  	   <label for="release_date" class="active">{{M.RELEASES_FIELD_RELEASEDATE}}:</label>
+	 <md-datepicker ng-model="data.single.release_date" ng-change="newDate(data.single.release_date)" id="release_date" name="release_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.releasesForm.release_date.$error" ng-show="forms.releasesForm.release_date.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+ </md-input-container>
+   <md-input-container class="md-block">
+    <label for="status" class="active">{{M.RELEASES_FIELD_STATUS}}:</label>
+    <input id="status" name="status" type="text" class="validate" ng-model="data.single.status" required ng-disabled="locked">
+    <div ng-messages="forms.releasesForm.status.$error" ng-show="forms.releasesForm.status.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+   <md-input-container  class="md-block">
+          <label for="projects_id" class="active">{{M.RELEASES_FIELD_PROJECT_ID}}:</label>
+          <md-select ng-model="data.single.projects_id" id="projects_id" name="projects_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="project in projectsdata" ng-selected="{{data.single.projects.project_name === project.project_name}}"
+            ng-value="project.id">
+              {{project.project_name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.releasesForm.projects_id.$error" ng-show="forms.releasesForm.projects_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

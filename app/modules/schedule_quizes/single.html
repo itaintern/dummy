@@ -1,0 +1,53 @@
+<form name="forms.schedule_quizesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+   <md-input-container  class="md-block">
+          <label for="question_sets_id" class="active">{{M.SCHEDULE_QUIZES_FIELD_QUESETID}}:</label>
+          <md-select ng-model="data.single.question_sets_id" id="question_sets_id" name="question_sets_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="qsdata in questionSetsdata" ng-selected="{{data.single.question_sets.title === qsdata.title}}"
+            ng-value="qsdata.id">
+              {{qsdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.schedule_quizesForm.question_sets_id.$error" ng-show="forms.schedule_quizesForm.question_sets_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  	   <label for="date" class="active">{{M.SCHEDULE_QUIZES_FIELD_DATE}}:</label>
+	 <md-datepicker ng-model="data.single.date" ng-change="newdate(data.single.date)" id="date" name="date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.schedule_quizesForm.date.$error" ng-show="forms.schedule_quizesForm.date.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+ </md-input-container>
+  <md-input-container  class="md-block">
+          <label for="users_id" class="active">{{M.SCHEDULE_QUIZES_FIELD_USERID}}:</label>
+          <md-select ng-model="data.single.users_id" id="users_id" name="users_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="udata in usersdata" ng-selected="{{data.single.users.email === udata.email}}"
+            ng-value="udata.id">
+              {{udata.email}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.manageCoursesForm.users_id.$error" ng-show="forms.manageCoursesForm.users_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0" ng-checked="data.single.is_active" id="is_active" name="is_active" ng-disabled="locked">
+		{{M.SCHEDULE_QUIZES_FIELD_ISACTIVE}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

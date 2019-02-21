@@ -1,0 +1,75 @@
+<form name="forms.question_banksForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	<md-input-container class="md-block">
+    <label for="qus" class="active">{{M.QUESTION_BANKS_FIELD_QUS}}:</label>
+    <input id="qus" name="qus" type="text" class="validate" ng-model="data.single.qus" required ng-disabled="locked">
+    <div ng-messages="forms.question_banksForm.qus.$error" ng-show="forms.question_banksForm.qus.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="option1" class="active">{{M.QUESTION_BANKS_FIELD_OPTION1}}:</label>
+    <input id="option1" name="option1" type="text" class="validate" ng-model="data.single.option1" required ng-disabled="locked">
+    <div ng-messages="forms.question_banksForm.option1.$error" ng-show="forms.question_banksForm.option1.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="option2" class="active">{{M.QUESTION_BANKS_FIELD_OPTION2}}:</label>
+    <input id="option2" name="option2" type="text" class="validate" ng-model="data.single.option2" required ng-disabled="locked">
+    <div ng-messages="forms.question_banksForm.option2.$error" ng-show="forms.question_banksForm.option2.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="option3" class="active">{{M.QUESTION_BANKS_FIELD_OPTION3}}:</label>
+    <input id="option3" name="option3" type="text" class="validate" ng-model="data.single.option3" required ng-disabled="locked">
+    <div ng-messages="forms.question_banksForm.option3.$error" ng-show="forms.question_banksForm.option3.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="option4" class="active">{{M.QUESTION_BANKS_FIELD_OPTION4}}:</label>
+    <input id="option4" name="option4" type="text" class="validate" ng-model="data.single.option4" required ng-disabled="locked">
+    <div ng-messages="forms.question_banksForm.option4.$error" ng-show="forms.question_banksForm.option4.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="ans" class="active">{{M.QUESTION_BANKS_FIELD_ANS}}:</label>
+    <input id="ans" name="ans" type="text" class="validate" ng-model="data.single.ans" required ng-disabled="locked">
+    <div ng-messages="forms.question_banksForm.ans.$error" ng-show="forms.question_banksForm.ans.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+	<md-input-container  class="md-block">
+          <label for="manage_courses_id" class="active">{{M.QUESTION_BANKS_FIELD_COURSEID}}:</label>
+          <md-select ng-model="data.single.manage_courses_id" id="manage_courses_id" name="manage_courses_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="mcdata in ManageCoursedata" ng-selected="{{data.single.manage_courses.title === mcdata.title}}"
+            ng-value="mcdata.id">
+              {{mcdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.question_banksForm.manage_courses_id.$error" ng-show="forms.question_banksForm.manage_courses_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.isActive" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isActive" id="isActive" name="isActive" ng-disabled="locked">
+		{{M.QUESTION_BANKS_FIELD_ISACTIVE}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

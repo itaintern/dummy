@@ -1,0 +1,55 @@
+<form name="forms.departmentsForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container class="md-block">
+    <label for="title" class="active">{{M.DEPARTMENTS_FIELD_TITLE}}:</label>
+    <input id="title" name="title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
+    <div ng-messages="forms.departmentsForm.title.$error" ng-show="forms.departmentsForm.title.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="contact_number" class="active">{{M.DEPARTMENTS_FIELD_CONTACTNUMBER}}:</label>
+    <input id="contact_number" name="contact_number" type="text" class="validate" ng-model="data.single.contact_number" required ng-disabled="locked">
+    <div ng-messages="forms.departmentsForm.contact_number.$error" ng-show="forms.departmentsForm.contact_number.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+ <md-input-container class="md-block">
+    <label for="description" class="active">{{M.DEPARTMENTS_FIELD_DESCRIPTION}}:</label>
+    <input id="description" name="description" type="text" class="validate" ng-model="data.single.description" required ng-disabled="locked">
+    <div ng-messages="forms.departmentsForm.description.$error" ng-show="forms.departmentsForm.description.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container  class="md-block">
+          <label for="companies_id" class="active">{{M.DEPARTMENTS_FIELD_COMPANY}}:</label>
+          <md-select ng-model="data.single.companies_id" id="companies_id" name="companies_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="company in companyname" ng-selected="{{data.single.companies.organization_name === company.organization_name}}"
+            ng-value="company.id">
+              {{company.organization_name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.departmentsForm.company.$error" ng-show="forms.departmentsForm.company.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+    
+  </md-input-container>
+   <md-input-container class="md-block">
+  <md-checkbox class="active" ng-model="data.single.status" ng-true-value="1" ng-false-value="0" ng-checked="data.single.status" id="status" name="status" ng-disabled="locked">
+		{{M.DEPARTMENTS_FIELD_STATUS}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

@@ -1,0 +1,126 @@
+<style>
+md-dialog{width:50%}
+</style>
+<md-dialog aria-lebel="Welcome">
+	<div style="margin-left:10px">
+		<h6 >New Task</h6>
+	</div>
+	<md-dialog-content>
+		<form name="milestone" style="margin-left:10px">
+			
+			<md-input-container class="md-block">
+				<label for="task_title" class="active">{{M.TASKS_FIELD_TASK_TITLE}}</label>
+				<input id="task_title" name="task_title" type="text" class="validate" ng-model="$root.task_title" required >
+				<div ng-messages="milestone.task_title.$error" ng-show="milestone.task_title.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>
+				</div>
+			</md-input-container>
+			
+			<md-input-container class="md-block">
+				<label for="task_details" class="active">{{M.TASKS_FIELD_TASK_DETAILS}}</label>
+				<input name="task_details" type="text" class="validate" ng-model="$root.task_details" required >
+				<div ng-messages="milestone.task_details.$error" ng-show="milestone.task_details.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>
+				</div>
+			</md-input-container>
+			
+			<md-input-container  class="md-block">
+				<label for="task_list" class="active">Task List:</label>
+				<md-select ng-model="$root.task_list"  name="task_list" class="validate" required>
+					
+					<md-option ng-repeat="cdata in Releases"  ng-value="cdata.id" >
+						{{cdata.name}}
+					</md-option>
+				</md-select>
+			</md-input-container>
+			
+			<md-input-container  class="md-block">
+				<label for="assignee_id" class="active">Owner:</label>
+				<md-select ng-model="$root.assignee_id" id="clients_id" name="assignee_id" class="validate" required>
+					<md-option><em>None</em></md-option>
+					<md-option ng-repeat="cdata in Users"  ng-value="cdata.id" >
+						{{cdata.display_name}}
+					</md-option>
+				</md-select>
+			</md-input-container>
+			
+			<md-input-container  class="md-block">
+				<label for="reporter_id" class="active">Reporter:</label>
+				<md-select ng-model="$root.reporter_id" id="reporter_id" name="reporter_id" class="validate" required>
+					<md-option><em>None</em></md-option>
+					<md-option ng-repeat="user in Users"  ng-value="user.id" >
+						{{user.display_name}}
+					</md-option>
+				</md-select>
+			</md-input-container>
+			
+			
+			<md-input-container class="md-block">
+				<label for="estimated_start_date" class="active">{{M.MILESTONES_FIELD_ESTIMATEDSTARTDATE}}:</label>
+				<md-datepicker  ng-model="$root.estimated_start_date" ng-change="newestimatedStartDate(data.single.estimated_start_date)" id="estimated_start_date" name="estimated_start_date" class="validate" required md-open-on-focus ></md-datepicker>
+				<div ng-messages="milestone.estimated_start_date.$error" ng-show="milestone.estimated_start_date.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>
+				</div>
+			</md-input-container>
+			
+			
+			
+			<md-input-container class="md-block">
+				<label for="estimated_end_date" class="active">{{M.MILESTONES_FIELD_ESTIMATEDENDDATE}}:</label>
+				<md-datepicker ng-model="$root.estimated_end_date" ng-change="newestimatedEndDate(data.single.estimated_end_date)" id="estimated_end_date" name="estimated_end_date" class="validate" required  ></md-datepicker>
+				<div ng-messages="milestone.estimated_end_date.$error" ng-show="milestone.estimated_end_date.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>
+				</div>
+			</md-input-container>
+			
+			
+			<md-input-container  class="md-block">
+				<label for="status_value" class="active">{{M.TASKS_FIELD_TASK_PRIORITY}}:</label>
+				<md-select ng-model="$root.priority"  name="priority" class="validate" required>
+					
+					
+					<md-option ng-repeat="priority in Priority"  ng-value="priority.value" >
+						{{priority.value}}
+					</md-option>
+					
+				</md-select>
+				<div ng-messages="milestone.status_value.$error" ng-show="milestone.status_value.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>
+				</div>
+			</md-input-container>
+			
+			<md-input-container  class="md-block">
+				<label for="status_value" class="active">{{M.TASKS_FIELD_STATUS}}:</label>
+				<md-select ng-model="$root.status" id="clients_id" name="status" class="validate" required>
+					
+					<md-option><em>None</em></md-option>
+					<md-option ng-repeat="status in Task_Status"  ng-value="status.value" >
+						{{status.value}}
+					</md-option>
+					
+				</md-select>
+				<div ng-messages="milestone.status_value.$error" ng-show="forms.projectsForm.status_value.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>
+				</div>
+			</md-input-container>
+			
+			
+			
+			
+			<md-dialog-actions layout="row">
+				
+				<md-button  class = "md-primary md-raised"  ng-click = "addTask($event)"
+				ng-disabled="milestone.$invalid">
+				Add 
+			</md-button>
+			<md-button  class = "md-primary md-raised"  ng-click = "cancel($event)">
+				Cancel 
+			</md-button>
+		</md-dialog-actions>
+		
+	</form>
+</md-dialog-content> 
+</md-dialog> 
+
+
+

@@ -1,0 +1,67 @@
+<style>
+md-dialog{width:50%}
+</style>
+
+<md-dialog aria-lebel="Welcome">
+	<div style="margin-left:10px">
+		<h6 >Update Task</h6>
+	</div>
+	<md-dialog-content>
+		<form  name="forms.taskListForm" style="margin-left:10px" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	 
+	<md-input-container class="md-block">
+			<label for="task_title" class="active">{{M.TASKS_FIELD_TASK_TITLE}}</label>
+			<input id="task_title" name="task_title" type="text" class="validate" ng-model="title" >
+			
+		</md-input-container>
+		
+		<md-input-container class="md-block">
+			<label for="task_details" class="active">{{M.TASKS_FIELD_TASK_DETAILS}}</label>
+			<input name="task_details" type="text" class="validate" ng-model="task_details"  >
+			
+		</md-input-container>
+		
+		<md-input-container  class="md-block">
+			  <label for="assignee_id" class="active">Owner:</label>
+			  <md-select ng-model="assignee_id" id="clients_id" name="assignee_id" class="validate" >
+				<md-option><em>None</em></md-option>
+				<md-option ng-repeat="cdata in Users"  ng-value="cdata.id" >
+				{{cdata.display_name}}
+			  </md-option>
+			</md-select>
+		</md-input-container>
+		
+  <md-input-container  class="md-block">
+			  <label for="status_value" class="active">{{M.TASKS_FIELD_STATUS}}:</label>
+			  <md-select ng-model="current_status" id="clients_id" name="current_status" class="validate">
+			  
+				<md-option><em>None</em>General</md-option>
+				<md-option ng-repeat="status in Task_Status"  ng-value="status.value" >
+				{{status.value}}
+			  </md-option>
+			  
+			</md-select>
+			
+		</md-input-container>
+  
+	
+</form>
+
+
+
+<md-dialog-actions layout="row">
+	
+	<md-button  class = "md-primary md-raised"  ng-click = "updateTaskList($event)"
+	ng-disabled="forms.taskListForm.$invalid">
+	Update 
+</md-button>
+<md-button  class = "md-primary md-raised"  ng-click = "cancel($event)">
+	Cancel 
+</md-button>
+</md-dialog-actions>
+
+
+</md-dialog-content> 
+</md-dialog> 
+
+

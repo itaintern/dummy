@@ -1,0 +1,116 @@
+<form name="forms.test_casesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container class="md-block">
+    <label for="testcase_no" ass="active">{{M.TEST_CASES_FIELD_TESTCASENO}}:</label>
+    <input id="testcase_no" name="testcase_no" type="text" class="validate" ng-model="data.single.testcase_no" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.testcase_no.$error" ng-show="forms.test_casesForm.testcase_no.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container  class="md-block">
+          <label for="backlog_id" class="active">{{M.TEST_CASES_FIELD_BACKLOGID}}:</label>
+          <md-select ng-model="data.single.backlog_id" id="backlog_id" name="backlog_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="usdata in UserStoriesdata" ng-selected="{{data.single.backlog.title === usdata.title}}"
+            ng-value="usdata.id">
+              {{usdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.test_casesForm.backlog_id.$error" ng-show="forms.test_casesForm.backlog_id.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="testcase_description" ass="active">{{M.TEST_CASES_FIELD_TESTCASEDESCRIPTION}}:</label>
+    <input id="testcase_description" name="testcase_description" type="text" class="validate" ng-model="data.single.testcase_description" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.testcase_description.$error" ng-show="forms.test_casesForm.testcase_description.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="access_path" ass="active">{{M.TEST_CASES_FIELD_ACCESSPATH}}:</label>
+    <input id="access_path" name="access_path" type="text" class="validate" ng-model="data.single.access_path" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.access_path.$error" ng-show="forms.test_casesForm.access_path.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="precondition" ass="active">{{M.TEST_CASES_FIELD_PRECONDITION}}:</label>
+    <input id="precondition" name="precondition" type="text" class="validate" ng-model="data.single.precondition" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.precondition.$error" ng-show="forms.test_casesForm.precondition.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="test_step" ass="active">{{M.TEST_CASES_FIELD_TESTSTEP}}:</label>
+    <input id="test_step" name="test_step" type="text" class="validate" ng-model="data.single.test_step" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.test_step.$error" ng-show="forms.test_casesForm.test_step.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="test_data" ass="active">{{M.TEST_CASES_FIELD_TESTDATA}}:</label>
+    <input id="test_data" name="test_data" type="text" class="validate" ng-model="data.single.test_data" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.test_data.$error" ng-show="forms.test_casesForm.test_data.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="expected_result" ass="active">{{M.TEST_CASES_FIELD_EXPECTEDRESULT}}:</label>
+    <input id="expected_result" name="expected_result" type="text" class="validate" ng-model="data.single.expected_result" required ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.expected_result.$error" ng-show="forms.test_casesForm.expected_result.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  	   <label for="creation_date" class="active">{{M.TEST_CASES_FIELD_CREATIONDATE}}:</label>
+	 <md-datepicker ng-model="data.single.creation_date" ng-change="newcreationDate(data.single.creation_date)" id="creation_date" name="creation_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.test_casesForm.creation_date.$error" ng-show="forms.test_casesForm.creation_date.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+ </md-input-container>
+  <md-input-container class="md-block">
+  	   <label for="execution_date" class="active">{{M.TEST_CASES_FIELD_EXECUTIONDATE}}:</label>
+	 <md-datepicker ng-model="data.single.execution_date" ng-change="newexecutionDate(data.single.execution_date)" id="execution_date" name="execution_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.test_casesForm.execution_date.$error" ng-show="forms.test_casesForm.execution_date.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+ </md-input-container>
+ <md-input-container  class="md-block">
+          <label for="test_status_id" class="active">{{M.TEST_CASES_FIELD_STATUS}}:</label>
+          <md-select ng-model="data.single.test_status_id" id="test_status_id" name="test_status_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="tsdata in TestStatusdata" ng-selected="{{data.single.test_status.name === tsdata.name}}"
+            ng-value="tsdata.id">
+              {{tsdata.name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.test_casesForm.test_status_id.$error" ng-show="forms.test_casesForm.test_status_id.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>     
+    </div>
+  </md-input-container>
+   <md-input-container class="md-block">
+    <label for="remark" class="active">{{M.TEST_CASES_FIELD_REMARK}}:</label>
+    <input id="remark" name="remark" type="text" class="validate" ng-model="data.single.remark" rerequired ng-disabled="locked">
+    <div ng-messages="forms.test_casesForm.remark.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+    <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0" ng-checked="data.single.is_active" id="is_active" name="is_active" ng-disabled="locked">
+		{{M.TEST_CASES_FIELD_ISACTIVE}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

@@ -1,0 +1,87 @@
+<form name="forms.test_plansForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container  class="md-block">
+          <label for="backlog_id" class="active">{{M.TEST_PLANS_FIELD_BACKLOGID}}:</label>
+          <md-select ng-model="data.single.backlog_id" id="backlog_id" name="backlog_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="usdata in UserStoriesdata" ng-selected="{{data.single.backlog.title === usdata.title}}"
+            ng-value="usdata.id">
+              {{usdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.test_plansForm.backlog_id.$error" ng-show="forms.test_plansForm.backlog_id.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container  class="md-block">
+          <label for="test_cases_id" class="active">{{M.TEST_PLANS_FIELD_TESTCASEID}}:</label>
+          <md-select ng-model="data.single.test_cases_id" id="test_cases_id" name="test_cases_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="tcdata in TestCasesdata" ng-selected="{{data.single.test_cases.testcase_no === tcdata.testcase_no}}"
+            ng-value="tcdata.id">
+              {{tcdata.testcase_no}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.test_plansForm.test_cases_id.$error" ng-show="forms.test_plansForm.test_cases_id.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>     
+    </div>
+  </md-input-container>
+   <md-input-container class="md-block">
+    <label for="estimated_hours" ass="active">{{M.TEST_PLANS_FIELD_ESTIMATEDHOURS}}:</label>
+    <input id="estimated_hours" name="estimated_hours" type="number" maxlength="4" class="validate" ng-model="data.single.estimated_hours" required ng-disabled="locked">
+    <div ng-messages="forms.test_plansForm.estimated_hours.$error" ng-show="forms.test_plansForm.estimated_hours.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="version_name" ass="active">{{M.TEST_PLANS_FIELD_VERSIONNAME}}:</label>
+    <input id="version_name" name="version_name" type="text" class="validate" ng-model="data.single.version_name" required ng-disabled="locked">
+    <div ng-messages="forms.test_plansForm.version_name.$error" ng-show="forms.test_plansForm.version_name.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  	   <label for="release_date" class="active">{{M.TEST_PLANS_FIELD_RELEASEDATE}}:</label>
+	 <md-datepicker ng-model="data.single.release_date" ng-change="newreleaseDate(data.single.release_date)" id="release_date" name="release_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+	     <div ng-messages="forms.test_plansForm.release_date.$error" ng-show="forms.test_plansForm.release_date.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+ </md-input-container>
+  <md-input-container class="md-block">
+    <label for="bug_verification" ass="active">{{M.TEST_PLANS_FIELD_BUGVERIFICATION}}:</label>
+    <input id="bug_verification" name="bug_verification" type="text" class="validate" ng-model="data.single.bug_verification" required ng-disabled="locked">
+    <div ng-messages="forms.test_plansForm.bug_verification.$error" ng-show="forms.test_plansForm.bug_verification.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>
+    </div>
+  </md-input-container>
+   <md-input-container  class="md-block">
+          <label for="test_status_id" class="active">{{M.TEST_PLANS_FIELD_STATUSID}}:</label>
+          <md-select ng-model="data.single.test_status_id" id="test_status_id" name="test_status_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="tsdata in TestStatusdata" ng-selected="{{data.single.test_status.name === tsdata.name}}"
+            ng-value="tsdata.id">
+              {{tsdata.name}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.test_plansForm.test_status_id.$error" ng-show="forms.test_plansForm.test_status_id.$dirty">
+      <div ng-message="rerequired">{{M.RErequired}}</div>     
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0" ng-checked="data.single.is_active" id="is_active" name="is_active" ng-disabled="locked">
+		{{M.TEST_PLANS_FIELD_ISACTIVE}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

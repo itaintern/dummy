@@ -1,0 +1,24 @@
+<td>
+	<a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')"
+	href="#!/{{currentRoute}}/{{item.id}}">{{item.to_email}}</a>
+</td>
+<td>
+	<span>{{item.cc_email}}</span>
+<!--</td>-->
+<!--<td>-->
+<!--	<span>{{item.is_active == 1 ? 'Yes' : 'No'}}</span>-->
+<!--</td>-->
+<td>
+    <md-switch class="no-margin" ng-disabled="true" aria-label="Disabled active switch" ng-model="item.is_active" ng-true-value="1" ng-false-value="0">
+    </md-switch>
+</td>
+<td>
+    <span>{{item.alerts_modules_operators.modules_operators}}</span>
+</td>
+<!--<td>-->
+<!--	<span>-->
+<!--		<a class="btn-floating red darken-4" ng-click="softDelete(item)">-->
+<!--			<i class="material-icons">delete</i>-->
+<!--		</a>-->
+<!--	</span>-->
+<!--</td>-->

@@ -1,0 +1,43 @@
+<form name="forms.add_questionsForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container  class="md-block">
+          <label for="qb_id" class="active">{{M.ADD_QUESTIONS_FIELD_QB_ID}}:</label>
+          <md-select ng-model="data.single.qb_id" id="qb_id" name="qb_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <!--<md-option ng-selected><em>test</em></md-option>-->
+            <md-option ng-repeat="qbdata in Questionbankdata" ng-selected="{{data.single.qb.qus === qbdata.qus}}"
+            ng-value="qbdata.id">
+              {{qbdata.qus}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.add_questionsForm.qb_id.$error" ng-show="forms.add_questionsForm.qb_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+   <md-input-container  class="md-block">
+          <label for="qs_id" class="active">{{M.ADD_QUESTIONS_FIELD_QS_ID}}:</label>
+          <md-select ng-model="data.single.qs_id" id="qs_id" name="qs_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <!--<md-option ng-selected><em>test</em></md-option>-->
+            <md-option ng-repeat="qsdata in QuestionSetdata" ng-selected="{{data.single.qs.title === qsdata.title}}"
+            ng-value="qsdata.id">
+              {{qsdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.add_questionsForm.qs_id.$error" ng-show="forms.add_questionsForm.qs_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

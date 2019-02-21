@@ -1,0 +1,48 @@
+<td>
+	<a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')"
+	href="#!/{{currentRoute}}/{{item.id}}">{{item.testcase_no}}</a>
+	<!--<span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.organizationName}}</span>-->
+</td>
+<td>
+    <span>{{item.testcase_description}}</span>
+</td>
+<td>
+    <span>{{item.access_path}}</span>
+</td>
+<td>
+    <span>{{item.precondition}}</span>
+</td>
+<td>
+    <span>{{item.test_step}}</span>
+</td>
+<td>
+    <span>{{item.test_data}}</span>
+</td>
+<td>
+    <span>{{item.expected_result}}</span>
+</td>
+<td>
+    <span>{{item.creation_date}}</span>
+</td>
+<td>
+    <span>{{item.execution_date}}</span>
+</td>
+<td>
+    <span>{{item.remark}}</span>
+</td>
+<td>
+    <span>{{item.is_active}}</span>
+</td>
+<td>
+    <span>{{item.backlog.title}}</span>
+</td>
+<td>
+    <span>{{item.test_status.name}}</span>
+</td>
+<td>
+	<span>
+		<a class="btn-floating red darken-4" ng-click="softDelete(item)">
+			<i class="material-icons">delete</i>
+		</a>
+	</span>
+</td>

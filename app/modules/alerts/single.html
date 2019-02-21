@@ -1,0 +1,111 @@
+<form name="forms.alertsForm">
+	<md-input-container  class="md-block">
+          <label for="companies_id" class="active">{{M.ALERTS_FIELD_MODULES_ID}}:</label>
+          <md-select ng-model="data.single.alerts_modules_operators_id" id="alerts_modules_operators_id" name="alerts_modules_operators_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="module in amdata" ng-selected="{{data.single.alerts_modules_operators.modules_operators === module.modules_operators}}"
+            	ng-value="module.id" >
+            	{{module.modules_operators}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.alertsForm.alerts_modules_operators_id.$error" ng-show="forms.alertsForm.alerts_modules_operators_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+    <md-input-container class="md-block">
+      <label for="to_email" class="active">{{M.ALERTS_TO_EMAIL}}:</label>
+      <input id="to_email" name="to_email" type="text" class="validate" ng-model="data.single.to_email" required ng-disabled="locked">
+      <div ng-messages="forms.alertsForm.to_email.$error" ng-show="forms.alertsForm.to_email.$dirty">
+        <div ng-message="required">{{M.REQUIRED}}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <label for="cc_email" class="active">{{M.ALERTS_CC_EMAIL}}:</label>
+      <input id="cc_email" name="cc_email" type="text" class="validate" ng-model="data.single.cc_email" required ng-disabled="locked">
+      <div ng-messages="forms.alertsForm.cc_email.$error" ng-show="forms.alertsForm.cc_email.$dirty">
+        <div ng-message="required">{{M.REQUIRED}}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label for="is_active" class="active">{{M.ALERTS_IS_ACTIVE}}:</label>
+        <br>
+        <md-switch id="is_active" name="is_active" ng-disabled="locked" aria-label="Disabled active switch" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0">
+        </md-switch>
+    </md-input-container>
+ <!--   	<a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')"-->
+	<!--href="#!/{{currentRoute}}/list.html">alert</a>-->
+</form>
+<section>
+<form ng-submit="addNewCondition(field,operator,compare_value)">
+	<div layout="row">
+		<div flex=25>
+			<md-input-container  class="md-block">
+			<label for="companies_id" class="active">{{M.ALERTS_FIELD_MODULES_FIELDS}}:</label>
+				<md-select ng-model="field" id="field" name="field" class="validate" ng-disabled="locked">
+				<!--<md-select ng-model="allconditions.field" id="field" name="field" class="validate" ng-disabled="locked">-->
+					<md-option><em>None</em></md-option>
+					<md-option ng-repeat="(header, value) in hnm[0]"
+						ng-show="(header == 'estimated_start_date' || header == 'estimated_end_date' || header == 'project_name' ||
+								header == 'projects_id' || header == 'release_date' || 
+								header == 'holiday_date' || 
+								header == 'leave_status_id' || header == 'start_date' || header == 'end_date' || 
+								header == 'date' || 
+								header == 'status')"
+						ng-value="header">
+						{{ header }}
+					</md-option>
+				</md-select>
+				<div ng-messages="forms.alertsForm.field.$error" ng-show="forms.alertsForm.field.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>     
+				</div>
+			</md-input-container>
+		</div>
+		<div flex=25>
+			<md-input-container  class="md-block">
+				<label for="companies_id" class="active">{{M.ALERTS_FIELD_OPERATORS}}:</label>
+				<md-select ng-model="operator" id="operator" name="operator" class="validate" ng-disabled="locked">
+				<!--<md-select ng-model="allconditions.operator" id="operator" name="operator" class="validate" ng-disabled="locked">-->
+					<md-option><em>None</em></md-option>
+					<md-option ng-repeat="operators in aodata"
+            			ng-value="operators.id" >
+            				{{operators.modules_operators}}
+            		</md-option>
+				</md-select>
+				<div ng-messages="forms.alertsForm.operator.$error" ng-show="forms.alertsForm.operator.$dirty">
+					<div ng-message="required">{{M.REQUIRED}}</div>     
+				</div>
+			</md-input-container>
+		</div>
+		<div flex=25>
+			<md-input-container class="md-block">
+				<label for="compare_value" class="active">{{M.ALERTS_VALUE}}:</label>
+				<input id="compare_value" name="compare_value" type="text" class="validate" ng-model="compare_value" required ng-disabled="locked">
+				<!--<input id="compare_value" name="compare_value" type="text" class="validate" ng-model="allconditions.compare_value" required ng-disabled="locked">-->
+					<div ng-messages="forms.alertsForm.compare_value.$error" ng-show="forms.alertsForm.compare_value.$dirty">
+						<div ng-message="required">{{M.REQUIRED}}</div>
+					</div>
+			</md-input-container>
+		</div>
+		<div flex=25>
+			<a ng-disabled="locked" class="top-margin-20 btn-floating btn-medium waves-effect waves-light blue" ng-click="addNewCondition(field,operator,compare_value)"><i class="material-icons">add</i></a>
+		</div>
+    </div>
+    
+</form>
+<div class="displayChip" id="conditionremove" ng-repeat="allcondition in alert_conditionAdd track by $index">
+	<span>{{allcondition.field}} {{allcondition.operator}} {{allcondition.compare_value}}</span>
+	<i class="close material-icons" ng-click="removeCondition(allcondition)" ng-hide="locked">close</i>
+</div>
+<!--<br/>-->
+<!--<div class="chip" id="conditionremove" ng-repeat="allcondition in alert_conditionAdd track by $index">-->
+<!--    <span>{{allcondition.id}}---{{allcondition.field}} {{allcondition.operator}} {{allcondition.compare_value}} </span>-->
+<!--    <i class="close material-icons" ng-click="removeCondition(allcondition)" ng-hide="locked">close</i>-->
+<!--</div>-->
+<!--<br/>-->
+<!--<div class="row" ng-repeat="allcondition in alert_conditionAdd track by $index">-->
+<!--	{{allcondition}}-->
+<!--{{allcondition.id}}---{{allcondition.field}} {{allcondition.operator}} {{allcondition.compare_value}}-->
+<!--</div>-->
+
+</section>
+

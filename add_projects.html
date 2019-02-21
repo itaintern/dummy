@@ -1,0 +1,107 @@
+<style>
+md-dialog{width:50%}
+</style>
+
+<md-dialog aria-lebel="Welcome">
+ <div style="margin-left:10px">
+  <h6 >New Project</h6>
+</div>
+<md-dialog-content>
+ <form name="forms.projectsForm" style="margin-left:10px" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  
+  
+  <md-input-container class="md-block">
+    <label for="project_name" class="active">{{M.PROJECTS_FIELD_PROJECTNAME}}:</label>
+    <input id="project_name" name="project_name" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" ng-model="$root.project_name" required >
+    <span style="color:red" ng-if="forms.projectsForm.project_name.$invalid && forms.projectsForm.project_name.$dirty">Only alphanumerics are allowed!</span>
+    <div ng-messages="forms.projectsForm.project_name.$error" ng-show="forms.projectsForm.project_name.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  
+  <md-input-container  class="md-block">
+    <label for="clients_id" class="active">Owner:</label>
+    <md-select ng-model="$root.clients_id" id="clients_id" name="clients_id" class="validate" >
+      <md-option><em>None</em></md-option>
+      <md-option ng-repeat="cdata in Clientdata"  ng-value="cdata.clients_id" >
+        {{cdata.clients.name}}
+      </md-option>
+    </md-select>
+    <div ng-messages="forms.projectsForm.clients_id.$error" ng-show="forms.projectsForm.clients_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  
+  
+  
+  
+  
+  <md-input-container class="md-block">
+   <label for="estimated_start_date" class="active">{{M.PROJECTS_FIELD_ESTIMATEDSTARTDATE}}:</label>
+   <md-datepicker  ng-model="$root.estimated_start_date" ng-change="newestimatedStartDate(data.single.estimated_start_date)" id="estimated_start_date" name="estimated_start_date" class="validate" required md-open-on-focus ></md-datepicker>
+   <div ng-messages="forms.projectsForm.estimated_start_date.$error" ng-show="forms.projectsForm.estimated_start_date.$dirty">
+    <div ng-message="required">{{M.REQUIRED}}</div>
+  </div>
+</md-input-container>
+
+
+
+<md-input-container class="md-block">
+ <label for="estimated_end_date" class="active">{{M.PROJECTS_FIELD_ESTIMATEDENDDATE}}:</label>
+ <md-datepicker ng-model="$root.estimated_end_date" ng-change="newestimatedEndDate(data.single.estimated_end_date)" id="estimated_end_date" name="estimated_end_date" class="validate" required  ></md-datepicker>
+ <div ng-messages="forms.projectsForm.estimated_end_date.$error" ng-show="forms.projectsForm.estimated_end_date.$dirty">
+  <div ng-message="required">{{M.REQUIRED}}</div>
+</div>
+</md-input-container> 
+
+<md-input-container class="md-block">
+  <label for="project_description" class="active">{{M.PROJECTS_FIELD_PROJECTOVERVIEW}}:</label>
+  <textarea id="project_description" name="project_description" type="text" class="validate" ng-model="$root.project_description" required ></textarea>
+  <div ng-messages="forms.projectsForm.project_description.$error" ng-show="forms.projectsForm.project_description.$dirty">
+    <div ng-message="required">{{M.REQUIRED}}</div>
+  </div>
+  
+</md-input-container>
+
+
+
+
+
+
+
+<md-input-container class="md-block">
+  <label for="version" class="active">{{M.PROJECTS_FIELD_VERSION}}:</label>
+  <input id="version" name="version" type="text" maxlength="10" ng-pattern="/^[0-9]+(\.[0-9])*?$/" class="validate" ng-model="$root.version" required >
+  <div ng-messages="forms.projectsForm.version.$error" ng-show="forms.projectsForm.version.$dirty">
+    <div ng-message="required">{{M.REQUIRED}}</div>
+  </div>
+</md-input-container>
+<md-input-container class="md-block">
+  <label for="type" class="active">{{M.PROJECTS_FIELD_TYPE}}:</label>
+  <input id="type" name="type" type="text" class="validate" ng-model="$root.type" required >
+  <div ng-messages="forms.projectsForm.type.$error" ng-show="forms.projectsForm.type.$dirty">
+    <div ng-message="required">{{M.REQUIRED}}</div>     
+  </div>
+</md-input-container>
+
+
+
+
+
+<md-dialog-actions layout="row">
+  
+  <md-button  class = "md-primary md-raised"  ng-click = "insert($event)"
+  ng-disabled="forms.projectsForm.$invalid">
+  Add 
+</md-button>
+<md-button  class = "md-primary md-raised"  ng-click = "cancel($event)">
+ Cancel 
+</md-button>
+</md-dialog-actions>
+</form>
+
+
+</md-dialog-content> 
+</md-dialog> 
+
+

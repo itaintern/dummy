@@ -1,0 +1,24 @@
+<td>
+	<a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')"
+	href="#!/{{currentRoute}}/{{item.id}}">{{item.title}}</a>
+	<!--<span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.organizationName}}</span>-->
+</td>
+<td>
+    <span>{{item.contact_number}}</span>
+</td>
+<td>
+    <span>{{item.description}}</span>
+</td>
+<td>
+    <span>{{item.companies.organization_name}}</span>
+</td>
+<td>
+    <span>{{item.status}}</span>
+</td>
+<td>
+	<span>
+		<a class="btn-floating red darken-4" ng-click="softDelete(item)">
+			<i class="material-icons">delete</i>
+		</a>
+	</span>
+</td>

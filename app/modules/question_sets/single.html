@@ -1,0 +1,27 @@
+<form name="forms.question_setsForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	<md-input-container class="md-block">
+    <label for="title" class="active">{{M.QUESTION_SETS_FIELD_TITLE}}:</label>
+    <input id="title" name="title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
+    <div ng-messages="forms.question_setsForm.title.$error" ng-show="forms.question_setsForm.title.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0" ng-checked="data.single.is_active" id="is_active" name="is_active" ng-disabled="locked">
+		{{M.QUESTION_SETS_FIELD_ISACTIVE}} 
+          </md-checkbox>
+   </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>
