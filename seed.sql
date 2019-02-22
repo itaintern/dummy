@@ -5,9 +5,6 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-CREATE DATABASE `weSuite` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `weSuite`;
-
 DROP TABLE IF EXISTS `add_questions`;
 CREATE TABLE `add_questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
