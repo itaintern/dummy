@@ -954,14 +954,15 @@ function RegisterEasyController(route, headers, controller){
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
         	    	items : [
-        	    		{action: 'projects', icon: '',text: 'Manage Projects'},
-        	    		{action: 'releases', icon: '',text: 'Manage Release'},
-        	    		{action: 'test_cases', icon: '',text: 'Test Cases'},
-        	    		{action: 'test_plans', icon: '',text: 'Test Plans'},
-        	    		{action: 'test_executions', icon: '',text: 'Test Executions'}
+        	    		{action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
+        	    		{action: 'projects', icon: '',text: 'Manage Projects (Old)'},
+        	    		{action: 'releases', icon: '',text: 'Manage Release (Old)'},
+        	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
+        	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
+        	    		{action: 'test_executions', icon: '',text: 'Test Executions (Old)'}
         	    	]
         	    },
-        	    {action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects'},
+        	    
         	    
         	    {action: '', icon: 'grid_on', color:'orange',text: 'Courses',
         	    	items : [
@@ -2672,7 +2673,7 @@ app.controller("load_milestonesCtrl", function ($scope) {
     $scope.msg = "Data has been added!!";
 });
 
-app.controller('manage_projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M) {
+app.controller('manage_projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route) {
   
   $rootScope.hideButton = true;
    $scope.removeListHeaders = function(){
@@ -2729,7 +2730,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
          
 
       }
-      console.log("data",data)
+      //console.log("data",data)
       $http.post(H.SETTINGS.baseUrl+'/projects',data).then(function successCallback(response) {
         document.getElementById('myProject').reset()
       $mdDialog.show(
@@ -2743,7 +2744,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         
       );
       
-      $scope.reload = function(){
+      /* $scope.reload = function(){
         var urlClient = H.SETTINGS.baseUrl + '/projects';
         $http.get(urlClient)
           .then(function(r){
@@ -2754,21 +2755,74 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
               newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
             }
           });
-      };
+      }; */
       $scope.reload();
-      var promise = $interval($scope.reload, 2000);
+      var promise = $interval($scope.reload, 1000);
       $interval.cancel(promise);
       }, function errorCallback(response) {
-      console.log('project was not added Succesfully')
+      //console.log('project was not added Succesfully')
       
       });
       
-      
+      document.getElementById('myProject').reset();
       $mdSidenav('project').close();
+      
     
      
        }
-   
+       
+       //update projects
+       $scope.updateProject = function(id){
+        $mdSidenav('updateProject').toggle();
+         console.log("Update id"+id);
+         $http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl + '/projects/'+id,
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+          //console.log("Updated Data"+JSON.stringify(response.data));
+          $rootScope.project_name_update = response.data.project_name;
+          $rootScope.clients_id_update = response.data.clients_id;
+          $rootScope.project_description_update = response.data.project_description;
+          $rootScope.estimated_start_date_update = response.data.estimated_start_date;
+          $rootScope.estimated_end_date_update = response.data.estimated_end_date;
+          $rootScope.version_update = response.data.version;
+          $rootScope.flag_update = response.data.type;
+         });
+
+       //to save updated records of projects
+        $scope.saveProject = function(){
+        $http({
+          method : 'put',
+          url : H.SETTINGS.baseUrl+'/projects/'+id,
+          header : 'Content-Type: application/json; charset=UTF-8',
+          data: {
+            "project_name" : $rootScope.project_name_update,
+            "clients_id" : $rootScope.clients_id_update,
+            "project_description" : $rootScope.project_description_update,
+            "estimated_start_date" : $rootScope.estimated_start_date_update,
+            "estimated_end_date" : $rootScope.estimated_end_date_update,
+            "version" : $rootScope.version_update,
+            "type" : $rootScope.flag_update,
+          }
+        }).then(function(response){
+          var isvalid = response.status;
+          if(isvalid == 200){
+            //alert("Updated");
+            $route.reload();
+          }
+          else{
+            alert("Something went wrong");
+          }
+        });
+       } 
+      }
+
+
+       $scope.closeUpdateSlieder = function(){
+        $mdSidenav('updateProject').close();
+        document.getElementById('update_form_id').reset()
+      }
    
    $scope.delete_data = function(id){
     if (confirm("Are you sure you want to delete?")) {
@@ -2795,7 +2849,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     $scope.show_milestones = false;
   
     $scope.getDetails = function(v){
-    console.log("india "+v)
+    //console.log("india "+v)
       
       $scope.show_tasks = false;
       $scope.row_data = false;
@@ -2807,18 +2861,19 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       $http.get(H.SETTINGS.baseUrl+'/milestones?PID='+id).then(function successCallback(response) {
         $scope.milestones = response.data;
         
-      console.log($scope.milestones[0].id)
+      //console.log($scope.milestones[0].id);
       //  $scope.getReleases($scope.milestones[0].id);
       }, function errorCallback(response) {
 
       $scope.project = response.data;
-      console.log(response)
+      //console.log(response);
     //  $scope.project = response.data;
       });
       }
       else{
         $scope.project_Id = 0;        
-    } 
+    }
+    
     }
     
     $scope.addMilestone = function(evnt){ 
