@@ -1035,3 +1035,5 @@ CREATE TABLE `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+ALTER TABLE `milestones`
+ADD `is_deleted` tinyint(1) NULL DEFAULT '0';
