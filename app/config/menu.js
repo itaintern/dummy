@@ -19,14 +19,15 @@ function RegisterMenuItems(){
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
         	    	items : [
-        	    		{action: 'projects', icon: '',text: 'Manage Projects'},
-        	    		{action: 'releases', icon: '',text: 'Manage Release'},
-        	    		{action: 'test_cases', icon: '',text: 'Test Cases'},
-        	    		{action: 'test_plans', icon: '',text: 'Test Plans'},
-        	    		{action: 'test_executions', icon: '',text: 'Test Executions'}
+        	    		{action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
+        	    		{action: 'projects', icon: '',text: 'Manage Projects (Old)'},
+        	    		{action: 'releases', icon: '',text: 'Manage Release (Old)'},
+        	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
+        	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
+        	    		{action: 'test_executions', icon: '',text: 'Test Executions (Old)'}
         	    	]
         	    },
-        	    {action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects'},
+        	    
         	    
         	    {action: '', icon: 'grid_on', color:'orange',text: 'Courses',
         	    	items : [
