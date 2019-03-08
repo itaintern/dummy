@@ -2670,11 +2670,10 @@ app.config(function($routeProvider) {
     });
 });
 app.controller("load_milestonesCtrl", function ($scope) {
-  
     $scope.msg = "Data has been added!!";
 });
 
-app.controller('manage_projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route) {
+app.controller('manage_projectsControllerExtension', function($scope,$route ,$controller, $rootScope, $http, $location,$mdSidenav, $mdDialog,$window, H, M) {
   
   $rootScope.hideButton = true;
    $scope.removeListHeaders = function(){
@@ -2718,6 +2717,8 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
   $scope.row_data = false;
        
        
+       console.log("page load");
+       $scope.update_data = {};
        $scope.insert = function(){
         var data={};
         data = {
@@ -2728,8 +2729,6 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
              estimated_end_date:$rootScope.estimated_end_date,
              version:$rootScope.version,
              type:$rootScope.flag,
-         
-
       }
       //console.log("data",data)
       $http.post(H.SETTINGS.baseUrl+'/projects',data).then(function successCallback(response) {
@@ -2761,6 +2760,188 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       var promise = $interval($scope.reload, 1000);
       $interval.cancel(promise);
       }, function errorCallback(response) {
+      console.log('project was not added Succesfully')
+      });
+      $mdSidenav('project').close();
+      }
+   
+   	
+   	
+	$scope.delete_data1 = function(id1){
+						$http({
+						method : 'PUT',
+						url : H.SETTINGS.baseUrl+'/projects',
+						data : {
+							"id" : id1,
+							"is_deleted" : "1"
+							},
+						header : 'Content-Type: application/json; charset=UTF-8'
+					}).then(function(response){
+						var isdelete = response.status;
+						if(isdelete == 200)
+						{
+							console.log("Project Deleted");
+							$route.reload();
+						}
+						else
+						{
+							console.log("Project Not Deleted");
+						}
+					});
+	};
+					
+	$http({
+            method : 'GET',
+            url : H.SETTINGS.baseUrl + '/users?role=admin',
+            header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+     $scope.admin_incharge = response.data;
+     
+     /*console.log("========");
+     console.log($scope.admin_incharge);
+     console.log("========");*/
+        });
+        
+        $http({
+            method : 'GET',
+            url : H.SETTINGS.baseUrl + '/users',
+            header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+     $scope.allusers_reporter = response.data;
+     
+     /*console.log("++++++++");
+     console.log($scope.allusers_reporter);
+     console.log("++++++++");*/
+        });
+        
+	$scope.updateTask = function(update_id){
+		
+		/*console.log(update_id);*/
+		$mdSidenav('update_task').open();
+        $http({
+        	method:"GET",
+        	url:H.SETTINGS.baseUrl + '/tasks?id='+update_id+'',
+        	header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+        	/*var data1 = JSON.stringify(response.data);*/
+        	var data1 = response.data[0];
+        	console.log(data1);
+        	/*console.log(response.data[0].reporter.display_name);
+        	console.log(response.data[0].assignee.display_name);*/
+        	/*var get_title = data1.title;
+        	var get_task_details = data1.task_details;
+        	var get_start_date = data1.start_date;	
+        	var get_end_date = data1.end_date;
+        	var get_priority = data1.priority;
+        	var get_task_status = data1.task_status;
+        	var get_in_charge = data1.display_name;
+        	var get_reporter_display_name = response.data[0].reporter.display_name;
+        	var get_assignee_display_name = response.data[0].assignee.display_name;*/
+        	
+        	/*console.log(get_title);
+        	console.log(get_task_details);
+        	console.log(get_start_date);
+        	console.log(get_end_date);
+        	console.log(get_priority);
+        	console.log(get_task_status);
+        	console.log(get_reporter_display_name);
+        	console.log(get_assignee_display_name);*/
+        	
+        	
+        	$scope.update_data.get_title = data1.title;
+        	$scope.update_data.get_task_details = data1.task_details;
+        	
+        	$scope.update_data.get_priority = data1.priority;
+        	$scope.update_data.get_task_status = data1.task_status;
+        	$scope.update_data.get_in_charge = data1.display_name;
+        	
+        	$scope.update_data.get_reporter_id = response.data[0].reporter.id;
+        	$scope.update_data.get_reporter_display_name = response.data[0].reporter.display_name;
+        	
+        	$scope.update_data.get_assignee_id = response.data[0].assignee.id;
+        	$scope.update_data.get_assignee_display_name = response.data[0].assignee.display_name;
+        	$scope.update_data.get_start_date = data1.start_date;	
+        	$scope.update_data.get_end_date = data1.end_date;
+        	
+        	/*var get_start_date = data1.start_date;
+        	var convert_start_date = new Date(get_start_date);	
+        	
+        	var get_end_date = data1.end_date;
+        	var convert_end_date = new Date(get_end_date);	*/
+        	
+        	
+        	/*console.log(response.data[0].assignee.id);
+        	console.log(response.data[0].reporter.id);*/
+        	/*$scope.get_start_date =  convert_start_date;	
+        	$scope.get_end_date = convert_end_date;*/
+        });  
+        
+   		$scope.save_updated_task = function(insert_data)
+   		{
+   			
+   			console.log(insert_data.get_title);
+   			console.log(insert_data.get_task_details);
+   			console.log(insert_data.get_reporter_id);
+   			console.log(insert_data.get_assignee_id);
+   			console.log(insert_data.get_start_date);
+   			console.log(insert_data.get_end_date);
+   			console.log(insert_data.get_priority);
+   			console.log(insert_data.get_task_status);
+   			
+	   	$http({
+			method:"PUT",
+				url:H.SETTINGS.baseUrl+'/tasks/'+update_id+'', /*api_key=a0f16ffb39162569c38ab644efd4300d*/
+				data:
+				{
+					"title":insert_data.get_title,
+					"task_details":insert_data.get_task_details,
+					"reporter_id":insert_data.get_reporter_id,
+					"assignee_id":insert_data.get_assignee_id,
+					"start_date":insert_data.get_start_date,
+					"end_date":insert_data.get_end_date,
+					"priority":insert_data.get_priority,
+					"task_status":insert_data.get_task_status
+				},
+				header : 'Content-Type: application/json; charset=UTF-8'
+	   		}).then(function(response){
+				var isdelete = response.status;
+				if(isdelete == 200)
+				{
+					console.log("Task Updated");
+					$route.reload();
+				}
+				else
+				{
+					console.log("Task Not Updated");
+				}
+			});
+	};
+	};
+					
+	$scope.delete_milestone = function(id){
+		$http({
+			method:"PUT",
+			url:H.SETTINGS.baseUrl + '/milestones',
+			data : {
+				"id" : id,
+				"is_deleted" : "1"
+			},
+			header : 'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+			var isdelete = response.status;
+			if(isdelete == 200)
+			{
+				console.log("Milestone Deleted");
+				$route.reload();
+			}
+			else
+			{
+				console.log("Milestone Not Deleted");
+			}
+		});
+	};
+	
+	
       //console.log('project was not added Succesfully')
       
       });
@@ -2827,33 +3008,32 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
      
        
    
-   $scope.delete_data = function(id){
-    if (confirm("Are you sure you want to delete?")) {
-            $http.delete(H.SETTINGS.baseUrl+"/tasks/"+ id, {
-                    'id': id
-                })
+   $scope.delete_data = function(id)
+   {
+   	console.log(id);
+            /*$http.put(H.SETTINGS.baseUrl+"/tasks/"+ id, {*/
+            	$http.put(H.SETTINGS.baseUrl+'/tasks/', {'id': id,"is_deleted":"1"})
                 .then(function success(data) {
                    
                    //Below line displays all the tasks of selected milestone. It doesn't handle the task list
-                    $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID).then(function successCallback(response) {
+                    
+                    	
+                    	$http.get(H.SETTINGS.baseUrl+'/tasks?is_deleted=0&MID='+$scope.MID).then(function successCallback(response) {
 
                       $scope.tasks = response.data;
                       
                       }, function errorCallback(response) {});
           
                 }, function error(){});
-        } 
-    else {
-            return false;
-        }
    }
         
     $scope.show_tasks = false;
     $scope.show_milestones = false;
   
+  
     $scope.getDetails = function(v){
-    //console.log("india "+v)
-      
+    console.log("india "+v)
+      $scope.milestones = null;
       $scope.show_tasks = false;
       $scope.row_data = false;
       var id = event.target.id;
@@ -2861,10 +3041,13 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       if($scope.project_Id != id ){
         $scope.project_Id = id;
         
-      $http.get(H.SETTINGS.baseUrl+'/milestones?PID='+id).then(function successCallback(response) {
+        
+        $http.get(H.SETTINGS.baseUrl+'/milestones?PID='+id+'&is_deleted=0').then(function successCallback(response) {
+        	
+        	
         $scope.milestones = response.data;
         
-      //console.log($scope.milestones[0].id);
+     // console.log($scope.milestones[0].id)
       //  $scope.getReleases($scope.milestones[0].id);
       }, function errorCallback(response) {
 
@@ -2956,60 +3139,60 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     }
     
     $scope.addTask = function(evnt){
-      var tl = $rootScope.task_list;
-    if(tl == null){
-      $rootScope.task_list = 0;
-    }
-        var data={};
-       data={
-        title:$rootScope.task_title,
-        assignee_id: $rootScope.assignee_id,
-        reporter_id : $rootScope.reporter_id,
-        project_lists_id: $rootScope.task_list,
-        task_details:$rootScope.task_details,
-        status:$rootScope.status,
-        priority:$rootScope.priority,
-        MID:$scope.MID,
-      }
-      $http.post(H.SETTINGS.baseUrl+'/tasks',data).then(function successCallback(response) {
-      document.getElementById('myTask').reset()
-      $mdDialog.show(
-        $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Task Adding')
-        .textContent('Task was added Succesfully!')
-        .ariaLabel('New Task')
-        .ok('OK')
-        
-      );
+     var tl = $rootScope.task_list;
+   if(tl == null){
+     $rootScope.task_list = 0;
+   }
+       var data={};
+      data={
+       title:$rootScope.task_title,
+       assignee_id: $rootScope.assignee_id,
+       reporter_id : $rootScope.reporter_id,
+       project_lists_id: $rootScope.task_list,
+       task_details:$rootScope.task_details,
+       task_status:$rootScope.task_status,
+       priority:$rootScope.priority,
+       MID:$scope.MID,
+     }
+     $http.post(H.SETTINGS.baseUrl+'/tasks',data).then(function successCallback(response) {
+     document.getElementById('myTask').reset()
+     $mdDialog.show(
+       $mdDialog.alert()
+       .parent(angular.element(document.querySelector('#popupContainer')))
+       .clickOutsideToClose(true)
+       .title('Task Adding')
+       .textContent('Task was added Succesfully!')
+       .ariaLabel('New Task')
+       .ok('OK')
 
-      //Automatically display the recently added task
+     );
 
-      var string = ""+$scope.task_value;
-      if(string.localeCompare("undefined") != 0){
-        $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID+'&project_lists_id='+$scope.task_value).then(function successCallback(response) {
-        $scope.tasks = response.data;
-        //console.log($scope.tasks.length)
-        }, function errorCallback(response) {
-        	//console.log("Not added")
-        $scope.project = response.data;
-        });
-      }
-      else{
-        $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID).then(function successCallback(response) {
-        $scope.tasks = response.data;
-        //console.log($scope.tasks.length)
-        }, function errorCallback(response) {
-        	//console.log("Not added")
-        $scope.project = response.data;
-        });
-      }
-          
-      }, function errorCallback(response) {});
-      
-      $mdSidenav('task').close();
-    }
+     //Automatically display the recently added task
+
+     var string = ""+$scope.task_value;
+     if(string.localeCompare("undefined") != 0){
+       $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID+'&project_lists_id='+$scope.task_value).then(function successCallback(response) {
+       $scope.tasks = response.data;
+       //console.log($scope.tasks.length)
+       }, function errorCallback(response) {
+           //console.log("Not added")
+       $scope.project = response.data;
+       });
+     }
+     else{
+       $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID).then(function successCallback(response) {
+       $scope.tasks = response.data;
+       //console.log($scope.tasks.length)
+       }, function errorCallback(response) {
+           //console.log("Not added")
+       $scope.project = response.data;
+       });
+     }
+
+     }, function errorCallback(response) {});
+
+     $mdSidenav('task').close();
+   }
     
   $scope.newTaskList = function(evnt) {
         
@@ -3045,7 +3228,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       var string = ""+pl;
       
       if(string.localeCompare('undefined') != 0){
-        $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+mile+'&project_lists_id='+pl).then(function successCallback(response) {
+        $http.get(H.SETTINGS.baseUrl+'/tasks?is_deleted=0&MID='+mile+'&project_lists_id='+pl).then(function successCallback(response) {
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
@@ -3056,7 +3239,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         });
       }
       else{
-        $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+mile).then(function successCallback(response) {
+        $http.get(H.SETTINGS.baseUrl+'/tasks?is_deleted=0&MID='+mile).then(function successCallback(response) {
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
@@ -3116,8 +3299,8 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
 		});
 
     
-    
-    var urlClient = H.SETTINGS.baseUrl + '/projects';
+    //var urlClient = H.SETTINGS.baseUrl + '/projects';
+    var urlClient = H.SETTINGS.baseUrl + '/projects/?is_deleted[in]=0';
       $http.get(urlClient)
           .then(function(r){
               $scope.Clientdata = r.data;
@@ -3133,6 +3316,21 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
           .then(function(r){
               $scope.Users = r.data;
         
+        
+          },function(e){
+            if(e && e.data && e.data.error && e.data.error.status){
+              newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+            }
+          });
+          
+          
+          var urlUsers1 = H.SETTINGS.baseUrl + '/employees';
+      $http.get(urlUsers)
+          .then(function(r1){
+              $scope.Users1 = r1.data;
+      /*  console.log("-=-=-=");
+        console.log($scope.Users1);
+        console.log("-=-=-=");*/
         
           },function(e){
             if(e && e.data && e.data.error && e.data.error.status){
@@ -3224,6 +3422,11 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       document.getElementById('myTask').reset();
     }
     
+    $scope.closeTask1 = function(){
+      $mdSidenav('update_task').close();
+      document.getElementById('myTask').reset()
+    }
+    
     $scope.newProject = function() {
                $mdSidenav('project').toggle();
             };
@@ -3237,6 +3440,8 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       $mdSidenav('updateProject').close();
       document.getElementById('update_form_id').reset();
     }
+    
+    
     
 });
 

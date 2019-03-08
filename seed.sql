@@ -1175,4 +1175,171 @@ INSERT INTO `user_stories` (`id`, `test_status_id`, `title`, `user_story`, `is_a
 (1,	1,	'screen',	'us1',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e'),
 (2,	1,	'i\'m title',	'nothing',	1,	0,	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
--- 2019-03-07 12:17:17
+-- 2019-01-23 06:34:04
+
+---- Create SQL Script on 2019-01-19
+
+DROP TABLE IF EXISTS `milestones`;
+CREATE TABLE `milestones` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `milestone_name` varchar(25) CHARACTER SET armscii8 COLLATE armscii8_bin NOT NULL,
+  `pid` int(10) DEFAULT NULL,
+  `secret` text,
+  `estimated_start_date` date DEFAULT NULL,
+  `estimated_end_date` date DEFAULT NULL,
+  `flag` tinytext,
+  `status_value` tinytext,
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `milestones_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `project_lists`;
+CREATE TABLE `project_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `mid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `secret` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mid` (`mid`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `project_lists_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `milestones` (`id`),
+
+
+
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `assignee_id` int(11) NOT NULL,
+  `reporter_id` int(11) NOT NULL,
+  `task_details` varchar(100) NOT NULL,
+  `start_date` varchar(100) NOT NULL,
+  `end_date` varchar(200) NOT NULL,
+  `priority` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  `is_deleted` tinyint(1) DEFAULT '0',
+  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
+  `MID` int(11) NOT NULL,
+  `project_lists_id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Assignee` (`assignee_id`),
+  KEY `Reporter` (`reporter_id`),
+  KEY `MID` (`MID`),
+  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`assignee_id`) REFERENCES `employees` (`id`),
+  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`reporter_id`) REFERENCES `employees` (`id`),
+  CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`MID`) REFERENCES `milestones` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS `projects`;
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `clients_id` int(11) NOT NULL,
+  `project_name` varchar(50) NOT NULL,
+  `project_description` varchar(2000) NOT NULL,
+  `estimated_start_date` date NOT NULL,
+  `estimated_hours` int(6) NOT NULL,
+  `daily_estimated_hours` int(2) NOT NULL,
+  `estimated_end_date` date NOT NULL,
+  `dev_url` varchar(2000) NOT NULL,
+  `qa_url` varchar(2000) NOT NULL,
+  `po_url` varchar(2000) NOT NULL,
+  `demo_url` varchar(2000) NOT NULL,
+  `live_url` varchar(2000) NOT NULL,
+  `version` int(11) DEFAULT NULL,
+  `type` varchar(50) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
+  PRIMARY KEY (`id`),
+  KEY `client` (`clients_id`),
+  CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`clients_id`) REFERENCES `clients` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+  CONSTRAINT `project_lists_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `projects` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS `releases`;
+CREATE TABLE `releases` (
+  `id` bigint(4) NOT NULL AUTO_INCREMENT,
+  `projects_id` int(11) NOT NULL,
+  `release_no` varchar(4) NOT NULL,
+  `version_no` varchar(10) NOT NULL,
+  `release_date` date NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
+  PRIMARY KEY (`id`),
+  KEY `projects_id` (`projects_id`),
+  CONSTRAINT `releases_ibfk_1` FOREIGN KEY (`projects_id`) REFERENCES `projects` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `milestones`;
+CREATE TABLE `milestones` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `milestone_name` varchar(25) CHARACTER SET armscii8 COLLATE armscii8_bin NOT NULL,
+  `pid` int(10) DEFAULT NULL,
+  `secret` text,
+  `estimated_start_date` date DEFAULT NULL,
+  `estimated_end_date` date DEFAULT NULL,
+  `flag` tinytext,
+  `status_value` tinytext,
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `milestones_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS `project_lists`;
+CREATE TABLE `project_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `mid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `secret` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mid` (`mid`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `project_lists_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `milestones` (`id`),
+  CONSTRAINT `project_lists_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `projects` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `assignee_id` int(11) NOT NULL,
+  `reporter_id` int(11) NOT NULL,
+  `task_details` varchar(100) NOT NULL,
+  `start_date` varchar(100) NOT NULL,
+  `end_date` varchar(200) NOT NULL,
+  `priority` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  `is_deleted` tinyint(1) DEFAULT '0',
+  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
+  `MID` int(11) NOT NULL,
+  `project_lists_id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Assignee` (`assignee_id`),
+  KEY `Reporter` (`reporter_id`),
+  KEY `MID` (`MID`),
+  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`assignee_id`) REFERENCES `employees` (`id`),
+  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`reporter_id`) REFERENCES `employees` (`id`),
+  CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`MID`) REFERENCES `milestones` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `milestones`
+ADD `is_deleted` tinyint(1) NULL DEFAULT '0';

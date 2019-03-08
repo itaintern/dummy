@@ -125,10 +125,23 @@ body, html {
   <div class="col-md-10">
     <div id="accordion">
       <div class="row" ng-repeat=" item in Clientdata">
+      	
+     
         <div class="card-header" id="headingOne">
           <h6 class="mb-0">
-            <button class="project_button" data-toggle="collapse" id="{{item.id}}" ng-click="getDetails(item.id)"  data-target="#{{item.id}}_1" aria-expanded="true" aria-controls="collapseOne">
+            <button class="project_button" data-toggle="collapse" id="{{item.id}}" ng-click="getDetails(item.id)"
+            data-target="#{{item.id}}_1" aria-expanded="true" aria-controls="collapseOne">
               {{item.project_name}}
+              
+              
+              <span id="{{item.id}}" data-toggle="collapse" class="glyphicon glyphicon-chevron-left"  style="float:right">
+              </span>
+              
+              <a ng-click="delete_data1(item.id)" class="icon">
+            	<i class="glyphicon glyphicon-trash" title="Delete Project" style="font-size: 15px;line-height: 25px;color:white;"  data-toggle="tooltip" tooltip></i>
+              </a>	
+            	
+          
               <span id="{{item.id}}" data-toggle="collapse"   style="float:right">
                 <a ng-click="updateProject(item.id)" class="edit" href="" id="editProject" class="icon">
                   <i class="material-icons"  title="Edit" style="font-size:15px;" data-toggle="tooltip" tooltip>edit</i>
@@ -138,6 +151,7 @@ body, html {
               
             </button>
           </h6>
+          <!--<button class="glyphicon glyphicon-trash" style="border:none;color:#ee10df;background-color: transparent;margin-left: 100%;" ng-click="delete_data1(item.id)"></button>-->
         </div>
   
         <div id="{{item.id}}_1" class="nav nav-tabs" aria-labelledby="headingOne" data-parent="#accordion" ng-if="item.id == project_Id" style="margin-left: 79px; width: 100%;">
@@ -158,6 +172,14 @@ body, html {
         <md-tab  name="{{tab.id}}" md-on-select="getReleases(tab.id)" md-on-deselect="announceDeselected(tab)" ng-disabled="tab.disabled">
         <md-tab-label >
           {{tab.milestone_name}}
+          
+          
+        
+        <a ng-click="delete_milestone(tab.id)" class="icon">
+        	<i class="glyphicon glyphicon-trash" title="Delete Milestone" style="font-size: 16px;line-height: 22px;color:red;" 
+        	data-toggle="tooltip" tooltip></i>
+        </a>
+        
           <a ng-click="update_Milestone(tab.id)" class="editMilestone" href="" id="updateMilestone" class="icon">
               <i class="material-icons"  title="Edit" style="font-size:15px;" data-toggle="tooltip" tooltip>edit</i>
           </a>
@@ -165,20 +187,7 @@ body, html {
         
         <md-tab-body >
           
-             <!--<md-tabs md-selected="selectedIndex" md-dynamic-height md-stretch-tabs>
-             	 <div ng-repeat="release in Releases">
-             	 	<md-tab name="{{release.id}}" md-on-select= "getTasks(release.id)" md-on-deselect="announceDeselected(tab)" ng-disabled="tab.disabled" >
-             	 		<md-tab-label ng-value="release.id" >
-             	 			{{release.name}}
-             	 		</md-tab-label>
-             	 	</md-tab>
-             	 </div>
-             	 <md-tab-body>
-             	 	
-             	 </md-tab-body>
-             </md-tabs> -->
-          
-          
+            
            
            <md-input-container>
               <label>Task List:</label>
@@ -194,7 +203,7 @@ body, html {
               <p>No ProjectList exists for this milestone. Click '+' icon below to add one.</p>
             </div>
             
-              <button class="button button2 glyphicon glyphicon-plus" ng-click="newTaskList(tab.id)"></button>
+             <!-- <button class="button button2 glyphicon glyphicon-plus" ng-click="newTaskList(tab.id)"></button>-->
             
             
          
@@ -205,33 +214,45 @@ body, html {
                 <th>In-charge</th>
                 <th>Task Details</th>
                 <th>Status</th>
-                <th>Delete</th>
+                <th>Action
+                </th>
                 </tr>
                 <tr ng-repeat="y in tasks">
                  <td>{{y.title}}</td>
                  <td>{{y.assignee.display_name}}</td>
                  <td>{{y.task_details}}</td>
                 
-                 <td>{{ y.status }}</td>
+                 <td>{{ y.task_status }}</td>
+                 
                  <td>
                  {{y.length}}
-                <button class="glyphicon glyphicon-trash" style="border:none;color:#ee10df; background-color: transparent;" ng-click="delete_data(y.id )"></button>
+                <button class="glyphicon glyphicon-trash" style="border:none;color:#ee10df; background-color: transparent;" 
+                ng-click="delete_data(y.id )" title="Delete Task"></button>
+               
+                 	 <a ng-click="updateTask(y.id)"  href="" id="edit" class="icon">
+                 <i class="material-icons" style="font-size: 20px;line-height: 25px;" title="Edit Task" data-toggle="tooltip" tooltip>edit</i>
+               </a>
                  </td>
                 </tr>
                
              </table>
                   
-            <md-button class = "md-primary md-raised"  ng-click = "newTask()"
+            <!--<md-button class = "md-primary md-raised"  ng-click = "newTask()"
                  flex = "100"  flex-gt-md = "auto" style="float:right">
                  Add Task
-            </md-button>
+            </md-button>-->
+            <button class="button button3 glyphicon glyphicon-plus" title="Add New Task" ng-click="newTask()" 
+            flex="100" flex-gt-md="auto" style="float:right;margin-bottom:3px;"></button>
           </div>
           
          <div ng-if="tasks.length == 0 && show_tasks"><p><em>No Task Exists.</em></p>
-           <md-button class = "md-primary md-raised"  ng-click = "newTask()"
+           <!--<md-button class = "md-primary md-raised"  ng-click = "newTask()"
                  flex = "100"  flex-gt-md = "auto">
                  Add Task
-            </md-button>
+            </md-button>-->
+            <button class="button button3 glyphicon glyphicon-plus" title="Add New Task" ng-click="newTask()" 
+            flex="100" flex-gt-md="auto" style="float:right;margin-bottom:3px;"></button>
+            <!--<button class="button button3 glyphicon glyphicon-plus" title="Add New Task"  ng-click="newTask()"></button>-->
          </div>
          
         </md-tab-body>
@@ -241,8 +262,8 @@ body, html {
      </div>
      	<div class=col-md-2>
             <span>
-        <button class="button button3 glyphicon glyphicon-plus" title="New Milestone"  ng-click="newMilestone()"></button>
-        
+        <button class="button button3 glyphicon glyphicon-plus" title="Add New Milestone"  ng-click="newMilestone()"></button>
+      
       </span>
           </div>
           
@@ -257,7 +278,7 @@ body, html {
   
    <div class="col-md-2">
      <div id="mybutton">
-        <button class="feedback glyphicon glyphicon-plus" ng-click = "newProject()" title="add project" > </button> 
+        <button class="feedback glyphicon glyphicon-plus" ng-click = "newProject()" title="Add New Project" > </button> 
     </div>
    </div>
    
@@ -550,12 +571,13 @@ body, html {
        
   <!-- Adding Task -->
   
-  <md-sidenav md-component-id = "task" class = "md-sidenav-right" style="width:600px;position:fixed">
+    <md-sidenav md-component-id = "task" class = "md-sidenav-right" style="width:600px;position:fixed">
   
   <md-toolbar class="md-theme-indigo">
           <h1 class="md-toolbar-tools">Add Task</h1>
         </md-toolbar>
-              <form name="task" id="myTask" style="margin-left:10px">
+        
+        <form name="task" id="myTask" style="margin-left:10px">
       
           <md-input-container class="md-block">
         <label for="task_title" class="active">{{M.TASKS_FIELD_TASK_TITLE}}</label>
@@ -587,8 +609,8 @@ body, html {
           <label for="assignee_id" class="active">{{M.PROJECTS_FIELD_IN_CHARGE}}</label>
           <md-select ng-model="$root.assignee_id" id="clients_id" name="assignee_id" class="validate" required>
           <md-option><em>None</em></md-option>
-          <md-option ng-repeat="cdata in Users"  ng-value="cdata.id" >
-          {{cdata.display_name}}
+          <md-option ng-repeat="cdata1 in admin_incharge"  ng-value="cdata1.id" >
+          {{cdata1.username}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -597,8 +619,8 @@ body, html {
           <label for="reporter_id" class="active">Reporter:</label>
           <md-select ng-model="$root.reporter_id" id="reporter_id" name="reporter_id" class="validate" required>
           <md-option><em>None</em></md-option>
-          <md-option ng-repeat="user in Users"  ng-value="user.id" >
-          {{user.display_name}}
+          <md-option ng-repeat="user1 in allusers_reporter"  ng-value="user1.id" >
+          {{user1.username}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -640,7 +662,7 @@ body, html {
     
     <md-input-container  class="md-block">
           <label for="status_value" class="active">{{M.TASKS_FIELD_STATUS}}:</label>
-          <md-select ng-model="$root.status" id="clients_id" name="status" class="validate" required>
+          <md-select ng-model="$root.task_status" id="clients_id" name="status" class="validate" required>
           
           <md-option><em>None</em>General</md-option>
           <md-option ng-repeat="status in Task_Status"  ng-value="status.value" >
@@ -668,7 +690,9 @@ body, html {
       </md-dialog-actions>
            
         </form>
-           </md-sidenav>
+        
+           
+    </md-sidenav>
   
   <!-- Adding Project -->
   
@@ -678,6 +702,8 @@ body, html {
   <md-toolbar class="md-theme-indigo" >
           <h1 class="md-toolbar-tools">Add Project</h1>
         </md-toolbar>
+        
+        
               <form name="forms.projectsForm" id="myProject" style="margin-left:10px" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
      
      
@@ -862,6 +888,150 @@ body, html {
      
            
            
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+  <md-sidenav md-component-id = "update_task" class = "md-sidenav-right" style="width:600px;position:fixed">
+  
+  <md-toolbar class="md-theme-indigo">
+          <h1 class="md-toolbar-tools">Update Task</h1>
+        </md-toolbar>
+              <form name="update_task" id="myTask" style="margin-left:10px">
+      
+          <md-input-container class="md-block">
+        <label for="task_title" class="active">{{M.TASKS_FIELD_TASK_TITLE}}</label>
+        <input id="task_title" name="task_title" type="text" class="validate" ng-model="update_data.get_title" required >
+        <div ng-messages="update_task.task_title.$error" ng-show="update_task.task_title.$dirty">
+          <div ng-message="required">{{M.REQUIRED}}</div>
+        </div>
+      </md-input-container>
+      
+      <md-input-container class="md-block">
+        <label for="task_details" class="active">{{M.TASKS_FIELD_TASK_DETAILS}}</label>
+        <input name="task_details" type="text" class="validate" ng-model="update_data.get_task_details" required >
+        <div ng-messages="update_task.task_details.$error" ng-show="update_task.task_details.$dirty">
+          <div ng-message="required">{{M.REQUIRED}}</div>
+        </div>
+      </md-input-container>
+      
+      <div ng-show="blocked_value">
+      <md-input-container  class="md-block" >
+          <label for="task_list" class="active">Task List:</label>
+          <md-select ng-model="update_data.task_list"  name="task_list" class="validate">
+          
+          <md-option ng-repeat="cdata in Releases"  ng-value="cdata.id" >
+          {{cdata.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      </div>
+      <md-input-container  class="md-block">
+          <label for="assignee_id" class="active">In-Charge</label>
+          <md-select ng-model="update_data.get_reporter_id" id="clients_id" name="assignee_id" class="validate" required>
+          <md-option><em>None</em></md-option>
+          <md-option ng-repeat="cdata1 in inCharges1 track by cdata1.id"   ng-value="cdata1.id"  >	<!--ng-repeat="cdata1 in inCharges1"-->
+        																							<!--ng-selected = "update_data.get_reporter_display_name == true "-->
+          {{cdata1.username}}	<!--get_reporter_display_name-->
+          </md-option>
+        </md-select>
+      </md-input-container>
+      
+       <md-input-container  class="md-block">
+          <label for="reporter_id" class="active">Reporter:</label>
+          <md-select ng-model="update_data.get_assignee_id" id="reporter_id" name="reporter_id" class="validate" required>
+          <md-option><em>None</em></md-option>
+          <md-option ng-repeat="user1 in Users1  track by user1.id"   ng-value="user1.id" >	<!--ng-repeat="user in Users"-->
+          {{user1.display_name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      
+      
+      <md-input-container class="md-block">
+           <label for="estimated_start_date" class="active">{{M.MILESTONES_FIELD_ESTIMATEDSTARTDATE}}:</label>
+           <md-datepicker  ng-model="update_data.get_start_date" ng-change="newestimatedStartDate(data.single.estimated_start_date)" id="estimated_start_date" name="estimated_start_date" class="validate"  md-open-on-focus ></md-datepicker>
+           <div ng-messages="update_task.estimated_start_date.$error" ng-show="update_task.estimated_start_date.$dirty">
+            <div ng-message="required">{{M.REQUIRED}}</div>
+          </div>
+        </md-input-container>
+        
+        
+        
+        <md-input-container class="md-block">
+         <label for="estimated_end_date" class="active">{{M.MILESTONES_FIELD_ESTIMATEDENDDATE}}:</label>
+         <md-datepicker ng-model="update_data.get_end_date" ng-change="newestimatedEndDate(data.single.estimated_end_date)" id="estimated_end_date" name="estimated_end_date" class="validate" ></md-datepicker>
+         <div ng-messages="update_task.estimated_end_date.$error" ng-show="update_task.estimated_end_date.$dirty">
+          <div ng-message="required">{{M.REQUIRED}}</div>
+        </div>
+      </md-input-container>
+    
+     
+      <md-input-container  class="md-block">
+        <label for="status_value" class="active">{{M.TASKS_FIELD_TASK_PRIORITY}}:</label>
+        <md-select ng-model="update_data.get_priority"  name="priority" class="validate" required>
+          <md-option   ng-value="update_data.get_priority" >	<!--ng-repeat="priority in Priority"-->
+          {{update_data.get_priority}}
+          </md-option>
+        </md-select>
+      
+    <div ng-messages="milestone.status_value.$error" ng-show="milestone.status_value.$dirty">
+          <div ng-message="required">{{M.REQUIRED}}</div>
+        </div>
+    </md-input-container>
+    
+    <md-input-container  class="md-block">
+          <label for="status_value" class="active">{{M.TASKS_FIELD_STATUS}}:</label>
+          <md-select ng-model="update_data.get_task_status" id="clients_id" name="status" class="validate" required>
+          
+          <md-option><em>None</em>General</md-option>
+          <md-option ng-repeat="status in Task_Status"  ng-value="status.value" >
+          {{status.value}}
+          </md-option>
+          
+        </md-select>
+        <div ng-messages="task.status_value.$error" ng-show="task.status_value.$dirty">
+          <div ng-message="required">{{M.REQUIRED}}</div>
+        </div>
+      </md-input-container>
+    
+    
+    
+    
+    <md-dialog-actions layout="row">
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "save_updated_task(update_data)"
+                  ng-disabled="update_task.$invalid">
+                 Update 
+         </md-button>
+       <md-button  class = "md-primary md-raised"  ng-click = "closeTask1()">
+                 Cancel 
+         </md-button>
+      </md-dialog-actions>
+           
+        </form>
+           </md-sidenav>
+ 
            
            
     
