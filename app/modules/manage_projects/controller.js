@@ -113,8 +113,12 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
        
        //update projects
        $scope.updateProject = function(id){
-        $mdSidenav('updateProject').toggle();
-         console.log("Update id"+id);
+        $mdSidenav('updateProject').open();
+    /*     $scope.closeUpdateSlieder = function(){
+          $mdSidenav('updateProject').close();
+          document.getElementById('update_form_id').reset(); */
+        //}
+         //console.log("Update id"+id);
          $http({
           method : 'GET',
           url : H.SETTINGS.baseUrl + '/projects/'+id,
@@ -150,6 +154,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
           if(isvalid == 200){
             //alert("Updated");
             $route.reload();
+
           }
           else{
             alert("Something went wrong");
@@ -158,11 +163,8 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
        } 
       }
 
-
-       $scope.closeUpdateSlieder = function(){
-        $mdSidenav('updateProject').close();
-        document.getElementById('update_form_id').reset()
-      }
+     
+       
    
    $scope.delete_data = function(id){
     if (confirm("Are you sure you want to delete?")) {
@@ -207,7 +209,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
 
       $scope.project = response.data;
       //console.log(response);
-    //  $scope.project = response.data;
+    
       });
       }
       else{
@@ -215,14 +217,21 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     }
     
     }
-    
+
+     
+    $http.get(H.SETTINGS.baseUrl+'/employees').then(function(response){
+      $scope.emp_responsible = response.data;
+      
+      //console.log("Employee "+JSON.stringify($scope.emp_responsible));
+    });
     $scope.addMilestone = function(evnt){ 
+      
           var mydata = {
         milestone_name :$rootScope.milestone_name,
       estimated_start_date:$rootScope.estimated_start_date,
           estimated_end_date:$rootScope.estimated_end_date,
           status_value:$rootScope.status_value,  
-        PID : $scope.myproject_Id,
+        eid : $scope.user_id,
       flag:$rootScope.flag
       }
       $http.post(H.SETTINGS.baseUrl+'/milestones',mydata).then(function successCallback(response) {
@@ -320,18 +329,18 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       if(string.localeCompare("undefined") != 0){
         $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID+'&project_lists_id='+$scope.task_value).then(function successCallback(response) {
         $scope.tasks = response.data;
-        console.log($scope.tasks.length)
+        //console.log($scope.tasks.length)
         }, function errorCallback(response) {
-        	console.log("Not added")
+        	//console.log("Not added")
         $scope.project = response.data;
         });
       }
       else{
         $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID).then(function successCallback(response) {
         $scope.tasks = response.data;
-        console.log($scope.tasks.length)
+        //console.log($scope.tasks.length)
         }, function errorCallback(response) {
-        	console.log("Not added")
+        	//console.log("Not added")
         $scope.project = response.data;
         });
       }
@@ -343,7 +352,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     
   $scope.newTaskList = function(evnt) {
         
-        console.log($scope.MID)
+        //console.log($scope.MID)
                $mdDialog.show ({
                   clickOutsideToClose: true,
           
@@ -364,7 +373,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
    
     $scope.show_tasks = true;
       $scope.task_list_id = pl;
-      console.log('MID is '+mile+' task list id is '+pl)
+      //console.log('MID is '+mile+' task list id is '+pl)
       var id = event.target.id;
       
       if($scope.milestone_Id != id ){
@@ -379,7 +388,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
-        console.log($scope.tasks.length)
+        //console.log($scope.tasks.length)
         }, function errorCallback(response) {
         
         $scope.project = response.data;
@@ -390,7 +399,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
-        console.log($scope.tasks.length)
+        //console.log($scope.tasks.length)
         }, function errorCallback(response) {
         
         $scope.project = response.data;
@@ -403,7 +412,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       $scope.show_tasks = false;
     }
     $scope.checked = $scope.milestone_Id;
-    console.log('mid is '+id)
+    //console.log('mid is '+id)
       
       
       
@@ -423,7 +432,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       
       $http.get(H.SETTINGS.baseUrl+'/project_lists?mid='+v).then(function successCallback(response) {
         $scope.Releases = response.data;
-      console.log($scope.Releases)
+      //console.log($scope.Releases)
       $scope.show_tasks = true;
 
       }, function errorCallback(response) {
@@ -433,13 +442,25 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     
       
     }
+
+    //get users(admin) as in-charge in dropdown control
+    
+    $http({
+			method : 'GET',
+			url : H.SETTINGS.baseUrl + '/users?role=admin',
+			header : 'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+      $scope.inCharges = response.data;
+      //console.log("Admin users: "+JSON.stringify($scope.inCharges));
+		});
+
     
     
     var urlClient = H.SETTINGS.baseUrl + '/projects';
       $http.get(urlClient)
           .then(function(r){
               $scope.Clientdata = r.data;
-        
+            //console.log("This is it : "+JSON.stringify($scope.Clientdata));
           },function(e){
             if(e && e.data && e.data.error && e.data.error.status){
               newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
@@ -475,10 +496,59 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       document.getElementById('myMilestone').reset()
     }
     
+
+    //update milestone
+    $scope.update_Milestone = function(id){
+      $mdSidenav('updateMilestone').open();
+      //console.log("Milestone id :"+id);
+
+      $http({
+        method : 'GET',
+        url : H.SETTINGS.baseUrl + '/milestones/'+id,
+        header : 'Content-Type: application/json; charset=UTF-8'
+      }).then(function(response){
+        //console.log("Updated Data"+JSON.stringify(response.data));
+        $rootScope.milestone_name_update = response.data.milestone_name;
+        $rootScope.estimated_start_date_update = response.data.estimated_start_date;
+        $rootScope.estimated_end_date_update = response.data.estimated_end_date;
+        $rootScope.status_value_update = response.data.status_value;
+        $rootScope.flag_update = response.data.flag;
+       }); 
+      
+
+    //to save updated records of milestone
+    $scope.saveMilestone = function(){
+      $http({
+        method : 'put',
+        url : H.SETTINGS.baseUrl+'/milestones/'+id,
+        header : 'Content-Type: application/json; charset=UTF-8',
+        data: {
+          "milestone_name" : $rootScope.milestone_name_update
+          
+        }
+      }).then(function(response){
+        var isvalid = response.status;
+        if(isvalid == 200){
+          alert("Updated");
+          $route.reload();
+
+        }
+        else{
+          alert("Something went wrong");
+        }
+      });
+     } 
+    }
+
+    $scope.closeUpdateMilestone = function(){
+      $mdSidenav('updateMilestone').close();
+      document.getElementById('updateMilestone_form_id').reset();
+    }
+    
     $scope.newTask = function() {
         $rootScope.task_list = $scope.task_list_id;
         $scope.blocked_value = "true";
-        console.log($scope.task_list_id+ " is my value")
+        //console.log($scope.task_list_id+ " is my value")
                $mdSidenav('task').toggle();
             };
       
@@ -490,7 +560,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     
     $scope.closeTask = function(){
       $mdSidenav('task').close();
-      document.getElementById('myTask').reset()
+      document.getElementById('myTask').reset();
     }
     
     $scope.newProject = function() {
@@ -499,7 +569,12 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     
     $scope.closeProject = function(){
       $mdSidenav('project').close();
-      document.getElementById('myProject').reset()
+      document.getElementById('myProject').reset();
+    }
+
+    $scope.closeUpdateSlieder = function(){
+      $mdSidenav('updateProject').close();
+      document.getElementById('update_form_id').reset();
     }
     
 });
