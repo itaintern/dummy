@@ -189,6 +189,7 @@ app.service('M', function($http) {
 		"PROJECTS_FIELD_IS_ACTIVE":"Is Active",
 		"PROJECTS_FIELD_VERSION":"Version",
 		"PROJECTS_FIELD_TYPE":"Type",
+		"PROJECTS_FIELD_IN_CHARGE":"In-charge",
 		
 		"RELEASES_FIELD_RELEASENO":"Release No",
 		"RELEASES_FIELD_VERSIONNO":"Version No",

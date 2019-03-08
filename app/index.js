@@ -1217,6 +1217,7 @@ app.service('M', function($http) {
 		"PROJECTS_FIELD_IS_ACTIVE":"Is Active",
 		"PROJECTS_FIELD_VERSION":"Version",
 		"PROJECTS_FIELD_TYPE":"Type",
+		"PROJECTS_FIELD_IN_CHARGE":"In-charge",
 		
 		"RELEASES_FIELD_RELEASENO":"Release No",
 		"RELEASES_FIELD_VERSIONNO":"Version No",
@@ -2729,7 +2730,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
              version:$rootScope.version,
              type:$rootScope.flag,
       }
-      console.log("data",data)
+      //console.log("data",data)
       $http.post(H.SETTINGS.baseUrl+'/projects',data).then(function successCallback(response) {
         document.getElementById('myProject').reset()
       $mdDialog.show(
@@ -2743,7 +2744,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
         
       );
       
-      $scope.reload = function(){
+      /* $scope.reload = function(){
         var urlClient = H.SETTINGS.baseUrl + '/projects';
         $http.get(urlClient)
           .then(function(r){
@@ -2754,9 +2755,9 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
               newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
             }
           });
-      };
+      }; */
       $scope.reload();
-      var promise = $interval($scope.reload, 2000);
+      var promise = $interval($scope.reload, 1000);
       $interval.cancel(promise);
       }, function errorCallback(response) {
       console.log('project was not added Succesfully')
@@ -2941,6 +2942,71 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
 	};
 	
 	
+      //console.log('project was not added Succesfully')
+      
+      });
+      
+      document.getElementById('myProject').reset();
+      $mdSidenav('project').close();
+      
+    
+     
+       }
+       
+       //update projects
+       $scope.updateProject = function(id){
+        $mdSidenav('updateProject').open();
+    /*     $scope.closeUpdateSlieder = function(){
+          $mdSidenav('updateProject').close();
+          document.getElementById('update_form_id').reset(); */
+        //}
+         //console.log("Update id"+id);
+         $http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl + '/projects/'+id,
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+          //console.log("Updated Data"+JSON.stringify(response.data));
+          $rootScope.project_name_update = response.data.project_name;
+          $rootScope.clients_id_update = response.data.clients_id;
+          $rootScope.project_description_update = response.data.project_description;
+          $rootScope.estimated_start_date_update = response.data.estimated_start_date;
+          $rootScope.estimated_end_date_update = response.data.estimated_end_date;
+          $rootScope.version_update = response.data.version;
+          $rootScope.flag_update = response.data.type;
+         });
+
+       //to save updated records of projects
+        $scope.saveProject = function(){
+        $http({
+          method : 'put',
+          url : H.SETTINGS.baseUrl+'/projects/'+id,
+          header : 'Content-Type: application/json; charset=UTF-8',
+          data: {
+            "project_name" : $rootScope.project_name_update,
+            "clients_id" : $rootScope.clients_id_update,
+            "project_description" : $rootScope.project_description_update,
+            "estimated_start_date" : $rootScope.estimated_start_date_update,
+            "estimated_end_date" : $rootScope.estimated_end_date_update,
+            "version" : $rootScope.version_update,
+            "type" : $rootScope.flag_update,
+          }
+        }).then(function(response){
+          var isvalid = response.status;
+          if(isvalid == 200){
+            //alert("Updated");
+            $route.reload();
+
+          }
+          else{
+            alert("Something went wrong");
+          }
+        });
+       } 
+      }
+
+     
+       
    
    $scope.delete_data = function(id)
    {
@@ -2986,22 +3052,30 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
       }, function errorCallback(response) {
 
       $scope.project = response.data;
-      console.log(response)
-    //  $scope.project = response.data;
+      //console.log(response);
+    
       });
       }
       else{
         $scope.project_Id = 0;        
-    } 
     }
     
+    }
+
+     
+    $http.get(H.SETTINGS.baseUrl+'/employees').then(function(response){
+      $scope.emp_responsible = response.data;
+      
+      //console.log("Employee "+JSON.stringify($scope.emp_responsible));
+    });
     $scope.addMilestone = function(evnt){ 
+      
           var mydata = {
         milestone_name :$rootScope.milestone_name,
       estimated_start_date:$rootScope.estimated_start_date,
           estimated_end_date:$rootScope.estimated_end_date,
           status_value:$rootScope.status_value,  
-        PID : $scope.myproject_Id,
+        eid : $scope.user_id,
       flag:$rootScope.flag
       }
       $http.post(H.SETTINGS.baseUrl+'/milestones',mydata).then(function successCallback(response) {
@@ -3122,7 +3196,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
     
   $scope.newTaskList = function(evnt) {
         
-        console.log($scope.MID)
+        //console.log($scope.MID)
                $mdDialog.show ({
                   clickOutsideToClose: true,
           
@@ -3143,7 +3217,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
    
     $scope.show_tasks = true;
       $scope.task_list_id = pl;
-      console.log('MID is '+mile+' task list id is '+pl)
+      //console.log('MID is '+mile+' task list id is '+pl)
       var id = event.target.id;
       
       if($scope.milestone_Id != id ){
@@ -3158,7 +3232,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
-        console.log($scope.tasks.length)
+        //console.log($scope.tasks.length)
         }, function errorCallback(response) {
         
         $scope.project = response.data;
@@ -3169,7 +3243,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
-        console.log($scope.tasks.length)
+        //console.log($scope.tasks.length)
         }, function errorCallback(response) {
         
         $scope.project = response.data;
@@ -3182,7 +3256,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
       $scope.show_tasks = false;
     }
     $scope.checked = $scope.milestone_Id;
-    console.log('mid is '+id)
+    //console.log('mid is '+id)
       
       
       
@@ -3202,7 +3276,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
       
       $http.get(H.SETTINGS.baseUrl+'/project_lists?mid='+v).then(function successCallback(response) {
         $scope.Releases = response.data;
-      console.log($scope.Releases)
+      //console.log($scope.Releases)
       $scope.show_tasks = true;
 
       }, function errorCallback(response) {
@@ -3212,13 +3286,25 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
     
       
     }
+
+    //get users(admin) as in-charge in dropdown control
+    
+    $http({
+			method : 'GET',
+			url : H.SETTINGS.baseUrl + '/users?role=admin',
+			header : 'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+      $scope.inCharges = response.data;
+      //console.log("Admin users: "+JSON.stringify($scope.inCharges));
+		});
+
     
     //var urlClient = H.SETTINGS.baseUrl + '/projects';
     var urlClient = H.SETTINGS.baseUrl + '/projects/?is_deleted[in]=0';
       $http.get(urlClient)
           .then(function(r){
               $scope.Clientdata = r.data;
-        
+            //console.log("This is it : "+JSON.stringify($scope.Clientdata));
           },function(e){
             if(e && e.data && e.data.error && e.data.error.status){
               newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
@@ -3269,10 +3355,59 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
       document.getElementById('myMilestone').reset()
     }
     
+
+    //update milestone
+    $scope.update_Milestone = function(id){
+      $mdSidenav('updateMilestone').open();
+      //console.log("Milestone id :"+id);
+
+      $http({
+        method : 'GET',
+        url : H.SETTINGS.baseUrl + '/milestones/'+id,
+        header : 'Content-Type: application/json; charset=UTF-8'
+      }).then(function(response){
+        //console.log("Updated Data"+JSON.stringify(response.data));
+        $rootScope.milestone_name_update = response.data.milestone_name;
+        $rootScope.estimated_start_date_update = response.data.estimated_start_date;
+        $rootScope.estimated_end_date_update = response.data.estimated_end_date;
+        $rootScope.status_value_update = response.data.status_value;
+        $rootScope.flag_update = response.data.flag;
+       }); 
+      
+
+    //to save updated records of milestone
+    $scope.saveMilestone = function(){
+      $http({
+        method : 'put',
+        url : H.SETTINGS.baseUrl+'/milestones/'+id,
+        header : 'Content-Type: application/json; charset=UTF-8',
+        data: {
+          "milestone_name" : $rootScope.milestone_name_update
+          
+        }
+      }).then(function(response){
+        var isvalid = response.status;
+        if(isvalid == 200){
+          alert("Updated");
+          $route.reload();
+
+        }
+        else{
+          alert("Something went wrong");
+        }
+      });
+     } 
+    }
+
+    $scope.closeUpdateMilestone = function(){
+      $mdSidenav('updateMilestone').close();
+      document.getElementById('updateMilestone_form_id').reset();
+    }
+    
     $scope.newTask = function() {
         $rootScope.task_list = $scope.task_list_id;
         $scope.blocked_value = "true";
-        console.log($scope.task_list_id+ " is my value")
+        //console.log($scope.task_list_id+ " is my value")
                $mdSidenav('task').toggle();
             };
       
@@ -3284,7 +3419,7 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
     
     $scope.closeTask = function(){
       $mdSidenav('task').close();
-      document.getElementById('myTask').reset()
+      document.getElementById('myTask').reset();
     }
     
     $scope.closeTask1 = function(){
@@ -3298,7 +3433,12 @@ app.controller('manage_projectsControllerExtension', function($scope,$route ,$co
     
     $scope.closeProject = function(){
       $mdSidenav('project').close();
-      document.getElementById('myProject').reset()
+      document.getElementById('myProject').reset();
+    }
+
+    $scope.closeUpdateSlieder = function(){
+      $mdSidenav('updateProject').close();
+      document.getElementById('update_form_id').reset();
     }
     
     
