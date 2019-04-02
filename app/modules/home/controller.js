@@ -71,7 +71,7 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 				background: 'bg-brown',
 				color: 'white-text',
 				action: 'projects',
-				allowedRoles: ['user', 'admin']
+				allowedRoles: ['admin']
 			}
 		},
 		bgColors: [

@@ -19,8 +19,7 @@ function RegisterMenuItems(){
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
         	    	items : [
-        	    		{action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
-        	    		{action: 'projects', icon: '',text: 'Manage Projects (Old)'},
+        	    		{action: 'projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
         	    		{action: 'releases', icon: '',text: 'Manage Release (Old)'},
         	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
         	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
@@ -77,7 +76,8 @@ function RegisterMenuItems(){
         	    {action: 'categories', icon: 'list', color: 'orange', text: 'Categories'},
         	    {action: 'departments', icon: 'view_comfy', color:"", text: 'Departments'},
         	    {action: 'users', icon: 'person', color: 'blue', text: 'Users'},
-        	    {action: 'groups', icon: 'group', color: 'green', text: 'Groups'}
+        	    {action: 'groups', icon: 'group', color: 'green', text: 'Groups'},
+        	    {action: 'profiles', icon: 'account_circle', color: 'bg-orange', text: 'Profiles'}
 	        ],
 	        allowedRoles: ['admin']
         },

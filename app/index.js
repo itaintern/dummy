@@ -954,8 +954,8 @@ function RegisterEasyController(route, headers, controller){
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
         	    	items : [
-        	    		{action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
-        	    		{action: 'projects', icon: '',text: 'Manage Projects (Old)'},
+        	    		{action: 'projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
+        	    		/*{action: 'projects', icon: '',text: 'Manage Projects (Old)'},*/
         	    		{action: 'releases', icon: '',text: 'Manage Release (Old)'},
         	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
         	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
@@ -1012,7 +1012,8 @@ function RegisterEasyController(route, headers, controller){
         	    {action: 'categories', icon: 'list', color: 'orange', text: 'Categories'},
         	    {action: 'departments', icon: 'view_comfy', color:"", text: 'Departments'},
         	    {action: 'users', icon: 'person', color: 'blue', text: 'Users'},
-        	    {action: 'groups', icon: 'group', color: 'green', text: 'Groups'}
+        	    {action: 'groups', icon: 'group', color: 'green', text: 'Groups'},
+        	    {action: 'profiles', icon: 'account_circle', color: 'bg-orange', text: 'Profiles'}
 	        ],
 	        allowedRoles: ['admin']
         },
@@ -1042,6 +1043,13 @@ app.service('M', function($http) {
 		"INVALID_EMAIL": "Invalid email!",
 		"UNAUTHORIZED_AREA": "You are not authorized to access this area!",
 		"NA": "N/A",
+		"VALIDATE_ALPHANUMERIC" : "Special characters are not allowed!(Except - _ , . /)",
+		"VALIDATE_NUMERIC" : "Only numbers are allowed!",
+		"VALIDATE_CONTACT" : "Invalid phone number",
+		"VALIDATE_ALPHABETS" : "Only alphabets are allowed!",
+		"VAIDATE_ZIPCODE" : "Invalid zipcode",
+		"ERR_END_DATE" : 'End date should be greater than start date.',
+		"ERR_START_DATE" : 'Start date should be greater than today date.',
 		
 		"DELETE_TITLE": "Item Delete!",
 		"DELETE_MESSAGE" : "Are you sure you want delete the item?",
@@ -1191,6 +1199,7 @@ app.service('M', function($http) {
 		"COURSE_MODULES_FIELD_MODULEID":"Module",
 		"COURSE_MODULES_FIELD_IS_ACTIVE":"Is Active",
 		
+		"DEPARTMENTS_FIELD":"Departments",
 		"DEPARTMENTS_FIELD_TITLE":"Title",
 		"DEPARTMENTS_FIELD_CONTACTNUMBER":"Contact Number",
 		"DEPARTMENTS_FIELD_DESCRIPTION":"Description",
@@ -1200,6 +1209,7 @@ app.service('M', function($http) {
 		"DESIGNATION_FIELD_COMPANY":"Company",
 		"DESIGNATION_FIELD_IS_ACTIVE":"Is Active",
 		
+		"PROJECTS_FIELD":"Projects",
 		"PROJECTS_FIELD_COMPANY":"Company",
 		"PROJECTS_FIELD_PROJECTNAME":"Project Name",
 		"PROJECTS_FIELD_PROJECTDESCRIPTION":"Project Description",
@@ -1363,8 +1373,9 @@ app.service('M', function($http) {
 		"SCHEDULE_QUIZES_FIELD_USERID":"User",
 		"SCHEDULE_QUIZES_FIELD_IS_ACTIVE":"Is Active",
 		
-		"PROFILES_FIELD_USER":"User",
-		"PROFILES_FIELD_EMPLOYEENUMBER":"Employe Number",
+		
+		"PROFILES_FIELD_USER":"Username",
+		"PROFILES_FIELD_EMPLOYEENUMBER":"Employee Number",
 		"PROFILES_FIELD_FIRSTNAME":"First Name",
 		"PROFILES_FIELD_LASTNAME":"Last Name",
 		"PROFILES_FIELD_DISPLAYNAME":"Display Name",
@@ -1388,6 +1399,8 @@ app.service('M', function($http) {
 		"PROFILES_FIELD_ISPRIMARY":"Is Primary",
 		"PROFILES_FIELD_PROFILEPICTURE":"Profile Picture",
 		"PROFILES_FIELD_IS_ACTIVE":"Is Active",
+		"PROFILES_FIELD":"Profiles",
+		"PROFILES_FIELD_STATUS" : "Status",
 		
 		"ALERTS_FIELD_MODULES_ID":"Modules",
 		"ALERTS_TO_EMAIL":"To Email",
@@ -1411,8 +1424,7 @@ app.service('M', function($http) {
             //////////////////////////////////////////////////////////////////////////////
             {route: 'companies', template: 'auth/companies', controller: 'companies'},
             
-             {route: 'manage_projects', template: 'auth/manage_projects', controller: 'manage_projects'},
-            
+            {route: 'projects', template: 'manage_projects/list', controller: 'manage_projects'},
             {route: 'company_holidays', template: 'auth/company_holidays', controller: 'company_holidays'},
             {route: 'company_modules', template: 'auth/company_modules', controller: 'company_modules'},
             {route: 'add_questions', template: 'auth/add_questions', controller: 'add_questions'},
@@ -1420,9 +1432,9 @@ app.service('M', function($http) {
             {route: 'assign_projects', template: 'auth/assign_projects', controller: 'assign_projects'},
             {route: 'clients', template: 'auth/clients', controller: 'clients'},
             {route: 'course_modules', template: 'auth/course_modules', controller: 'course_modules'},
-            {route: 'departments', template: 'auth/departments', controller: 'departments'},
+            {route: 'departments', template: 'departments/single', controller: 'departments'},
             {route: 'designations', template: 'auth/designations', controller: 'designations'},
-            {route: 'projects', template: 'auth/projects', controller: 'projects'},
+            /*{route: 'projects', template: 'auth/projects', controller: 'projects'},*/
             {route: 'releases', template: 'auth/releases', controller: 'releases'},
             {route: 'test_cases', template: 'auth/test_cases', controller: 'test_cases'},
             {route: 'test_plans', template: 'auth/test_plans', controller: 'test_plans'},
@@ -1431,6 +1443,7 @@ app.service('M', function($http) {
             {route: 'documents', template: 'auth/documents', controller: 'documents'},
             {route: 'employees', template: 'auth/employees', controller: 'employees'},
             {route: 'question_banks', template: 'auth/question_banks', controller: 'question_banks'},
+            {route: 'profiles', template: 'profiles/single', controller: 'profiles'},
             {route: 'leave_requests', template: 'auth/leave_requests', controller: 'leave_requests'},
             {route: 'modules', template: 'auth/modules', controller: 'modules'},
             {route: 'manage_courses', template: 'auth/manage_courses', controller: 'manage_courses'},
@@ -1440,14 +1453,16 @@ app.service('M', function($http) {
             {route: 'schedule_quizes', template: 'auth/schedule_quizes', controller: 'schedule_quizes'},
             {route: 'search', template: 'auth/search', controller: 'search'},
             {route: 'reports', template: 'auth/reports', controller: 'reports'},
-            {route: 'alerts', template: 'auth/alerts', controller: 'alerts'}
+            {route: 'tasks', template: 'tasks/list', controller: 'tasks'},
+            {route: 'alerts', template: 'auth/alerts', controller: 'alerts'},
+            {route: 'users', template: 'users/list-item', controller: 'users'}
         ],
-        easyRoutes: ['organizations', 'users', 'groups', 'categories', 'tasks',
-        			'profiles', 'departments','projects','companies','company_holidays','company_modules',
+        easyRoutes: ['organizations', 'groups', 'categories',
+        			'companies','company_holidays','company_modules',
         			'add_questions','appreciations','assign_projects','clients','course_modules','designations','releases',
         			'test_cases','test_plans','test_executions','user_stories','documents','employees','question_banks',
         			'leave_requests','modules','manage_courses','manage_batches','question_sets','manage_quizes',
-        			'schedule_quizes','search','reports','alerts','members','manage_projects']
+        			'schedule_quizes','search','reports','alerts','members']
     };
 }/*global app*/
 app.service('S', function($http) {
@@ -1943,6 +1958,8 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		//$scope.loading = true;
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
 			.then(function(r){
+				var get_email = $scope.email;
+				sessionStorage.setItem("login_email",get_email);
 				$scope.error = "";
 				if(!r.data.token){
 					$scope.error = M.E500;
@@ -2239,26 +2256,143 @@ app.controller('company_holidaysControllerExtension', function($scope, $controll
     	// 	return query;
     	// };
 });/*global angular, app*/
-app.controller('departmentsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
-    $rootScope.hideButton = false;
-    var url = H.SETTINGS.baseUrl + '/companies';
-    	$http.get(url)
-        	.then(function(r){
-            	$scope.companyname = r.data;
-        	},function(e){
-        		if(e && e.data && e.data.error && e.data.error.status){
-        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-        		}
-        	});
+app.controller('departmentsController', function(M, $scope, $controller, $rootScope, $http, $location, $mdSidenav, $mdDialog, H, $route) {
+$scope.H = H;
+$scope.M = H.M;
+var vm = this;
+	//getting data of companies  
+  	var urlCompany = H.SETTINGS.baseUrl + '/organization_profile?is_deleted=0';
+    	$http.get(urlCompany)
+        	.then(function(response){
+                $scope.company_data = response.data;
+            });
+    //getting data of departments
+    var urlDepartment = H.SETTINGS.baseUrl + '/departments?is_deleted=0';
+    	$http.get(urlDepartment)
+        	.then(function(response){
+                $scope.department_data = response.data;
+                //console.log($scope.department_data);
+            });
+	//Inserting data in department table
+	
+
+	$scope.insert_department = function(){
+		$http.post(H.SETTINGS.baseUrl + '/departments',$scope.model)
+        	.then(function successCallback(response){
+        		$scope.close_add_department();				
+                                $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Department')
+                                    .textContent('Department was added Succesfully!')
+                                    .ariaLabel('Department')
+                                    .ok('OK')
+                                  );
+                                  $route.reload();
+                            },function errorCallback(response){    
+                            });
+		
+	}
+	
+	//Updating data in department table
+	$scope.get_departmentData = function(id){
+    	$scope.open_update_department();
+    	$http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl + '/departments/'+id,
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+        	$scope.model = response.data;
+        	
+        });
     
-    $scope.removeListHeaders = function(){
-		return ['is_deleted'];
+    //Saving modified data of update slider
+     $scope.save_departmentData = function(model){
+                    
+                        $http.put(H.SETTINGS.baseUrl+'/departments/'+id,model)
+                            .then(function successCallback(response){
+                            	$scope.close_update_department(); 
+                                $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Department')
+                                    .textContent('Department was Updated Succesfully!')
+                                    .ariaLabel('Department')
+                                    .ok('OK')
+                                  );
+                                    if(response.status == 200){  
+                                	$route.reload();
+                                }  
+                            },function errorCallback(response){
+                                $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Department')
+                                    .textContent('Department was Not Updated.')
+                                    .ariaLabel('Department')
+                                    .ok('OK')
+                                  );
+                            });
+                            
+                    };
+    };
+    
+    //Deleting data from department
+    $scope.delete_department = function(id){
+    	
+    	$http.put(H.SETTINGS.baseUrl+'/departments/', {'id': id,"is_deleted":"1"})
+    	.then(function successCallback(response){
+    		 $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Department')
+                                    .textContent('Department was Deleted Succesfully!')
+                                    .ariaLabel('Department')
+                                    .ok('OK')
+                                  );
+                                  $route.reload();                      
+    	});
+    };
+
+    $scope.open_add_department = function(){
+    	document.getElementById('form_add_department').reset();
+		$mdSidenav('component_add_deparment').open();
     }
+    
+	$scope.close_add_department = function(){
+		$mdSidenav('component_add_deparment').close();
+		$scope.model ={};
+		$route.reload();
+	}
+	$scope.open_update_department = function(){
+    	document.getElementById('form_update_department').reset();
+		$mdSidenav('component_update_deparment').open();
+    }
+    
+	$scope.close_update_department = function(){
+		$mdSidenav('component_update_deparment').close();
+		$scope.model ={};
+		$route.reload();
+	}
     	
     // $scope.onLoadAll = function(obj){
     // 	$scope.setListHeaders(['Title','Contact Number','Description','Companies','Status']);
     // };
     
+});app.service('get_apiService', function() {
+	
+  this.myFunc = function () {
+  	var urlDepartment = H.SETTINGS.baseUrl + '/organization_profile';
+    	$http.get(urlDepartment)
+        	.then(function(response){
+                var department_data = response.data;    
+            });
+    return department_data;
+  }
 });/*global angular, app, $*/
 app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, $mdDialog, H, M) {
     if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
@@ -2482,7 +2616,7 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 				background: 'bg-brown',
 				color: 'white-text',
 				action: 'projects',
-				allowedRoles: ['user', 'admin']
+				allowedRoles: ['admin']
 			}
 		},
 		bgColors: [
@@ -2674,16 +2808,54 @@ app.controller("load_milestonesCtrl", function ($scope) {
     $scope.msg = "Data has been added!!";
 });
 
-app.controller('manage_projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route) {
-  
+app.controller('manage_projectsController', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route) {
+  $scope.H = H;
+  $scope.M = H.M;
   $rootScope.hideButton = true;
    $scope.removeListHeaders = function(){
       return ['is_deleted']
     }
-  
-  $scope.selectedIndex = -1;
+	$scope.open_add_project = function(){
+    	$scope.model = {};
+		$mdSidenav('component_add_project').open();
+    }
+    $scope.close_add_project = function(){
+    	
+		$mdSidenav('component_add_project').close();
+		$scope.model = {};
+		$route.reload();
+    }
+    $scope.open_update_project = function(){
+		$mdSidenav('component_update_project').open();
+    }
+    $scope.close_update_project = function(){
+		$mdSidenav('component_update_project').close();
+		$scope.model = {};
+		$route.reload();
+    }
+    
+    $scope.movie = {}
+        $scope.projects = []
+
+        $scope.maxSize = 8
+
+        $scope.query = {
+            page: 1,
+            pageSize: 8
+        }
+    
+    
+    
+        $http.get(H.SETTINGS.baseUrl+'/projects?is_deleted=0&count=true')
+        .then(function (response) {
+        $scope.counttt =  response.data[0].count
+       
+        });
+
+      $scope.selectedIndex = -1;
   
   //Milestone status
+  $scope.update_data = {};
   $scope.Status = [
   {value:"Released"},
   {value:"Un-released"},
@@ -2717,143 +2889,100 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
   $scope.show_milestones = false;
   $scope.row_data = false;
        
+       //Add project slider
        
-       $scope.insert = function(){
-        var data={};
-        data = {
-               clients_id:$rootScope.clients_id,
-             project_name: $rootScope.project_name,
-             project_description:$rootScope.project_description,
-             estimated_start_date:$rootScope.estimated_start_date,
-             estimated_end_date:$rootScope.estimated_end_date,
-             version:$rootScope.version,
-             type:$rootScope.flag,
-         
-
-      }
-      //console.log("data",data)
-      $http.post(H.SETTINGS.baseUrl+'/projects',data).then(function successCallback(response) {
-        document.getElementById('myProject').reset()
-      $mdDialog.show(
+       $scope.insert = function(model){
+    	$http.post(H.SETTINGS.baseUrl+'/projects',model).then(function successCallback(response) {
+    	$scope.close_add_project();  
+    	$mdDialog.show(
         $mdDialog.alert()
         .parent(angular.element(document.querySelector('#popupContainer')))
         .clickOutsideToClose(true)
-        .title('Project Adding')
+        .title('Project')
         .textContent('Project was added Succesfully!')
-        .ariaLabel('Project Adding')
-        .ok('OK')
-        
-      );
+        .ariaLabel('Project')
+        .ok('OK'));
       
-      /* $scope.reload = function(){
-        var urlClient = H.SETTINGS.baseUrl + '/projects';
-        $http.get(urlClient)
-          .then(function(r){
-            $scope.Clientdata = r.data;
-            
-          },function(e){
-            if(e && e.data && e.data.error && e.data.error.status){
-              newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-            }
-          });
-      }; */
-      $scope.reload();
-      var promise = $interval($scope.reload, 1000);
-      $interval.cancel(promise);
+    	$route.reload();
+   
       }, function errorCallback(response) {
-      //console.log('project was not added Succesfully')
-      
+    	$mdDialog.show(
+        $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('Project')
+        .textContent('Project was not added Succesfully!')
+        .ariaLabel('Project')
+        .ok('OK'))
       });
-      
-      document.getElementById('myProject').reset();
-      $mdSidenav('project').close();
-      
-    
-     
+       
        }
        
        //update projects
        $scope.updateProject = function(id){
-        $mdSidenav('updateProject').open();
-    /*     $scope.closeUpdateSlieder = function(){
-          $mdSidenav('updateProject').close();
-          document.getElementById('update_form_id').reset(); */
-        //}
-         //console.log("Update id"+id);
          $http({
           method : 'GET',
           url : H.SETTINGS.baseUrl + '/projects/'+id,
           header : 'Content-Type: application/json; charset=UTF-8'
         }).then(function(response){
-          //console.log("Updated Data"+JSON.stringify(response.data));
-          $rootScope.project_name_update = response.data.project_name;
-          $rootScope.clients_id_update = response.data.clients_id;
-          $rootScope.project_description_update = response.data.project_description;
-          $rootScope.estimated_start_date_update = response.data.estimated_start_date;
-          $rootScope.estimated_end_date_update = response.data.estimated_end_date;
-          $rootScope.version_update = response.data.version;
-          $rootScope.flag_update = response.data.type;
+          
+			$scope.model = response.data;
          });
-
+		$scope.open_update_project();
        //to save updated records of projects
-        $scope.saveProject = function(){
-        $http({
-          method : 'put',
-          url : H.SETTINGS.baseUrl+'/projects/'+id,
-          header : 'Content-Type: application/json; charset=UTF-8',
-          data: {
-            "project_name" : $rootScope.project_name_update,
-            "clients_id" : $rootScope.clients_id_update,
-            "project_description" : $rootScope.project_description_update,
-            "estimated_start_date" : $rootScope.estimated_start_date_update,
-            "estimated_end_date" : $rootScope.estimated_end_date_update,
-            "version" : $rootScope.version_update,
-            "type" : $rootScope.flag_update,
-          }
-        }).then(function(response){
+        $scope.saveProject = function(model){
+		$scope.close_update_project();	
+        $http.put(H.SETTINGS.baseUrl+'/projects/'+id,model).then(function(response){
           var isvalid = response.status;
-          if(isvalid == 200){
-            //alert("Updated");
+        	$mdDialog.show(
+        	$mdDialog.alert()
+        	.parent(angular.element(document.querySelector('#popupContainer')))
+        	.clickOutsideToClose(true)
+	        .title('Project')
+    	    .textContent('Project was updated succesfully!')
+        	.ariaLabel('Project')
+        	.ok('OK'));
+          if(isvalid == 200){	
             $route.reload();
-
           }
-          else{
-            alert("Something went wrong");
-          }
-        });
+        },function errorCallback(response){
+			$mdDialog.show(
+			$mdDialog.alert()
+			.parent(angular.element(document.querySelector('#popupContainer')))
+			.clickOutsideToClose(true)
+			.title('Project')
+			.textContent('Project was not updated.')
+			.ariaLabel('Project')
+			.ok('OK'));
+		});
        } 
       }
-
-     
-       
-   
-   $scope.delete_data = function(id){
-    if (confirm("Are you sure you want to delete?")) {
-            $http.delete(H.SETTINGS.baseUrl+"/tasks/"+ id, {
-                    'id': id
-                })
-                .then(function success(data) {
-                   
-                   //Below line displays all the tasks of selected milestone. It doesn't handle the task list
-                    $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID).then(function successCallback(response) {
-
-                      $scope.tasks = response.data;
-                      
-                      }, function errorCallback(response) {});
-          
-                }, function error(){});
-        } 
-    else {
-            return false;
-        }
-   }
+      
+      $scope.delete_data = function(id)
+      {
+         
+               /*$http.put(H.SETTINGS.baseUrl+"/tasks/"+ id, {*/
+                   $http.put(H.SETTINGS.baseUrl+'/tasks/', {'id': id,"is_deleted":"1"})
+                   .then(function success(data) {
+    
+                      //Below line displays all the tasks of selected milestone. It doesn't handle the task list
+    
+                           
+                           $http.get(H.SETTINGS.baseUrl+'/tasks?is_deleted=0&MID='+$scope.MID).then(function successCallback(response) {
+    
+                         $scope.tasks = response.data;
+    
+                         }, function errorCallback(response) {});
+    
+                   }, function error(){});
+      }
         
     $scope.show_tasks = false;
     $scope.show_milestones = false;
   
     $scope.getDetails = function(v){
-    //console.log("india "+v)
-      
+    
+      $scope.milestones = null;
       $scope.show_tasks = false;
       $scope.row_data = false;
       var id = event.target.id;
@@ -2861,15 +2990,12 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       if($scope.project_Id != id ){
         $scope.project_Id = id;
         
-      $http.get(H.SETTINGS.baseUrl+'/milestones?PID='+id).then(function successCallback(response) {
+      $http.get(H.SETTINGS.baseUrl+'/milestones?pid='+id+'&is_deleted=0').then(function successCallback(response) {
         $scope.milestones = response.data;
-        
-      //console.log($scope.milestones[0].id);
-      //  $scope.getReleases($scope.milestones[0].id);
       }, function errorCallback(response) {
 
       $scope.project = response.data;
-      //console.log(response);
+     
     
       });
       }
@@ -2883,7 +3009,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     $http.get(H.SETTINGS.baseUrl+'/employees').then(function(response){
       $scope.emp_responsible = response.data;
       
-      //console.log("Employee "+JSON.stringify($scope.emp_responsible));
+      
     });
     $scope.addMilestone = function(evnt){ 
       
@@ -2892,11 +3018,12 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       estimated_start_date:$rootScope.estimated_start_date,
           estimated_end_date:$rootScope.estimated_end_date,
           status_value:$rootScope.status_value,  
-        eid : $scope.user_id,
+        profile_id : $scope.emp_milestone_id,
+        pid : $scope.myproject_Id,
       flag:$rootScope.flag
       }
       $http.post(H.SETTINGS.baseUrl+'/milestones',mydata).then(function successCallback(response) {
-      $http.get(H.SETTINGS.baseUrl+'/milestones?PID='+$scope.myproject_Id).then(function successCallback(response) {
+      $http.get(H.SETTINGS.baseUrl+'/milestones?pid='+$scope.myproject_Id).then(function successCallback(response) {
                 $scope.milestones = response.data;
                  }, function errorCallback(response) {});
       var tabs = $scope.milestones;
@@ -2911,7 +3038,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         .textContent('Milestone added Succesfully!')
         .ariaLabel('New Milestone')
         .ok('OK')
-            .openFrom({
+          .openFrom({
           top: -50,
           width: 30,
           height: 80
@@ -2926,13 +3053,39 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       
       
       }, function errorCallback(response) {
-      console.log('Milestone was not added Succesfully')
+     
       
       });
     $mdSidenav('milestone').close();
     }
   
+    //deleting projects
+    $scope.delete_data1 = function(id1){
+      $http({
+      method : 'PUT',
+      url : H.SETTINGS.baseUrl+'/projects',
+      data : {
+        "id" : id1,
+        "is_deleted" : "1"
+        },
+      header : 'Content-Type: application/json; charset=UTF-8'
+    }).then(function(response){
+      var isdelete = response.status;
+      if(isdelete == 200)
+      {
+        
+        
+        $route.reload();
+      }
+      else
+      {
+        
+      }
+    });
+};
+
   $scope.addTaskList = function(evnt){
+
           var data = {
         pid:$scope.myproject_Id,
       name:$rootScope.task_list,
@@ -2954,21 +3107,42 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       }, function errorCallback(response) {}
       );
     }
-    
+
+    $http({
+      method : 'GET',
+      url : H.SETTINGS.baseUrl + '/employees',
+      header : 'Content-Type: application/json; charset=UTF-8'
+  }).then(function(response){
+  $scope.incharges2 = response.data;
+  });
+
+  $http({
+      method : 'GET',
+      url : H.SETTINGS.baseUrl + '/employees',
+      header : 'Content-Type: application/json; charset=UTF-8'
+  }).then(function(response){
+$scope.reporters2 = response.data;
+  });
+
     $scope.addTask = function(evnt){
+      
       var tl = $rootScope.task_list;
+      
     if(tl == null){
       $rootScope.task_list = 0;
     }
         var data={};
        data={
-        title:$rootScope.task_title,
-        assignee_id: $rootScope.assignee_id,
-        reporter_id : $rootScope.reporter_id,
-        project_lists_id: $rootScope.task_list,
-        task_details:$rootScope.task_details,
-        status:$rootScope.status,
-        priority:$rootScope.priority,
+        title:evnt.task_title,
+        assignee_id: evnt.assignee_id,
+        reporter_id : evnt.reporter_id,
+        project_lists_id: evnt.task_list,
+        task_details:evnt.task_details,
+        task_status:evnt.task_status,
+        start_date:evnt.estimated_start_date,
+        end_date:evnt.estimated_end_date,
+        
+        priority:evnt.priority,
         MID:$scope.MID,
       }
       $http.post(H.SETTINGS.baseUrl+'/tasks',data).then(function successCallback(response) {
@@ -2981,27 +3155,27 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         .textContent('Task was added Succesfully!')
         .ariaLabel('New Task')
         .ok('OK')
-        
+ 
       );
-
+ 
       //Automatically display the recently added task
 
       var string = ""+$scope.task_value;
       if(string.localeCompare("undefined") != 0){
         $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID+'&project_lists_id='+$scope.task_value).then(function successCallback(response) {
         $scope.tasks = response.data;
-        //console.log($scope.tasks.length)
+        
         }, function errorCallback(response) {
-        	//console.log("Not added")
+        	
         $scope.project = response.data;
         });
       }
       else{
         $http.get(H.SETTINGS.baseUrl+'/tasks?MID='+$scope.MID).then(function successCallback(response) {
         $scope.tasks = response.data;
-        //console.log($scope.tasks.length)
+        
         }, function errorCallback(response) {
-        	//console.log("Not added")
+        	
         $scope.project = response.data;
         });
       }
@@ -3010,10 +3184,107 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       
       $mdSidenav('task').close();
     }
+
+    //update task
+          
+    $scope.updateTask = function(update_id){
+      $mdSidenav('update_task').open();
+          $http({
+            method:"GET",
+            url:H.SETTINGS.baseUrl + '/tasks?id='+update_id+'',
+            header : 'Content-Type: application/json; charset=UTF-8'
+          }).then(function(response){
+  
+            var data1 = response.data[0];
+           
+            
+            
+            $scope.update_data.get_title = data1.title;
+            $scope.update_data.get_task_details = data1.task_details;
+            
+            $scope.update_data.get_priority = data1.priority;
+            $scope.update_data.get_task_status = data1.task_status;
+            $scope.update_data.get_in_charge = data1.display_name;
+            
+            $scope.update_data.get_reporter_id = response.data[0].reporter.id;
+            $scope.update_data.get_reporter_display_name = response.data[0].reporter.display_name;
+            
+            $scope.update_data.get_assignee_id = response.data[0].assignee.id;
+            
+            $scope.update_data.get_assignee_display_name = response.data[0].assignee.display_name;
+            $scope.update_data.get_start_date = data1.start_date;	
+            $scope.update_data.get_end_date = data1.end_date;
+            
+            $scope.update_data.get_mi_id = response.data[0].MID.id;
+            $scope.update_data.get_milestone_name = response.data[0].MID.milestone_name;
+            
+          });  
+          
+         $scope.save_updated_task = function(insert_data)
+         {
+         
+         $http({
+        method:"PUT",
+          url:H.SETTINGS.baseUrl+'/tasks/'+update_id+'', 
+          data:
+          {
+            "title":insert_data.get_title,
+            "task_details":insert_data.get_task_details,
+            "reporter_id":insert_data.get_reporter_id,
+            "assignee_id":insert_data.get_assignee_id,
+            "start_date":insert_data.get_start_date,
+            "end_date":insert_data.get_end_date,
+            "priority":insert_data.get_priority,
+            "task_status":insert_data.get_task_status
+          },
+          header : 'Content-Type: application/json; charset=UTF-8'
+           }).then(function(response){
+          var isdelete = response.status;
+          if(isdelete == 200)
+          {
+           
+            $route.reload();
+          }
+          else
+          {
+         
+          }
+        });
+    };
+    };
+        
+			
+  
+
     
+    //delete milestone
+    $scope.delete_milestone = function(id){
+      $http({
+        method:"PUT",
+        url:H.SETTINGS.baseUrl + '/milestones',
+        data : {
+          "id" : id,
+          "is_deleted" : "1"
+        },
+        header : 'Content-Type: application/json; charset=UTF-8'
+      }).then(function(response){
+        var isdelete = response.status;
+        if(isdelete == 200)
+        {
+         
+          $route.reload();
+        }
+        else
+        {
+         
+        }
+      });
+    };
+  
+  
   $scope.newTaskList = function(evnt) {
         
-        //console.log($scope.MID)
+        
                $mdDialog.show ({
                   clickOutsideToClose: true,
           
@@ -3034,7 +3305,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
    
     $scope.show_tasks = true;
       $scope.task_list_id = pl;
-      //console.log('MID is '+mile+' task list id is '+pl)
+      
       var id = event.target.id;
       
       if($scope.milestone_Id != id ){
@@ -3049,7 +3320,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
-        //console.log($scope.tasks.length)
+
         }, function errorCallback(response) {
         
         $scope.project = response.data;
@@ -3060,7 +3331,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         $scope.tasks = response.data;
         $scope.show_tasks = true;
 
-        //console.log($scope.tasks.length)
+        
         }, function errorCallback(response) {
         
         $scope.project = response.data;
@@ -3073,7 +3344,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       $scope.show_tasks = false;
     }
     $scope.checked = $scope.milestone_Id;
-    //console.log('mid is '+id)
+    
       
       
       
@@ -3086,14 +3357,13 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       $scope.newtask = true;
       
       var id = event.target.id;
-      console.log(v+" is id")
-    
+     
   
       $scope.MID = v;
       
       $http.get(H.SETTINGS.baseUrl+'/project_lists?mid='+v).then(function successCallback(response) {
         $scope.Releases = response.data;
-      //console.log($scope.Releases)
+      
       $scope.show_tasks = true;
 
       }, function errorCallback(response) {
@@ -3104,24 +3374,23 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       
     }
 
-    //get users(admin) as in-charge in dropdown control
+    //getting data for in-charges in dropdown
     
     $http({
 			method : 'GET',
-			url : H.SETTINGS.baseUrl + '/users?role=admin',
+			url : H.SETTINGS.baseUrl + '/profiles?roles=admin',
 			header : 'Content-Type: application/json; charset=UTF-8'
 		}).then(function(response){
       $scope.inCharges = response.data;
-      //console.log("Admin users: "+JSON.stringify($scope.inCharges));
 		});
 
     
     
-    var urlClient = H.SETTINGS.baseUrl + '/projects';
+    var urlClient = H.SETTINGS.baseUrl + '/projects?is_deleted=0&order=project_name&orderType=asc';
       $http.get(urlClient)
           .then(function(r){
               $scope.Clientdata = r.data;
-            //console.log("This is it : "+JSON.stringify($scope.Clientdata));
+            
           },function(e){
             if(e && e.data && e.data.error && e.data.error.status){
               newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
@@ -3139,15 +3408,27 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
               newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
             }
           });
-    
-    
-       $scope.newestimatedStartDate = function(Date){
-          $scope.data.single.estimated_start_date = H.toMySQLDateTime(Date);
+          
+    //star-end date validation
+    	$scope.minDate = new Date();
+    	$scope.maxDate = new Date();
+    	$scope.maxDate.setDate($scope.minDate.getDate() + 1);
+    	
+      $scope.add_estimated_start_date = function(Date){
+	  $scope.estimated_start_date = H.toMySQLDateTime(Date);
+          
       };
-      $scope.newestimatedEndDate = function(Date){
-          $scope.data.single.estimated_end_date = H.toMySQLDateTime(Date);
+      $scope.add_estimated_end_date = function(Date){
+          $scope.estimated_end_date = H.toMySQLDateTime(Date);
+          
       };
-    
+      
+      $scope.update_estimated_start_date = function(Date){
+          $scope.estimated_start_date_update = H.toMySQLDateTime(Date);
+      };
+      $scope.update_add_estimated_end_date = function(Date){
+          $scope.estimated_end_date_update = H.toMySQLDateTime(Date);
+      };
     $scope.newMilestone = function() {
                $mdSidenav('milestone').toggle();
             };
@@ -3161,21 +3442,23 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     //update milestone
     $scope.update_Milestone = function(id){
       $mdSidenav('updateMilestone').open();
-      //console.log("Milestone id :"+id);
+      
 
       $http({
         method : 'GET',
         url : H.SETTINGS.baseUrl + '/milestones/'+id,
         header : 'Content-Type: application/json; charset=UTF-8'
       }).then(function(response){
-        //console.log("Updated Data"+JSON.stringify(response.data));
+      
         $rootScope.milestone_name_update = response.data.milestone_name;
+        $rootScope.emp_milestone_update = response.data.profile_id;
         $rootScope.estimated_start_date_update = response.data.estimated_start_date;
         $rootScope.estimated_end_date_update = response.data.estimated_end_date;
         $rootScope.status_value_update = response.data.status_value;
         $rootScope.flag_update = response.data.flag;
        }); 
       
+
 
     //to save updated records of milestone
     $scope.saveMilestone = function(){
@@ -3184,18 +3467,20 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
         url : H.SETTINGS.baseUrl+'/milestones/'+id,
         header : 'Content-Type: application/json; charset=UTF-8',
         data: {
-          "milestone_name" : $rootScope.milestone_name_update
-          
+          "milestone_name" : $rootScope.milestone_name_update,
+          "profile_id" : $rootScope.emp_milestone_update,
+          "estimated_start_date" : $rootScope.estimated_start_date_update,
+          "estimated_end_date" : $rootScope.estimated_end_date_update,
+          "status_value" : $rootScope.status_value_update,
+          "flag" : $rootScope.flag_update
         }
       }).then(function(response){
         var isvalid = response.status;
         if(isvalid == 200){
-          alert("Updated");
           $route.reload();
-
         }
         else{
-          alert("Something went wrong");
+          
         }
       });
      } 
@@ -3209,7 +3494,7 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
     $scope.newTask = function() {
         $rootScope.task_list = $scope.task_list_id;
         $scope.blocked_value = "true";
-        //console.log($scope.task_list_id+ " is my value")
+        
                $mdSidenav('task').toggle();
             };
       
@@ -3223,21 +3508,13 @@ app.controller('manage_projectsControllerExtension', function($scope, $controlle
       $mdSidenav('task').close();
       document.getElementById('myTask').reset();
     }
+ 
     
-    $scope.newProject = function() {
-               $mdSidenav('project').toggle();
-            };
+    $scope.closeTask1 = function(){
+      $mdSidenav('update_task').close();
+      document.getElementById('myTask').reset();
     
-    $scope.closeProject = function(){
-      $mdSidenav('project').close();
-      document.getElementById('myProject').reset();
     }
-
-    $scope.closeUpdateSlieder = function(){
-      $mdSidenav('updateProject').close();
-      document.getElementById('update_form_id').reset();
-    }
-    
 });
 
 /*global angular, app*/
@@ -3404,62 +3681,283 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         $mdDialog.cancel();            
     };
 });/*global angular, app*/
-app.controller('profilesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+
+app.controller('profilesController', function(M, $scope, $controller, $rootScope, $http, $location, $mdSidenav, $mdDialog, H, $route) {
+    $scope.H = H;
+    $scope.M = H.M;
     
-    $scope.removeListHeaders = function(){
-    	return ['users','companies','employee_number','display_name','join_date','leave_date','birth_date','emergency_number',
-    	'secondary_email','address','password','state','country','zipCode','city','is_primary','profile_picture','status','is_deleted']
-	}
-         $rootScope.hideButton = false;
-    var urlCompany = H.SETTINGS.baseUrl + '/companies';
-    	$http.get(urlCompany)
-        	.then(function(r){
-            	$scope.Companydata = r.data;
-        	},function(e){
-        		if(e && e.data && e.data.error && e.data.error.status){
-        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-        		}
-        	});
+    //to display all the profiles data
+    var urlProfile = H.SETTINGS.baseUrl + '/profiles?is_deleted=0';
+    	$http.get(urlProfile)
+        	.then(function(response){
+                $scope.profile_data = response.data;    
+            });
+
+            //converting dates
+            $scope.newjoinDate = function(Date){
+                $scope.data_single_joinDate = H.toMySQLDateTime(Date);
+            };
+                $scope.newleaveDate = function(Date){
+                $scope.data_single_leaveDate = H.toMySQLDateTime(Date);
+            };
+                $scope.newbirthDate = function(Date){
+                $scope.data_single_birthDate = H.toMySQLDateTime(Date);
+            };
+            
+            $scope.newjoinDate_update = function(Date){
+                $scope.data_single_joinDate_update = H.toMySQLDateTime(Date);
+            };
+                $scope.newleaveDate_update = function(Date){
+                $scope.data_single_leaveDate_update = H.toMySQLDateTime(Date);
+            };
+                $scope.newbirthDate_update = function(Date){
+                $scope.data_single_birthDate_update = H.toMySQLDateTime(Date);
+            };
+
+            //geting data of foreign keys in dropdown
+                var urlCompany = H.SETTINGS.baseUrl + '/organization_profile';
+                $http.get(urlCompany)
+                    .then(function(r){
+                        $scope.company_data = r.data;
+                    },function(e){
+                    if(e && e.data && e.data.error && e.data.error.status){
+                        newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+                    }
+                });
     
-    var urlDepartment = H.SETTINGS.baseUrl + '/departments';
-    	$http.get(urlDepartment)
-        	.then(function(r){
-            	$scope.Departmentdata = r.data;
-        	},function(e){
-        		if(e && e.data && e.data.error && e.data.error.status){
-        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-        		}
-        	});
+                var urlDepartment = H.SETTINGS.baseUrl + '/departments';
+                    $http.get(urlDepartment)
+                        .then(function(r){
+                            $scope.Departmentdata = r.data;
+                        },function(e){
+                            if(e && e.data && e.data.error && e.data.error.status){
+                                newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+                            }
+                        });
+                
+              /*  var urlRole = H.SETTINGS.baseUrl + '/roles';
+                    $http.get(urlRole)
+                        .then(function(r){
+                            $scope.Roledata = r.data;
+                        },function(e){
+                            if(e && e.data && e.data.error && e.data.error.status){
+                                newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+                            }
+                        });*/
+                
+                var urlDesignation = H.SETTINGS.baseUrl + '/designations';
+                    $http.get(urlDesignation)
+                        .then(function(r){
+                            $scope.Designationdata = r.data;
+                        },function(e){
+                            if(e && e.data && e.data.error && e.data.error.status){
+                                newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+                            }
+                        });
+
+                    //Inserting data of profiles
+                    $scope.insert_profileData = function(){
+                        var data={};
+                        data = {
+                            display_name : $scope.data_single_displayName,
+                            employee_number : $scope.data_single_employeeNumber,
+                            first_name : $scope.data_single_firstName,
+                            last_name : $scope.data_single_lastName,
+                            join_date : $scope.data_single_joinDate,
+                            leave_date : $scope.data_single_leaveDate,
+                            birth_date : $scope.data_single_birthDate,
+                            departments_id : $scope.data_single_departments_id,
+                            designations_id : $scope.data_single_designations_id,
+                            roles : $scope.data_single_roles_name,
+                            contact_number : $scope.data_single_contactNumber,
+                            emergency_number : $scope.data_single_emergencyNumber,
+                            primary_email : $scope.data_single_primaryEmail,
+                            secondary_email : $scope.data_single_secondaryEmail,
+                            address : $scope.data_single_address,
+                            companies_id : $scope.data_single_companies_id,
+                            password : $scope.data_single_password,
+                            state : $scope.data_single_state,
+                            country : $scope.data_single_country,
+                            zipCode : $scope.data_single_zipCode,
+                            city : $scope.data_single_city,
+                            is_primary : $scope.data_single_isPrimary,
+                            profile_picture : $scope.data_single_profilePicture,
+                            status : $scope.data_single_status
+                    };
+                        $http.post(urlProfile,data)
+                            .then(function successCallback(response){
+                                $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Profile')
+                                    .textContent('Profile was added Succesfully!')
+                                    .ariaLabel('Profile')
+                                    .ok('OK')
+                                  );
+                                  $route.reload();
+                            },function errorCallback(response){
+                                //console.log("Profile not added")
+                            });
+                    }
+	//Adding Primary email id, password, role into users table
+	var urlUser = H.SETTINGS.baseUrl + '/users'
+    $scope.addUser = function(){
+    	var user={};
+                        user = {
+                        	username : $scope.data_single_displayName,
+                            role : $scope.data_single_roles_name,
+                            email : $scope.data_single_primaryEmail,
+                            password : Md5.hashStr($scope.data_single_password),
+                            token : Md5.hashStr(1)
+                        }
+                        $http.post(urlUser,user).then(function successCallback(response){
+                        	console.log("user added in users table")
+                        	
+                        },function errorCallback(response){
+                        	console.log("user not added in users table");
+                        });
+    }
+                    
+    //Getting data of profiles in update slider
+    $scope.get_profileData = function(id){
+    	$mdSidenav('component_update_profile').toggle();
+    	
+    	$http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl + '/profiles/'+id,
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+							$scope.data_single_displayName_update = response.data.display_name;
+                            $scope.data_single_employeeNumber_update = response.data.employee_number;
+                            $scope.data_single_firstName_update = response.data.first_name;
+                            $scope.data_single_lastName_update = response.data.last_name;
+                            $scope.data_single_joinDate_update = response.data.join_date;
+                            $scope.data_single_leaveDate_update = response.data.leave_date;
+                            $scope.data_single_birthDate_update = response.data.birth_date;
+                            $scope.data_single_departments_id_update = response.data.departments_id;
+                            $scope.data_single_designations_id_update = response.data.designations_id;
+                            $scope.data_single_roles_name_update = response.data.roles;
+                            $scope.data_single_contactNumber_update = response.data.contact_number;
+                            $scope.data_single_emergencyNumber_update = response.data.emergency_number;
+                            $scope.data_single_primaryEmail_update = response.data.primary_email;
+                            $scope.data_single_secondaryEmail_update = response.data.secondary_email;
+                            $scope.data_single_address_update = response.data.address;
+                            $scope.data_single_companies_id_update = response.data.companies_id;
+                            $scope.data_single_password_update = response.data.password;
+                            $scope.data_single_state_update = response.data.state;
+                            $scope.data_single_country_update = response.data.country;
+                            $scope.data_single_zipCode_update = response.data.zipCode;
+                            $scope.data_single_city_update = response.data.city;
+                            $scope.data_single_isPrimary_update = response.data.is_primary;
+                            $scope.data_single_profilePicture_update = response.data.profile_picture;
+                            $scope.data_single_status_update = response.data.status;
+                    
+        					});
     
-    var urlRole = H.SETTINGS.baseUrl + '/roles';
-    	$http.get(urlRole)
-        	.then(function(r){
-            	$scope.Roledata = r.data;
-        	},function(e){
-        		if(e && e.data && e.data.error && e.data.error.status){
-        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-        		}
-        	});
     
-    var urlDesignation = H.SETTINGS.baseUrl + '/designations';
-    	$http.get(urlDesignation)
-        	.then(function(r){
-            	$scope.Designationdata = r.data;
-        	},function(e){
-        		if(e && e.data && e.data.error && e.data.error.status){
-        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-        		}
-        	});
     
-       $scope.newjoinDate = function(Date){
-       		$scope.data.single.joinDate = H.toMySQLDateTime(Date);
-    	};
-    	$scope.newleaveDate = function(Date){
-       		$scope.data.single.leaveDate = H.toMySQLDateTime(Date);
-    	};
-    	$scope.newbirthDate = function(Date){
-    		$scope.data.single.birthDate = H.toMySQLDateTime(Date);
-    	};
+    //Saving modified data of update slider
+     $scope.save_profileData = function(){
+     	//console.log(id);
+                        var data1={};
+                        data1 = {
+                            display_name : $scope.data_single_displayName_update,
+                            employee_number : $scope.data_single_employeeNumber_update,
+                            first_name : $scope.data_single_firstName_update,
+                            last_name : $scope.data_single_lastName_update,
+                            join_date : $scope.data_single_joinDate_update,
+                            leave_date : $scope.data_single_leaveDate_update,
+                            birth_date : $scope.data_single_birthDate_update,
+                            departments_id : $scope.data_single_departments_id_update,
+                            designations_id : $scope.data_single_designations_id_update,
+                            roles : $scope.data_single_roles_name_update,
+                            contact_number : $scope.data_single_contactNumber_update,
+                            emergency_number : $scope.data_single_emergencyNumber_update,
+                            primary_email : $scope.data_single_primaryEmail_update,
+                            secondary_email : $scope.data_single_secondaryEmail_update,
+                            address : $scope.data_single_address_update,
+                            companies_id : $scope.data_single_companies_id_update,
+                            password : $scope.data_single_password_update,
+                            state : $scope.data_single_state_update,
+                            country : $scope.data_single_country_update,
+                            zipCode : $scope.data_single_zipCode_update,
+                            city : $scope.data_single_city_update,
+                            is_primary : $scope.data_single_isPrimary_update,
+                            profile_picture : $scope.data_single_profilePicture_update,
+                            status : $scope.data_single_status_update
+                    };
+                        $http.put(H.SETTINGS.baseUrl+'/profiles/'+id,data1)
+                            .then(function successCallback(response){
+                                $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Profile')
+                                    .textContent('Profile was Updated Succesfully!')
+                                    .ariaLabel('Profile')
+                                    .ok('OK')
+                                  );
+                                    
+                                    if(response.status == 200){  
+                                	$route.reload();
+                                }  
+                            },function errorCallback(response){
+                                $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Profile Updating')
+                                    .textContent('Profile was Not Updated.')
+                                    .ariaLabel('Profile Updating')
+                                    .ok('OK')
+                                  );
+                            });
+                            
+                    };
+    };
+    
+    
+    //deliting profile
+    $scope.delete_profile = function(id){
+    	
+    	$http.put(H.SETTINGS.baseUrl+'/profiles/', {'id': id,"is_deleted":"1"})
+    	.then(function successCallback(response){
+    		 $mdDialog.show(
+                                    $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Profile')
+                                    .textContent('Profile was Deleted Succesfully!')
+                                    .ariaLabel('Profile')
+                                    .ok('OK')
+                                  );
+    	});
+    	if(response.status == 200){
+    	$route.reload();
+    	}
+    };
+
+                    //open close sliders
+                    $scope.open_add_profile = function(){
+                    	document.getElementById('form_add_profile').reset();
+                        $mdSidenav('component_add_profile').open();
+                        
+                    }
+                    
+                    $scope.close_add_profile = function(){
+                        $mdSidenav('component_add_profile').close();
+                        document.getElementById('form_add_profile').reset();
+                    }
+                    
+                    $scope.open_update_profile = function(){
+                    	$mdSidenav('component_update_profile').open();
+                    }
+                    
+                    $scope.close_update_profile = function(){
+                    	$mdSidenav('component_update_profile').close();
+                        document.getElementById('form_update_profile').reset();
+                    }
 });/*global angular, app*/
 app.controller('projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
@@ -3594,84 +4092,161 @@ app.controller('settingsController', function($scope, $rootScope, $http, $cookie
 	    single: $rootScope.currentUser.organization
 	};
 
-});/*global app*/
-//The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
-//Example: your API is http://localhost:8080/api/tasks then the name of the controller is tasksControllerExtension.
-//To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' array.
-app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M, R) {
-	     $rootScope.hideButton = false;
-
-	$scope.removeListHeaders = function(){
-    	return ['is_deleted']
-    }
-
-    //This function is called when you need to make changes to the new single object.
-    $scope.onInit = function(obj){
-        //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'tasks' resource that matches the structure of your 'tasks' API.
-    };
-    
-    //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/tasks/1
-    $scope.onLoad = function(obj){
-        //$scope.data.single is available here. 'obj' refers to the same. It represents the object you are trying to edit.
-    };
-    
-    //This function is called when you are in list mode. i.e. before a call has been placed to one of your API that returns a the paginated list of all objects matching your API.
-    $scope.beforeLoadAll = function(query){
-        //This is where you can modify your query parameters.    
-        //query.is_active = 1;
-        //return query;
-    };
-
-    //This function is called when you are in list mode. i.e. after a call has returned from one of your API that returns a the paginated list of all objects matching your API.
-    $scope.onLoadAll = function(obj){
-        //$scope.data.list is available here. 'obj' refers to the same. It represents the object you are trying to edit.
-        
-        //You can call $scope.setListHeaders(['column1','column2',...]) in case the auto generated column names are not what you wish to display.
-        //or You can call $scope.changeListHeaders('current column name', 'new column name') to change the display text of the headers;
-    };
-    
-    //This function is called before the create (POST) request goes to API
-    $scope.beforeSave = function(obj, next){
-        //You can choose not to call next(), thus rejecting the save request. This can be used for extra validations.
-        next();
-    };
-
-    //This function is called after the create (POST) request is returned from API
-    $scope.onSave = function (obj, next){
-        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been created.
-        next();
-    };
-    
-    //This function is called before the update (PUT) request goes to API
-    $scope.beforeUpdate = function(obj, next){
-        //You can choose not to call next(), thus rejecting the update request. This can be used for extra validations.
-        next();
-    };
-
-    //This function is called after the update (PUT) request is returned from API
-    $scope.onUpdate = function (obj, next){
-        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been updated.
-        next();
-    };
-    
-    //This function will be called whenever there is an error during save/update operations.
-    $scope.onError = function (obj, next){
-        //You can choose not to call next(), thus preventing the page to display the popup that confirms there has been an error.
-        next();
-    };
-    
-    // If the singular of your title is having different spelling then you can define it as shown below.
-    // $scope.getSingularTitle = function(){
-    //     return "TASK";
-    // }
-
-    // If you want don't want to display certain columns in the list view you can remove them by defining the function below.
-    // $scope.removeListHeaders = function(){
-    //     return ['is_active'];
-    // }
-
-
 });/*global angular, app*/
+
+app.config(function($routeProvider) {
+    $routeProvider
+
+    .when("/load_milestones", {
+        templateUrl : "/load_milestones.html",
+        controller : "load_milestonesCtrl"
+    });
+});
+app.controller("load_milestonesCtrl", function ($scope) {
+  
+    $scope.msg = "Data has been added!!";
+});
+
+app.controller('tasksController', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route)
+{
+	$scope.getarray = [];
+	
+	$scope.load_all_pro_mile_tasks = function()
+	{
+		var get_data_id;
+		var get_login_email = sessionStorage.getItem("login_email");
+		
+		$http({
+			method:'GET', 
+			url:H.SETTINGS.baseUrl+'/profiles?primary_email='+get_login_email+'',
+			header:'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+			$scope.get_pr = response.data;
+			get_data_id = response.data[0].id;
+			
+		/*console.log("id is:");
+		console.log(get_data_id);*/
+		$http({
+			method:'GET',
+			url:H.SETTINGS.baseUrl+'/tasks?assignee_id='+get_data_id+'',
+			header:'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+			$scope.all_tasks = response.data;
+			var tsk = response.data;
+			/*console.log("tasks are");
+			console.log(tsk);*/
+			if($scope.all_tasks.length>1)
+			{
+				$scope.show_all_tasks = "true";
+			}
+			else{
+				$scope.show_all_tasks = "true";
+			}
+		});
+		
+		$http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl+'/projects?profile_id='+get_data_id+'',
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+        	$scope.all_projects  = response.data;
+        	var prjct = response.data;
+        	//console.log(response.data);
+         });
+		});
+         
+         $http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl+'/milestones',
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+        	$scope.all_milestones  = response.data;
+        	var mlstne = response.data;
+         });
+	};
+	
+	
+	
+	$scope.get_milestone = function(){
+		var get_project_id = $scope.project_dd_id;	
+			$scope.get_milestone_names='';
+		$http({
+			method:'GET',
+			url: H.SETTINGS.baseUrl+'/milestones?pid='+get_project_id+'', 
+		}).then(function(response){
+			$scope.get_milestone_names = response.data;
+			//console.log($scope.get_milestone_names);
+			if($scope.get_milestone_names.length === 0)
+			{
+			    $scope.milestone_is_null = "No Milestones for this Project";
+			}
+			else{
+			    $scope.milestone_is_null = "";
+			}
+		});
+	};
+	
+	
+		//GET PROJECT NAME
+		$scope.get_project_name = function(){
+		var get_project_id = $scope.project_dd_id;	
+		
+		/*console.log(get_project_id);*/
+			$scope.get_milestone_names='';
+		$http({
+			method:'GET',
+			url: H.SETTINGS.baseUrl+'/projects?id='+get_project_id+'', 
+		}).then(function(response){
+		//console.log(response.data.length);
+		if(response !== null && response.data.length > 0)
+		{
+			var ac = response.data[response.data.length - 1].project_name;
+			$scope.getarray.push(ac);
+		}
+	});
+	
+	};
+	
+	
+	$scope.get_milestone_name = function(){
+		var get_milestone_id = $scope.milestone_dd_id;	
+		$http({
+			method:'GET',
+			url: H.SETTINGS.baseUrl+'/milestones?id='+get_milestone_id+'', 
+		}).then(function(response){
+			$scope.mname = response.data[0];
+		});
+	};
+	
+	
+	
+	$scope.get_tasks = function(){
+		var get_milestone_id = $scope.milestone_dd_id;
+		$http({
+			method:"GET",
+			url:H.SETTINGS.baseUrl+'/tasks?MID='+get_milestone_id+'',
+		}).then(function(response){
+		
+			$scope.all_data_tasks = response.data;
+			console.log($scope.all_data_tasks);
+			if($scope.all_data_tasks.length === 0)
+			{
+			    $scope.task_is_null = "No Tasks for this Milestone";
+			}
+			else{
+			    $scope.task_is_null = "";
+			}
+		});
+		
+	};
+	
+
+	
+
+	
+});
+
+/*global angular, app*/
 app.controller('test_casesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
     $scope.removeListHeaders = function(){
@@ -3791,74 +4366,131 @@ app.controller('test_plansControllerExtension', function($scope, $controller, $r
        $scope.newreleaseDate = function(Date){
        		$scope.data.single.release_date = H.toMySQLDateTime(Date);
     	};
-});/*global angular, app*/
-app.controller('usersControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
-    
-         $rootScope.hideButton = false;
-
-    if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
-        $location.path('unauthorized');
-    }
-
-    $scope.onInit = function(){
-        //$scope.newSingle(function(){
-        $scope.data.single.password = H.getHash('pRESTige');    
-        //});
-    };
-    
-    $scope.onLoadAll = function(){
-        $scope.setListHeaders(['Username', 'Email', 'Last Lease', 'Role', 'Actions']);
-    }
-    
-    $scope.setPassword = function(item, newItem) {
-        if(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1){
-            if(newItem.admin_password == null || newItem.admin_password == ""){
-                newItem.error = M.ADMIN_PASSWORD_REQUIRED;
-                return;
-            }
-            if(newItem.password == null || newItem.password == ""){
-                newItem.error = M.PASSWORD_REQUIRED;
-                return;
-            }
-            if(newItem.password != newItem.confirm_password){
-                newItem.error = M.PASSWORD_NOT_MATCHING;
-                return;
-            }
-            var url = H.SETTINGS.baseUrl + '/users/set-password';
-            newItem.admin_email = $rootScope.currentUser.email;
-            newItem.secret = item.secret;
-            newItem.email = item.email;
-            //$scope.loading = true;
-            $http.post(url, newItem)
-                .then(function(r){
-                    $scope.clickedUser = {};
-                    $scope.newUserValues = {};
-                    $mdDialog.cancel();   
-                    //$scope.loading = false;
-                },function(e){
-                    if(e && e.data && e.data.error && e.data.error.status){
-                        newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
-                    }
-                    //$scope.loading = false;
-                });
-        }
-    };
-
-    $scope.showSetPasswordDialog = function(ev, item) {
-        $scope.clickedUser = item;
-        $scope.newUserValues = {};        
-        $mdDialog.show({
-          contentElement: '#setPasswordDialog',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose: false
-        });
-    };
-    
-    $scope.hideSetPasswordDialog = function(){
-        $scope.clickedUser = {};
-        $scope.newUserValues = {};
-        $mdDialog.cancel();            
-    }; 
-    
 });
+
+app.config(function($routeProvider) {
+    $routeProvider
+
+    .when("/load_milestones", {
+        templateUrl : "/load_milestones.html",
+        controller : "load_milestonesCtrl"
+    });
+});
+
+app.controller('usersController', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route,md5) {
+  
+  $scope.H = H;
+  $scope.M = H.M;
+  
+  $scope.set_user_roles = [
+	  {value:"superadmin"},
+	  {value:"admin"},
+	  {value:"user"}
+  ]
+  
+ $http({
+ 	method:'GET', 
+	url:H.SETTINGS.baseUrl+'/users',
+	header:'Content-Type: application/json; charset=UTF-8'
+ }).then(function(response){
+ 	//console.log(response.data);
+ 	$scope.get_all_users = response.data;
+ });
+ 
+ $scope.newUser= function(){
+	$mdSidenav('add_user').toggle();
+ };
+ 
+ $scope.open_set_password= function(){
+	$mdSidenav('set_password').toggle();
+ };
+ 
+ $scope.close_user_sidebar= function(){
+	$mdSidenav('add_user').close();
+ };
+ 
+ $scope.close_set_password= function(){
+ 	document.getElementById("mysetPassword").reset();
+	$mdSidenav('set_password').close();
+ };
+ 
+ $scope.after_set_password= function(){
+ 	document.getElementById('mysetPassword').reset();
+	$mdSidenav('set_password').close();
+ };
+ 
+ $scope.add_user = function(getUser){
+	var get_username = getUser.username;
+	var get_password = md5.createHash(getUser.password);
+	var get_email = getUser.email;
+	var get_role = getUser.role;
+	
+	console.log(get_username +'  ' + get_email+'  ' + get_password +'  ' + get_role);
+	$http({
+		method:'post',
+		url:H.SETTINGS.baseUrl+'/users',
+		header:'Content-Type: application/json; charset=UTF-8',
+		data:{
+			"email":getUser.email,
+			"username":getUser.username,
+			"password":get_password,
+			"role":getUser.role,
+			"secret":"206b2dbe-ecc9-490b-b81b-83767288bc5e",
+		}
+	}).then(function(response){
+		var isvalid = response.status;
+		console.log(isvalid);
+          if(isvalid == 200 || isvalid==201){
+            
+            $route.reload();
+			console.log("user ad");
+          }
+          else{
+            alert("Something went wrong");
+          }		
+	});
+ };
+ 
+ var admin_md5_password1,admin_md5_password2;
+ $scope.setPassword = function(id){
+	var admin_email = "admin@example.com";	
+	
+	$http({
+		method:'get',
+		url:H.SETTINGS.baseUrl+'/users?email='+admin_email+'&secret=206b2dbe-ecc9-490b-b81b-83767288bc5e',
+		header:'Content-Type: application/json; charset=UTF-8',
+	}).then(function(response){
+		admin_md5_password1 = response.data[0].password;
+	});
+	
+	
+	$scope.set_password_function = function(getPasswordData){
+	admin_md5_password2 = md5.createHash(getPasswordData.adminpassword);
+	
+		if(admin_md5_password1 == admin_md5_password2)
+		{
+			if(getPasswordData.password == getPasswordData.confirmpassword){
+				$http({
+					method:'put',
+					url:H.SETTINGS.baseUrl+'/users',
+					data:{
+							"id":id,
+							"password":md5.createHash(getPasswordData.password),
+					},
+					header:'Content-Type: application/json; charset=UTF-8',
+				}).then(function(response){
+					$scope.after_set_password();
+					$route.reload();
+				});
+			}
+		}
+		else
+		{
+			
+		}
+	};
+ };
+ 
+
+});
+

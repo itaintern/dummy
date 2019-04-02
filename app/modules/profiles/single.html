@@ -1,210 +1,547 @@
-<form name="forms.profilesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
-	<md-input-container class="md-block">
-    <label for="user" class="active">{{M.PROFILES_FIELD_USER}}:</label>
-    <input id="user" name="user" type="text" class="validate" ng-model="data.single.user" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.user.$error" ng-show="forms.profilesForm.user.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
-	<md-input-container class="md-block">
-    <label for="employeeNumber" class="active">{{M.PROFILES_FIELD_EMPLOYEENUMBER}}:</label>
-    <input id="employeeNumber" name="employeeNumber" type="text" class="validate" ng-model="data.single.employeeNumber" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.employeeNumber.$error" ng-show="forms.profilesForm.employeeNumber.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="firstName" class="active">{{M.PROFILES_FIELD_FIRSTNAME}}:</label>
-    <input id="firstName" name="firstName" type="text" class="validate" ng-model="data.single.firstName" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.firstName.$error" ng-show="forms.profilesForm.firstName.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="lastName" class="active">{{M.PROFILES_FIELD_LASTNAME}}:</label>
-    <input id="lastName" name="lastName" type="text" class="validate" ng-model="data.single.lastName" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.lastName.$error" ng-show="forms.profilesForm.lastName.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="displayName" class="active">{{M.PROFILES_FIELD_DISPLAYNAME}}:</label>
-    <input id="displayName" name="displayName" type="text" class="validate" ng-model="data.single.displayName" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.displayName.$error" ng-show="forms.profilesForm.displayName.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
-   <md-input-container class="md-block">
-  	   <label for="joinDate" class="active">{{M.PROFILES_FIELD_JOINDATE}}:</label>
-	 <md-datepicker ng-model="data.single.joinDate" ng-change="newjoinDate(data.single.joinDate)" id="joinDate" name="joinDate" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
-	     <div ng-messages="forms.profilesForm.joinDate.$error" ng-show="forms.profilesForm.joinDate.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
- </md-input-container>
-  <md-input-container class="md-block">
-  	   <label for="leaveDate" class="active">{{M.PROFILES_FIELD_LEAVEDATE}}:</label>
-	 <md-datepicker ng-model="data.single.leaveDate" ng-change="newleaveDate(data.single.leaveDate)" id="leaveDate" name="leaveDate" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
-	     <div ng-messages="forms.profilesForm.leaveDate.$error" ng-show="forms.profilesForm.leaveDate.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
- </md-input-container>
-   <md-input-container class="md-block">
-  	   <label for="birthDate" class="active">{{M.PROFILES_FIELD_BIRTHDATE}}:</label>
-	 <md-datepicker ng-model="data.single.birthDate" ng-change="newbirthDate(data.single.birthDate)" id="birthDate" name="birthDate" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
-	     <div ng-messages="forms.profilesForm.birthDate.$error" ng-show="forms.profilesForm.birthDate.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
- </md-input-container>
- 	<md-input-container  class="md-block">
-          <label for="departments_id" class="active">{{M.PROFILES_FIELD_DEPARTMENT}}:</label>
-          <md-select ng-model="data.single.departments_id" id="departments_id" name="departments_id" class="validate" ng-disabled="locked">
-            <md-option><em>None</em></md-option>
-            <md-option ng-repeat="ddata in Departmentdata" ng-selected="{{data.single.departments.title === ddata.title}}"
-            ng-value="ddata.id">
-              {{ddata.title}}
-            </md-option>
-        </md-select>
-          <div ng-messages="forms.profilesForm.departments_id.$error" ng-show="forms.profilesForm.departments_id.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container  class="md-block">
-          <label for="designations_id" class="active">{{M.PROFILES_FIELD_DESIGNATION}}:</label>
-          <md-select ng-model="data.single.designations_id" id="designations_id" name="designations_id" class="validate" ng-disabled="locked">
-            <md-option><em>None</em></md-option>
-            <md-option ng-repeat="dsdata in Designationdata" ng-selected="{{data.single.designations.title === dsdata.title}}"
-            ng-value="dsdata.id">
-              {{dsdata.title}}
-            </md-option>
-        </md-select>
-          <div ng-messages="forms.profilesForm.designations_id.$error" ng-show="forms.profilesForm.designations_id.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container  class="md-block">
-          <label for="roles_id" class="active">{{M.PROFILES_FIELD_ROLE}}:</label>
-          <md-select ng-model="data.single.roles_id" id="roles_id" name="roles_id" class="validate" ng-disabled="locked">
-            <md-option><em>None</em></md-option>
-            <md-option ng-repeat="rldata in Roledata" ng-selected="{{data.single.roles.title === rldata.title}}"
-            ng-value="rldata.id">
-              {{rldata.title}}
-            </md-option>
-        </md-select>
-          <div ng-messages="forms.profilesForm.roles_id.$error" ng-show="forms.profilesForm.roles_id.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="contactNumber" class="active">{{M.PROFILES_FIELD_CONTACTNUMBER}}:</label>
-    <input id="contactNumber" name="contactNumber" type="text" class="validate" ng-model="data.single.contactNumber" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.contactNumber.$error" ng-show="forms.profilesForm.contactNumber.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
- <md-input-container class="md-block">
-    <label for="emergencyNumber" class="active">{{M.PROFILES_FIELD_EMERGENCYNUMBER}}:</label>
-    <input id="emergencyNumber" name="emergencyNumber" type="text" class="validate" ng-model="data.single.emergencyNumber" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.emergencyNumber.$error" ng-show="forms.profilesForm.emergencyNumber.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="primaryEmail" class="active">{{M.PROFILES_FIELD_PRIMARYEMAIL}}:</label>
-    <input id="primaryEmail" name="primaryEmail" type="text" class="validate" ng-model="data.single.primaryEmail" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.primaryEmail.$error" ng-show="forms.profilesForm.primaryEmail.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
- <md-input-container class="md-block">
-    <label for="secondaryEmail" class="active">{{M.PROFILES_FIELD_SECONDARYEMAIL}}:</label>
-    <input id="secondaryEmail" name="secondaryEmail" type="text" class="validate" ng-model="data.single.secondaryEmail" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.secondaryEmail.$error" ng-show="forms.profilesForm.secondaryEmail.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
- <md-input-container class="md-block">
-    <label for="address" class="active">{{M.PROFILES_FIELD_ADDRESS}}:</label>
-    <input id="address" name="address" type="text" class="validate" ng-model="data.single.address" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.address.$error" ng-show="forms.profilesForm.address.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container  class="md-block">
-          <label for="companies_id" class="active">{{M.PROFILES_FIELD_COMPANY}}:</label>
-          <md-select ng-model="data.single.companies_id" id="companies_id" name="companies_id" class="validate" ng-disabled="locked">
-            <md-option><em>None</em></md-option>
-            <md-option ng-repeat="cmdata in Companydata" ng-selected="{{data.single.companies.organizationName === cmdata.organizationName}}"
-            ng-value="cmdata.id">
-              {{cmdata.organizationName}}
-            </md-option>
-        </md-select>
-          <div ng-messages="forms.profilesForm.companies_id.$error" ng-show="forms.profilesForm.companies_id.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="password" class="active">{{M.PROFILES_FIELD_PASSWORD}}:</label>
-    <input id="password" name="password" type="text" class="validate" ng-model="data.single.password" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.password.$error" ng-show="forms.profilesForm.password.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
- <md-input-container class="md-block">
-    <label for="state" class="active">{{M.PROFILES_FIELD_STATE}}:</label>
-    <input id="state" name="state" type="text" class="validate" ng-model="data.single.state" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.state.$error" ng-show="forms.profilesForm.state.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-    <label for="country" class="active">{{M.PROFILES_FIELD_COUNTRY}}:</label>
-    <input id="country" name="country" type="text" class="validate" ng-model="data.single.country" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.country.$error" ng-show="forms.profilesForm.country.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
- <md-input-container class="md-block">
-    <label for="zipCode" class="active">{{M.PROFILES_FIELD_ZIPCODE}}:</label>
-    <input id="zipCode" name="zipCode" type="text" class="validate" ng-model="data.single.zipCode" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.zipCode.$error" ng-show="forms.profilesForm.zipCode.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
- <md-input-container class="md-block">
-    <label for="city" class="active">{{M.PROFILES_FIELD_CITY}}:</label>
-    <input id="city" name="city" type="text" class="validate" ng-model="data.single.city" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.city.$error" ng-show="forms.profilesForm.city.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-  <md-checkbox class="validate" ng-model="data.single.isPrimary" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isPrimary" id="isPrimary" name="isPrimary" ng-disabled="locked">
-		{{M.PROFILES_FIELD_ISPRIMARY}} 
-          </md-checkbox>
-   </md-input-container>
-   <md-input-container class="md-block">
-    <label for="profilePicture" class="active">{{M.PROFILES_FIELD_PROFILEPICTURE}}:</label>
-    <input id="profilePicture" name="profilePicture" type="text" class="validate" ng-model="data.single.profilePicture" required ng-disabled="locked">
-    <div ng-messages="forms.profilesForm.profilePicture.$error" ng-show="forms.profilesForm.profilePicture.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-  <md-checkbox class="validate" ng-model="data.single.status" ng-true-value="1" ng-false-value="0" ng-checked="data.single.status" id="status" name="status" ng-disabled="locked">
-		{{M.PROFILES_FIELD_STATUS}}
-          </md-checkbox>
-   </md-input-container>
-</form>
+<!--All the profiles in table-->
+<h6>{{M.PROFILES_FIELD}}</h6>
+	<hr/>
+<div>
+			<table class="table table-striped pagination">
+				<tr>
+					  <th>First name</th>
+					  <th>Last name</th>
+					  <th>Display name</th>
+					  <th>Join date</th>
+			          <th>Employee no.</th>
+			          <th>Birth date</th>
+			          <th>Contact no.</th>
+			          <th>Email id</th>
+			          <th>Role</th>
+			          <th >Action</th>
+				</tr>
+				<tr ng-repeat="prf in profile_data">
+					<!--<th>{{x.blogId}}</th>-->
+					  <td>{{prf.first_name}}</td>
+					  <td>{{prf.last_name}}</td>
+			          <td>{{prf.display_name}}</td>
+			          <td>{{prf.join_date}}</td>
+			          <td>{{prf.employee_number}}</td>
+			          <td>{{prf.birth_date}}</td>
+			          <td>{{prf.contact_number}}</td>
+			          <td>{{prf.primary_email}}</td>
+			          <td>{{prf.roles.title}}</td>
+					  <td><a ng-click="get_profileData(prf.id)"  href="" id="edit" class="icon">
+            			<i class="material-icons" style="font-size: 14px;" title="Edit Profile" data-toggle="tooltip" tooltip>edit</i></a>
+        				<button class="glyphicon glyphicon-trash" style="border:none;color:#ee10df; background-color: transparent;" 
+            			ng-click="delete_profile(prf.id)" title="Delete Profile"></button></td>
+				</tr>
+            </table>
+      <button class="btnfeedback glyphicon-plus" ng-click = "open_add_profile();" title="Add Profile" ></button> 
+  </div>
 
-<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
-  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
-  <style type="text/css">
-      .middle-center-heading{
-              left: 50%;
-              position: absolute;
-              top: 50%;
-              margin-left: -300px;
-              font-size: xx-large;
-      }
-  </style>
-</div>
+	<!-- ====================Slider for Add profile===============================-->
+<md-sidenav md-component-id = "component_add_profile" class = "md-sidenav-right" style="width:600px;position:fixed">
+  
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Add Profile</h1>
+    </md-toolbar>
+      
+    <form name="form_add_profile" id="form_add_profile" novalidate>
+        <!-- <md-input-container class="md-block">
+          <label for="user" class="active">{{M.PROFILES_FIELD_USER}}:</label>
+          <input id="user" name="user" type="text" class="validate" ng-model="data_single_user" required ng-disabled="locked" >
+          <div ng-messages="form_add_profile.user.$error" ng-show="form_add_profile.user.$dirty">
+            <div ng-message="required">{{M.REQUIRED}}</div>
+          </div>
+         </md-input-container> -->
+         
+        <md-input-container class="md-block">
+          <label for="employeeNumber" class="active">{{M.PROFILES_FIELD_EMPLOYEENUMBER}}:</label>
+          <input id="employeeNumber" name="employeeNumber" type="text" class="validate"
+          ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" ng-model="data_single_employeeNumber" required ng-disabled="locked">
+          <div ng-messages="form_add_profile.employeeNumber.$error">
+            <div ng-message="required" ng-if="form_add_profile.employeeNumber.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_add_profile.employeeNumber.$invalid && form_add_profile.employeeNumber.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="firstName" class="active">{{M.PROFILES_FIELD_FIRSTNAME}}:</label>
+          <input id="firstName" name="firstName" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_firstName" required ng-disabled="locked">
+          <span style="color:red" ></span>
+          <div ng-messages="form_add_profile.firstName.$error">
+            <div ng-message="required" ng-if="form_add_profile.firstName.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_add_profile.firstName.$invalid && form_add_profile.firstName.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="lastName" class="active">{{M.PROFILES_FIELD_LASTNAME}}:</label>
+          <input id="lastName" name="lastName" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_lastName" required ng-disabled="locked">
+          <div ng-messages="form_add_profile.lastName.$error">
+            <div ng-message="required" ng-if="form_add_profile.lastName.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_add_profile.lastName.$invalid && form_add_profile.lastName.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="displayName" class="active">{{M.PROFILES_FIELD_DISPLAYNAME}}:</label>
+          <input id="displayName" name="displayName" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" ng-model="data_single_displayName" required ng-disabled="locked">
+          <div ng-messages="form_add_profile.displayName.$error">
+            <div ng-message="required" ng-if="form_add_profile.displayName.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_add_profile.displayName.$invalid && form_add_profile.displayName.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+            <label for="joinDate" class="active">{{M.PROFILES_FIELD_JOINDATE}}:</label>
+        	<md-datepicker ng-model="data_single_joinDate" ng-change="newjoinDate(data_single_joinDate)" required id="joinDate" name="joinDate" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+            <div ng-messages="form_add_profile.joinDate.$error">
+            <div ng-message="required" ng-if="form_add_profile.joinDate.$invalid">{{M.REQUIRED}}</div>
+            </div>
+            
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+             <label for="leaveDate" class="active">{{M.PROFILES_FIELD_LEAVEDATE}}:</label>
+        	 <md-datepicker ng-model="data_single_leaveDate" ng-change="newleaveDate(data_single_leaveDate)" id="leaveDate" name="leaveDate" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+            <label for="birthDate" class="active">{{M.PROFILES_FIELD_BIRTHDATE}}:</label>
+        	<md-datepicker ng-model="data_single_birthDate" ng-change="newbirthDate(data_single_birthDate)" id="birthDate" required name="birthDate" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+             <div ng-messages="form_add_profile.birthDate.$error">
+            <div ng-message="required" ng-if="form_add_profile.birthDate.$invalid">{{M.REQUIRED}}</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="departments_id" class="active">{{M.PROFILES_FIELD_DEPARTMENT}}:</label>
+            <md-select ng-model="data_single_departments_id" id="departments_id" name="departments_id" class="validate" required ng-disabled="locked">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="ddata in Departmentdata" ng-selected="{{data_single_departments.title === ddata.title}}" ng-value="ddata.id">
+                	{{ddata.title}}
+                </md-option>
+            </md-select>
+            <div ng-messages="form_add_profile.departments_id.$error">
+            <div ng-message="required" ng-if="form_add_profile.departments_id.$invalid">{{M.REQUIRED}}</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="designations_id" class="active">{{M.PROFILES_FIELD_DESIGNATION}}:</label>
+            <md-select ng-model="data_single_designations_id" id="designations_id" name="designations_id" class="validate" required ng-disabled="locked">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="dsdata in Designationdata" ng-selected="{{data_single_designations.title === dsdata.title}}" ng-value="dsdata.id">
+                    {{dsdata.title}}
+                </md-option>
+            </md-select>
+            <div ng-messages="form_add_profile.designations_id.$error">
+            <div ng-message="required" ng-if="form_add_profile.designations_id.$invalid">{{M.REQUIRED}}</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="roles_id" class="active">{{M.PROFILES_FIELD_ROLE}}:</label>
+            <md-select ng-model="data_single_roles_name" id="roles_id" name="roles_id" class="validate" ng-disabled="locked" required>
+				<md-option><em>None</em></md-option>
+                <md-option ng-repeat="u in [{key: 'admin', value: 'Employee'}, {key: 'user', value: 'Intern'}]" ng-value="u.key">
+        			{{u.value}}
+                </md-option>
+            </md-select>
+            <div ng-messages="form_add_profile.roles_id.$error">
+            <div ng-message="required" ng-if="form_add_profile.roles_id.$invalid">{{M.REQUIRED}}</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="contactNumber" class="active">{{M.PROFILES_FIELD_CONTACTNUMBER}}:</label>
+        	<input id="contactNumber" name="contactNumber" type="text" class="validate" ng-pattern='/^[0-9]*$/' ng-model="data_single_contactNumber"
+        	minlength="10" maxlength="10" ng-minlength="10" ng-maxlength="10" required ng-disabled="locked">	
+        	<div ng-messages="form_add_profile.contactNumber.$error">
+        		<div ng-message="required" ng-if="form_add_profile.contactNumber.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.contactNumber.$invalid && form_add_profile.contactNumber.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+            	<div ng-message="minlength" ng-if="form_add_profile.contactNumber.$invalid && form_add_profile.contactNumber.$dirty">{{M.VALIDATE_CONTACT}}</div>
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="emergencyNumber" class="active">{{M.PROFILES_FIELD_EMERGENCYNUMBER}}:</label>
+        	<input id="emergencyNumber" name="emergencyNumber" type="text" class="validate" ng-model="data_single_emergencyNumber"
+        	required ng-disabled="locked" ng-pattern='/^[0-9]*$/' minlength="10" maxlength="10" ng-minlength="10" ng-maxlength="10">
+        	<div ng-messages="form_add_profile.emergencyNumber.$error">
+        		<div ng-message="required" ng-if="form_add_profile.emergencyNumber.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.emergencyNumber.$invalid && form_add_profile.emergencyNumber.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+            	<div ng-message="minlength" ng-if="form_add_profile.emergencyNumber.$invalid && form_add_profile.emergencyNumber.$dirty">{{M.VALIDATE_CONTACT}}</div>     
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="primaryEmail" class="active">{{M.PROFILES_FIELD_PRIMARYEMAIL}}:</label>
+        	<input id="primaryEmail" name="primaryEmail" type="text" class="validate" 
+        	ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/" ng-model="data_single_primaryEmail" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.primaryEmail.$error">
+            	<div ng-message="required" ng-if="form_add_profile.primaryEmail.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.primaryEmail.$invalid && form_add_profile.primaryEmail.$dirty">{{M.INVALID_EMAIL}}</div>
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="secondaryEmail" class="active">{{M.PROFILES_FIELD_SECONDARYEMAIL}}:</label>
+        	<input id="secondaryEmail" name="secondaryEmail" type="text" class="validate" 
+        	ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/" ng-model="data_single_secondaryEmail" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.secondaryEmail.$error">
+        		<div ng-message="required" ng-if="form_add_profile.secondaryEmail.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.secondaryEmail.$invalid && form_add_profile.secondaryEmail.$dirty">{{M.INVALID_EMAIL}}</div>
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="address" class="active">{{M.PROFILES_FIELD_ADDRESS}}:</label>
+        	<input id="address" name="address" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" ng-model="data_single_address" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.address.$error">
+            	<div ng-message="required" ng-if="form_add_profile.address.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.address.$invalid && form_add_profile.address.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>     
+        	</div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="companies_id" class="active">{{M.PROFILES_FIELD_COMPANY}}:</label>
+            <md-select ng-model="data_single_companies_id" id="companies_id" name="companies_id" class="validate" required ng-disabled="locked">
+            	<md-option><em>None</em></md-option>
+                <md-option ng-repeat="cmdata in company_data" ng-selected="None" ng-value="cmdata.id">
+                    {{cmdata.primary_contact_person}}
+                </md-option>
+              </md-select>
+                <div ng-messages="form_add_profile.companies_id.$error">
+            		<div ng-message="required" ng-if="form_add_profile.companies_id.$invalid">{{M.REQUIRED}}</div>     
+        		</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="password" class="active">{{M.PROFILES_FIELD_PASSWORD}}:</label>
+          <input id="password" name="password" type="text" class="validate" ng-model="data_single_password" required ng-disabled="locked">
+          <div ng-messages="form_add_profile.password.$error">
+        	<div ng-message="required" ng-if="form_add_profile.password.$invalid">{{M.REQUIRED}}</div>
+          </div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+          <label for="state" class="active">{{M.PROFILES_FIELD_STATE}}:</label>
+          <input id="state" name="state" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_state" required ng-disabled="locked">
+          <div ng-messages="form_add_profile.state.$error">
+            <div ng-message="required" ng-if="form_add_profile.state.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_add_profile.state.$invalid && form_add_profile.state.$dirty">{{M.VALIDATE_ALPHABETS}}</div>     
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+    		<label for="country" class="active">{{M.PROFILES_FIELD_COUNTRY}}:</label>
+        	<input id="country" name="country" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_country" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.country.$error">
+            	<div ng-message="required" ng-if="form_add_profile.country.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.country.$invalid && form_add_profile.country.$dirty">{{M.VALIDATE_ALPHABETS}}</div>     
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="zipCode" class="active">{{M.PROFILES_FIELD_ZIPCODE}}:</label>
+        	<input id="zipCode" name="zipCode" type="text" class="validate" ng-minlength="6" maxlength="6" ng-pattern='/^[0-9]*$/' ng-model="data_single_zipCode" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.zipCode.$error">
+            	<div ng-message="required" ng-if="form_add_profile.zipCode.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.zipCode.$invalid && form_add_profile.zipCode.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+            	<div ng-message="minlength" ng-if="form_add_profile.zipCode.$invalid && form_add_profile.zipCode.$dirty">{{M.VAIDATE_ZIPCODE}}</div>
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="city" class="active">{{M.PROFILES_FIELD_CITY}}:</label>
+        	<input id="city" name="city" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_city" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.city.$error">
+            	<div ng-message="required" ng-if="form_add_profile.city.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_add_profile.city.$invalid && form_add_profile.city.$dirty">{{M.VALIDATE_ALPHABETS}}</div>     
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<md-checkbox class="validate" ng-model="data_single_isPrimary" ng-true-value="1" required ng-false-value="0" ng-checked="data_single_isPrimary" id="isPrimary" name="isPrimary" ng-disabled="locked">
+        		{{M.PROFILES_FIELD_ISPRIMARY}} 
+            </md-checkbox>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="profilePicture" class="active">{{M.PROFILES_FIELD_PROFILEPICTURE}}:</label>
+        	<input id="profilePicture" name="profilePicture" type="text" class="validate" ng-model="data_single_profilePicture" required ng-disabled="locked">
+        	<div ng-messages="form_add_profile.profilePicture.$error" ng-show="form_add_profile.profilePicture.$dirty">
+            	<div ng-message="required">{{M.REQUIRED}}</div>
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<md-checkbox class="validate" ng-model="data_single_status" required ng-true-value="1" ng-false-value="0" ng-checked="data_single_status" id="status" name="status" ng-disabled="locked">
+        		{{M.PROFILES_FIELD_STATUS}}
+            </md-checkbox>
+        </md-input-container>
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "insert_profileData(); addUser(); close_add_profile();" ng-disabled="form_add_profile.$invalid">
+			Add
+        </md-button>
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "close_add_profile();">
+			Cancel 
+		</md-button>
+    </form>
+  </md-sidenav>
+  
+	<!-- ====================Slider for Upadte profile===============================-->
+<md-sidenav md-component-id = "component_update_profile" class = "md-sidenav-right" style="width:600px;position:fixed">
+  
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Update Profile</h1>
+    </md-toolbar>
+      
+    <form name="form_update_profile" id="form_update_profile">
+        <!-- <md-input-container class="md-block">
+          <label for="user" class="active">{{M.PROFILES_FIELD_USER}}:</label>
+          <input id="user" name="user" type="text" class="validate" ng-model="data_single_user" required ng-disabled="locked" >
+          <div ng-messages="form_add_profile.user.$error" ng-show="form_add_profile.user.$dirty">
+            <div ng-message="required">{{M.REQUIRED}}</div>
+          </div>
+         </md-input-container> -->
+         
+        <md-input-container class="md-block">
+          <label for="employeeNumber_update" class="active">{{M.PROFILES_FIELD_EMPLOYEENUMBER}}:</label>
+          <input id="employeeNumber_update" name="employeeNumber_update" type="text" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" class="validate" ng-model="data_single_employeeNumber_update" required ng-disabled="locked">
+          <div ng-messages="form_update_profile.employeeNumber_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.employeeNumber_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.employeeNumber_update.$invalid && form_update_profile.employeeNumber_update.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="firstName_update" class="active">{{M.PROFILES_FIELD_FIRSTNAME}}:</label>
+          <input id="firstName_update" name="firstName_update" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_firstName_update" required ng-disabled="locked">
+          <div ng-messages="form_update_profile.firstName_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.firstName_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.firstName_update.$invalid && form_update_profile.firstName_update.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="lastName_update" class="active">{{M.PROFILES_FIELD_LASTNAME}}:</label>
+          <input id="lastName_update" name="lastName_update" type="text" class="validate" ng-pattern='/^[a-zA-Z]*$/' ng-model="data_single_lastName_update" required ng-disabled="locked">
+          <div ng-messages="form_update_profile.lastName_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.lastName_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.lastName_update.$invalid && form_update_profile.lastName_update.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="displayName_update" class="active">{{M.PROFILES_FIELD_DISPLAYNAME}}:</label>
+          <input id="displayName_update" name="displayName_update" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\-]*$/" ng-model="data_single_displayName_update" required ng-disabled="locked">
+          <div ng-messages="form_update_profile.displayName_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.displayName_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.displayName_update.$invalid && form_update_profile.displayName_update.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+            <label for="joinDate_update" class="active">{{M.PROFILES_FIELD_JOINDATE}}:</label>
+        	<md-datepicker ng-model="data_single_joinDate_update" required ng-change="newjoinDate_update(data_single_joinDate)" id="joinDate_update" name="joinDate_update" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+            <div ng-messages="form_update_profile.joinDate_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.joinDate_update.$invalid">{{M.REQUIRED}}</div>
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+             <label for="leaveDate_update" class="active">{{M.PROFILES_FIELD_LEAVEDATE}}:</label>
+        	 <md-datepicker ng-model="data_single_leaveDate_update" required ng-change="newleaveDate_update(data_single_leaveDate)" id="leaveDate_update" name="leaveDate_update" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+             <div ng-messages="form_update_profile.leaveDate_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.leaveDate_update.$invalid">{{M.REQUIRED}}</div>
+        	 </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+            <label for="birthDate_update" class="active">{{M.PROFILES_FIELD_BIRTHDATE}}:</label>
+        	<md-datepicker ng-model="data_single_birthDate_update" required ng-change="newbirthDate_update(data_single_birthDate)" id="birthDate_update" name="birthDate_update" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
+             <div ng-messages="form_update_profile.birthDate_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.birthDate_update.$invalid">{{M.REQUIRED}}</div>
+        	 </div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="departments_id_update" class="active">{{M.PROFILES_FIELD_DEPARTMENT}}:</label>
+            <md-select ng-model="data_single_departments_id_update" required id="departments_id_update" name="departments_id_update" class="validate" ng-disabled="locked">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="ddata in Departmentdata" ng-selected="{{data_single_roles_name_update.title === ddata.title}}" ng-value="ddata.id">
+                	{{ddata.title}}
+                </md-option>
+            </md-select>
+                <div ng-messages="form_update_profile.departments_id_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.departments_id_update.$invalid">{{M.REQUIRED}}</div>
+        	 </div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="designations_id_update" class="active">{{M.PROFILES_FIELD_DESIGNATION}}:</label>
+            <md-select ng-model="data_single_designations_id_update" required id="designations_id" name="designations_id_update" class="validate" ng-disabled="locked">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="dsdata in Designationdata" ng-selected="{{data_single_roles_id_update.title === dsdata.title}}" ng-value="dsdata.id">
+                    {{dsdata.title}}
+                </md-option>
+            </md-select>
+                <div ng-messages="form_update_profile.designations_id_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.designations_id_update.$invalid">{{M.REQUIRED}}</div>
+        	 </div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="roles_id_update" class="active">{{M.PROFILES_FIELD_ROLE}}:</label>
+            <md-select ng-model="data_single_roles_name_update" id="roles_id_update" name="roles_id_update" class="validate" ng-disabled="locked">
+				<md-option><em>None</em></md-option>
+                <md-option ng-repeat="rldata in Roledata" ng-selected="{{data_single_roles_id_update.title === rldata.title}}"  ng-value="rldata.id">
+                    {{rldata.title}}
+                </md-option>
+            </md-select>
+                <div ng-messages="form_update_profile.roles_id_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.roles_id_update.$invalid">{{M.REQUIRED}}</div>
+        	 </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="contactNumber_update" class="active">{{M.PROFILES_FIELD_CONTACTNUMBER}}:</label>
+        	<input id="contactNumber_update" name="contactNumber_update" minlength="10" maxlength="10" ng-minlength="10" ng-maxlength="10"
+        	type="text" class="validate" ng-model="data_single_contactNumber_update" required ng-disabled="locked" ng-pattern='/^[0-9]*$/'>
+        	<div ng-messages="form_update_profile.contactNumber.$error">
+        		<div ng-message="required" ng-if="form_update_profile.contactNumber_update.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_update_profile.contactNumber_update.$invalid && form_update_profile.contactNumber_update.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+            	<div ng-message="minlength" ng-if="form_update_profile.contactNumber_update.$invalid && form_update_profile.contactNumber_update.$dirty">{{M.VALIDATE_CONTACT}}</div>
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="emergencyNumber_update" class="active">{{M.PROFILES_FIELD_EMERGENCYNUMBER}}:</label>
+        	<input id="emergencyNumber_update" name="emergencyNumber_update" minlength="10" maxlength="10" ng-minlength="10" ng-maxlength="10"
+        	type="text" class="validate" ng-model="data_single_emergencyNumber_update" required ng-disabled="locked" ng-pattern='/^[0-9]*$/'>
+        		<div ng-messages="form_update_profile.emergencyNumber_update.$error">
+        		<div ng-message="required" ng-if="form_update_profile.emergencyNumber_update.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_update_profile.emergencyNumber_update.$invalid && form_update_profile.emergencyNumber_update.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+            	<div ng-message="minlength" ng-if="form_update_profile.emergencyNumber_update.$invalid && form_update_profile.emergencyNumber_update.$dirty">{{M.VALIDATE_CONTACT}}</div>
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="primaryEmail_update" class="active">{{M.PROFILES_FIELD_PRIMARYEMAIL}}:</label>
+        	<input id="primaryEmail_update" ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/"
+        	name="primaryEmail_update" type="text" class="validate" ng-model="data_single_primaryEmail_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.primaryEmail_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.primaryEmail_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.primaryEmail_update.$invalid && form_update_profile.primaryEmail_update.$dirty">{{M.INVALID_EMAIL}}</div>
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="secondaryEmail_update" class="active">{{M.PROFILES_FIELD_SECONDARYEMAIL}}:</label>
+        	<input id="secondaryEmail_update" ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/"
+        	name="secondaryEmail_update" type="text" class="validate" ng-model="data_single_secondaryEmail_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.secondaryEmail_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.secondaryEmail_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.secondaryEmail_update.$invalid && form_update_profile.secondaryEmail_update.$dirty">{{M.INVALID_EMAIL}}</div>
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="address_update" class="active">{{M.PROFILES_FIELD_ADDRESS}}:</label>
+        	<input id="address_update" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+        	name="address_update" type="text" class="validate" ng-model="data_single_address_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.address_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.address_update.$invalid">{{M.REQUIRED}}</div>
+            	<div ng-message="pattern" ng-if="form_update_profile.address_update.$invalid && form_update_profile.address_update.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>     
+        	</div>
+        </md-input-container>
+        
+        <md-input-container  class="md-block">
+            <label for="companies_id_update" class="active">{{M.PROFILES_FIELD_COMPANY}}:</label>
+            <md-select ng-model="data_single_companies_id_update" id="companies_id_update" name="companies_id_update" class="validate" ng-disabled="locked">
+            	<md-option><em>None</em></md-option>
+                <md-option ng-repeat="cmdata in company_data" ng-selected="None" ng-value="cmdata.id">
+                    {{cmdata.primary_contact_person}}
+                </md-option>
+              </md-select>
+				<div ng-messages="form_update_profile.companies_id_update.$error">
+            	<div ng-message="required" ng-if="form_update_profile.companies_id_update.$invalid">{{M.REQUIRED}}</div>
+        		</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label for="password_update" class="active">{{M.PROFILES_FIELD_PASSWORD}}:</label>
+          <input id="password_update" name="password_update" type="text" class="validate" ng-model="data_single_password_update" required ng-disabled="locked">
+          <div ng-messages="form_update_profile.password_update.$error">
+			<div ng-message="required" ng-if="form_update_profile.password_update.$invalid">{{M.REQUIRED}}</div>
+          </div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+          <label for="state_update" class="active">{{M.PROFILES_FIELD_STATE}}:</label>
+          <input id="state_update" name="state_update" type="text" ng-pattern='/^[a-zA-Z]*$/'
+          class="validate" ng-model="data_single_state_update" required ng-disabled="locked">
+          <div ng-messages="form_update_profile.state_update.$error">
+            <div ng-message="required" ng-if="form_update_profile.state_update.$invalid">{{M.REQUIRED}}</div>
+            <div ng-message="pattern" ng-if="form_update_profile.state_update.$invalid && form_update_profile.state_update.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+    		<label for="country_update" class="active">{{M.PROFILES_FIELD_COUNTRY}}:</label>
+        	<input id="country_update" name="country_update" type="text" class="validate" ng-model="data_single_country_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.country_update.$error" ng-show="form_update_profile.country_update.$dirty">
+            	<div ng-message="required">{{M.REQUIRED}}</div>     
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="zipCode_update" class="active">{{M.PROFILES_FIELD_ZIPCODE}}:</label>
+        	<input id="zipCode_update" name="zipCode_update" type="text" class="validate" ng-model="data_single_zipCode_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.zipCode_update.$error" ng-show="form_update_profile.zipCode_update.$dirty">
+            	<div ng-message="required">{{M.REQUIRED}}</div>
+        	</div>
+        </md-input-container>
+        
+    	<md-input-container class="md-block">
+        	<label for="city_update" class="active">{{M.PROFILES_FIELD_CITY}}:</label>
+        	<input id="city_update" name="city_update" type="text" class="validate" ng-model="data_single_city_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.city_update.$error" ng-show="form_update_profile.city_update.$dirty">
+            	<div ng-message="required">{{M.REQUIRED}}</div>     
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<md-checkbox class="validate" ng-model="data_single_isPrimary_update" ng-true-value="1" ng-false-value="0" ng-checked="data_single_isPrimary_update" id="isPrimary_update" name="isPrimary" ng-disabled="locked">
+        		{{M.PROFILES_FIELD_ISPRIMARY}} 
+            </md-checkbox>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<label for="profilePicture_update" class="active">{{M.PROFILES_FIELD_PROFILEPICTURE}}:</label>
+        	<input id="profilePicture_update" name="profilePicture_update" type="text" class="validate" ng-model="data_single_profilePicture_update" required ng-disabled="locked">
+        	<div ng-messages="form_update_profile.profilePicture_update.$error" ng-show="form_update_profile.profilePicture_update.$dirty">
+            	<div ng-message="required">{{M.REQUIRED}}</div>
+        	</div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+        	<md-checkbox class="validate" ng-model="data_single_status_update" ng-true-value="1" ng-false-value="0" ng-checked="data_single_status_update" id="status_update" name="status_update" ng-disabled="locked">
+        		{{M.PROFILES_FIELD_STATUS}}
+            </md-checkbox>
+        </md-input-container>
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "save_profileData(); close_update_profile();" ng-disabled="form_update_profile.$invalid">
+			Update
+        </md-button>
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "close_update_profile();">
+			Cancel 
+		</md-button>
+    </form>
+  </md-sidenav>
+  
+  
+
+  

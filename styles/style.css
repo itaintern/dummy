@@ -1,4 +1,4 @@
-﻿/* Navbar ====================================== */
+/* Navbar ====================================== */
 @import url(materialize.css); 
 .navbar {
   font-family: "Roboto", sans-serif;
@@ -8058,6 +8058,45 @@ html.ie11 .bs-searchbox .form-control {
     pointer-events: none;
     cursor: default;
  
+  }
+  /*plus button*/
+  .feedback {
+     background-color:#00bfff;
+     position:absolute;
+     border: none;
+     color: white;
+      width:60px;
+      height:60px;
+     text-align: center;
+     text-decoration: none;
+     /*display: inline-block;*/
+     font-size: 24px;
+     cursor: pointer;
+     left:180px;
+     top:90px;
+     border-radius:50%;
+  }
+  .btnfeedback {
+ 
+    background-color:  	#00bfff;
+      border: none;
+      color: white;
+      position: fixed;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 24px;
+      cursor: pointer;
+      border-radius:50%;
+      margin-left: 75%;
+      top:87%;
+      width:60px;
+      height:60px;
+  }
+  
+
+  #component_add_profile{
+      padding-left: 30%;
   }
   
   

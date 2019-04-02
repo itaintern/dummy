@@ -1,55 +1,158 @@
-<form name="forms.departmentsForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+<!--<script src="service.js"></script>-->
+
+<h6>{{M.DEPARTMENTS_FIELD}}</h6>
+	<hr/>
+<div>
+			<table class="table table-striped pagination department_table">
+				<tr>
+					  <th>Company name</th>
+					  <th>Department name</th>
+					  <th>Contact number </th>
+			          <th>Description</th>
+			          <th>Action</th>
+				</tr>
+				<tr ng-repeat="dprt in department_data">
+					  <td>{{dprt.companies.display_title}}</td>
+					  <td>{{dprt.title}}</td>
+					  <td>{{dprt.contact_number}}</td>
+			          <td>{{dprt.description}}</td>
+					  <td><a ng-click="get_departmentData(dprt.id);"  href="" id="edit" class="icon">
+            			<i class="material-icons" style="font-size: 14px;" title="Edit Department" data-toggle="tooltip" tooltip>edit</i></a>
+        				<button class="glyphicon glyphicon-trash" style="border:none;color:#ee10df; background-color: transparent;" 
+            			ng-click="delete_department(dprt.id)" title="Delete Department"></button></td>
+				</tr>
+            </table>
+      <button class="btnfeedback glyphicon-plus" ng-click = "open_add_department();" title="Add Department" ></button>
+  </div>
+
+<!--slider for add department-->
+<md-sidenav md-component-id = "component_add_deparment" class = "md-sidenav-right" style="width:600px;position:fixed">
+  
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Add Department</h1>
+    </md-toolbar>
+
+
+<form name="form_add_department" id="form_add_department" ng-controller = "departmentsController">
   <md-input-container class="md-block">
     <label for="title" class="active">{{M.DEPARTMENTS_FIELD_TITLE}}:</label>
-    <input id="title" name="title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
-    <div ng-messages="forms.departmentsForm.title.$error" ng-show="forms.departmentsForm.title.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
+    <input id="title" name="title" type="text" class="validate" ng-pattern='/^[a-zA-Z ]*$/' ng-model="model.title" required ng-disabled="locked">
+    <div ng-messages="form_add_department.title.$error">
+        <div ng-message="required" ng-if="form_add_department.title.$invalid">{{M.REQUIRED}}</div>
+        <div ng-message="pattern" ng-if="form_add_department.title.$invalid && form_add_department.title.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+	</div>
   </md-input-container>
   <md-input-container class="md-block">
     <label for="contact_number" class="active">{{M.DEPARTMENTS_FIELD_CONTACTNUMBER}}:</label>
-    <input id="contact_number" name="contact_number" type="text" class="validate" ng-model="data.single.contact_number" required ng-disabled="locked">
-    <div ng-messages="forms.departmentsForm.contact_number.$error" ng-show="forms.departmentsForm.contact_number.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
+    <input id="contact_number" name="contact_number" type="text" class="validate" ng-pattern='/^[0-9]*$/' minlength="10" maxlength="10" ng-minlength="10" ng-maxlength="10"
+    ng-model="model.contact_number" required ng-disabled="locked">
+    <div ng-messages="form_add_department.contact_number.$error">
+		<div ng-message="required" ng-if="form_add_department.contact_number.$invalid">{{M.REQUIRED}}</div>
+		<div ng-message="pattern" ng-if="form_add_department.contact_number.$invalid && form_add_department.contact_number.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+		<div ng-message="minlength" ng-if="form_add_department.contact_number.$invalid && form_add_department.contact_number.$dirty">{{M.VALIDATE_CONTACT}}</div>
+	</div>
   </md-input-container>
+  
  <md-input-container class="md-block">
     <label for="description" class="active">{{M.DEPARTMENTS_FIELD_DESCRIPTION}}:</label>
-    <input id="description" name="description" type="text" class="validate" ng-model="data.single.description" required ng-disabled="locked">
-    <div ng-messages="forms.departmentsForm.description.$error" ng-show="forms.departmentsForm.description.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>
-    </div>
+    <input id="description" name="description" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+    ng-model="model.description" required ng-disabled="locked">
+    <div ng-messages="form_add_department.description.$error">
+		<div ng-message="required" ng-if="form_add_department.description.$invalid">{{M.REQUIRED}}</div>
+		<div ng-message="pattern" ng-if="form_add_department.description.$invalid && form_add_department.description.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>     
+	</div>
   </md-input-container>
   <md-input-container  class="md-block">
           <label for="companies_id" class="active">{{M.DEPARTMENTS_FIELD_COMPANY}}:</label>
-          <md-select ng-model="data.single.companies_id" id="companies_id" name="companies_id" class="validate" ng-disabled="locked">
-            <md-option><em>None</em></md-option>
-            <md-option ng-repeat="company in companyname" ng-selected="{{data.single.companies.organization_name === company.organization_name}}"
-            ng-value="company.id">
-              {{company.organization_name}}
+          <md-select ng-model="model.companies_id" id="companies_id" name="companies_id" class="validate" required ng-disabled="locked">
+            <md-option ng-selected="true" ng-value="0"><em>None</em></md-option>
+            <md-option ng-repeat="company in company_data" ng-value="company.id">
+              {{company.display_title}}
             </md-option>
         </md-select>
-          <div ng-messages="forms.departmentsForm.company.$error" ng-show="forms.departmentsForm.company.$dirty">
-      <div ng-message="required">{{M.REQUIRED}}</div>     
-    </div>
+        <div ng-messages="form_add_department.companies_id.$error">
+		<div ng-message="required" ng-if="form_add_department.companies_id.$invalid">{{M.REQUIRED}}</div>
+		</div>
     
   </md-input-container>
    <md-input-container class="md-block">
-  <md-checkbox class="active" ng-model="data.single.status" ng-true-value="1" ng-false-value="0" ng-checked="data.single.status" id="status" name="status" ng-disabled="locked">
-		{{M.DEPARTMENTS_FIELD_STATUS}} 
-          </md-checkbox>
+	<md-checkbox class="active" ng-model="model.status" ng-true-value="1" ng-false-value="0"  id="status" name="status" ng-disabled="locked">
+		{{M.DEPARTMENTS_FIELD_STATUS}}
+    </md-checkbox>
    </md-input-container>
+   
+   <md-button  class = "md-primary md-raised"  ng-click = "insert_department() " ng-disabled="form_add_department.$invalid">
+			Update
+        </md-button>
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "close_add_department()">
+			Cancel 
+		</md-button>
+</form>
+</md-sidenav>
+
+<!--slider for update department-->
+<md-sidenav md-component-id = "component_update_deparment" class = "md-sidenav-right" style="width:600px;position:fixed">
+  
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Update Department</h1>
+    </md-toolbar>
+<form name="form_update_department" id="form_update_department" ng-controller = "departmentsController">
+  <md-input-container class="md-block">
+    <label for="title_update" class="active">{{M.DEPARTMENTS_FIELD_TITLE}}:</label>
+    <input id="title_update" name="title_update" type="text" class="validate" ng-pattern='/^[a-zA-Z ]*$/' ng-model="model.title" required ng-disabled="locked">
+    <div ng-messages="form_update_department.title_update.$error">
+        <div ng-message="required" ng-if="form_update_department.title_update.$invalid">{{M.REQUIRED}}</div>
+        <div ng-message="pattern" ng-if="form_update_department.title_update.$invalid && form_update_department.title_update.$dirty">{{M.VALIDATE_ALPHABETS}}</div>
+	</div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="contact_number_update" class="active">{{M.DEPARTMENTS_FIELD_CONTACTNUMBER}}:</label>
+    <input id="contact_number_update" name="model.contact_number" type="text" class="validate" ng-pattern='/^[0-9]*$/' minlength="10" maxlength="10" ng-minlength="10" ng-maxlength="10"
+    ng-model="model.contact_number" required ng-disabled="locked">
+    <div ng-messages="form_update_department.contact_number_update.$error">
+		<div ng-message="required" ng-if="form_update_department.contact_number_update.$invalid">{{M.REQUIRED}}</div>
+		<div ng-message="pattern" ng-if="form_update_department.contact_number_update.$invalid && form_update_department.contact_number_update.$dirty">{{M.VALIDATE_NUMERIC}}</div>
+		<div ng-message="minlength" ng-if="form_update_department.contact_number_update.$invalid && form_update_department.contact_number_update.$dirty">{{M.VALIDATE_CONTACT}}</div>
+	</div>
+  </md-input-container>
+  
+ <md-input-container class="md-block">
+    <label for="description_update" class="active">{{M.DEPARTMENTS_FIELD_DESCRIPTION}}:</label>
+    <input id="description_update" name="description_update" type="text" class="validate" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+    ng-model="model.description" required ng-disabled="locked">
+    <div ng-messages="form_update_department.description_update.$error">
+		<div ng-message="required" ng-if="form_update_department.description_update.$invalid">{{M.REQUIRED}}</div>
+		<div ng-message="pattern" ng-if="form_update_department.description_update.$invalid && form_update_department.description_update.$dirty">{{M.VALIDATE_ALPHANUMERIC}}</div>     
+	</div>
+  </md-input-container>
+  <md-input-container  class="md-block">
+          <label for="companies_id_update" class="active">{{M.DEPARTMENTS_FIELD_COMPANY}}:</label>
+          <md-select ng-model="model.companies_id" id="companies_id_update" name="companies_id_update" class="validate" required ng-disabled="locked">
+            <md-option ><em>None</em></md-option>
+            <md-option ng-repeat="cmp in company_data track by cmp.id" ng-value="cmp.id">
+              {{cmp.display_title}}
+            </md-option>
+        </md-select>
+        <div ng-messages="form_update_department.companies_id_update.$error">
+		<div ng-message="required" ng-if="form_update_department.companies_id_update.$invalid">{{M.REQUIRED}}</div>
+		</div>
+    
+  </md-input-container>
+   <md-input-container class="md-block">
+	<md-checkbox class="active" ng-model="model.status" ng-true-value="1" ng-false-value="0"  id="status_update" name="status_update" ng-disabled="locked">
+		{{M.DEPARTMENTS_FIELD_STATUS}}
+    </md-checkbox>
+   </md-input-container>
+   
+   <md-button  class = "md-primary md-raised"  ng-click = "save_departmentData(model);" ng-disabled="form_update_department.$invalid">
+			Update
+        </md-button>
+        
+        <md-button  class = "md-primary md-raised"  ng-click = "close_update_department()">
+			Cancel 
+		</md-button>
 </form>
 
-<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
-  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
-  <style type="text/css">
-      .middle-center-heading{
-              left: 50%;
-              position: absolute;
-              top: 50%;
-              margin-left: -300px;
-              font-size: xx-large;
-      }
-  </style>
-</div>
+
+</md-sidenav>

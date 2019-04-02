@@ -1,0 +1,152 @@
+<style>
+	#dd_projects{
+		width:35%;
+	}
+	#dd_milestone{
+		width:40%;
+		margin-top:3%;
+	}
+	
+	#div_milestone_dd{
+		margin-left:54%;
+		margin-top:-7%;
+	}
+	#project_milestone{
+		width:186%;	
+	}
+	#task_list{
+		margin-top:6%;
+	}
+	th,tr,td{
+		margin-left:50%;
+	}
+	#main_div_tasks{
+		width:137%;
+		margin-left:-18%;
+	}
+</style>
+<!-- <button ng-click="sh()" id="aa" value="aaaaa">hemal</button>-->
+ <div id="main_div_tasks" ng-init="load_all_pro_mile_tasks();">
+ <h6>Projects</h6>
+ <md-input-container  class="md-block" id="dd_projects">
+       <label for="project" class="active">Select Project Name</label>
+       
+        <md-select multiple="true" ng-model="project_dd_id" id="project" name="project" class="validate" ng-init="project_dd_id = false" ng-change="get_milestone(); get_project_name(); " required>
+        	<!--<md-option ng-value = "all_project_select" ng-selected="true"><em>All</em></md-option>-->
+        	<md-option  ng-repeat = "project in all_projects" ng-value="project.id ">	
+    			{{project.project_name}}
+        	</md-option>
+    	</md-select>
+    </md-input-container>
+    
+   <div id="div_milestone_dd">
+	     <h6>Milestone</h6>
+	     <md-input-container  class="md-block" id="dd_milestone">
+	       <label for="project_milestone" class="active">Select Milestone Name</label>
+	       <md-select multiple ng-model="milestone_dd_id" id="project_milestone" name="project_milestone" ng-change="get_tasks(); get_milestone_name();" 
+	    	  class="validate" ng-init = "milestone_dd_id = false" required>
+	         <!--<md-option ng-selected="true"><em>All</em></md-option>-->
+	          <md-option ng-repeat = "get_milestone_name in get_milestone_names" ng-value = "get_milestone_name.id" >
+	        	{{get_milestone_name.milestone_name}}
+	          </md-option>
+	     </md-select>
+	    	<span style="color:red" ng-if="get_milestone_names.length === 0">
+	    		{{milestone_is_null}}
+	    	</span>
+	    </md-input-container>
+    </div>      
+      
+      
+      <div id="task_list">
+      	<div>
+      		<h6  style="background-color:#039be5;line-height:30px;color:white;">List of Tasks</h6>
+      	</div>
+      	<div>
+      		<hr style="width:100%;margin-left:0px;margin-top:0%">
+      	</div>
+      	<div>
+      		
+      		<!--Table to show on selection of Project Dropdown-->    		
+      		<table ng-if="project_dd_id">
+      			<tr>
+	      			<th>Projects</th>
+	      			<th>Milestones</th>
+	      			<th>Tasks</th>
+	      			<th>Start Date</th>
+	      			<th>End Date</th>
+	      			<th>In-charge</th>
+	      			<th>Reporter</th>
+	      			<th>Priority</th>
+	      		</tr>	
+      			<tr ng-repeat = "task in all_data_tasks">	
+      				<td>{{task.MID.pid.project_name}}</td>
+      				<td>{{task.MID.milestone_name}}</td>
+      				<td>{{task.task_details}}</td>
+      				<td>{{task.start_date}}</td>
+      				<td>{{task.end_date}}</td>
+      				<td>{{task.assignee.display_name}}</td>
+      				<td>{{task.reporter.display_name}}</td>
+      				<td>{{task.priority}}</td>
+      			</tr>
+      		</table>
+      		
+			<!--Table to show on page load-->    		
+      		<table ng-hide="project_dd_id">
+      			<tr>
+	      			<th>Projects</th>
+	      			<th>Milestones</th>
+	      			<th>Tasks</th>
+	      			<th>Start Date</th>
+	      			<th>End Date</th>
+	      			<th>In-charge</th>
+	      			<th>Reporter</th>
+	      			<th>Priority</th>
+	      		</tr>	
+      			<tr ng-repeat = "task in all_tasks | orderBy :'MID.pid.project_name'"> 	
+      				<td>{{task.MID.pid.project_name}}</td>
+      				<td>{{task.MID.milestone_name}}</td>
+      				<td>{{task.task_details}}</td>
+      				<td>{{task.start_date}}</td>
+      				<td>{{task.end_date}}</td>
+      				<td>{{task.assignee.display_name}}</td>
+      				<td>{{task.reporter.display_name}}</td>
+      				<td>{{task.priority}}</td>
+      			</tr>	
+      		</table>
+      		<span style="color:red"> <!--ng-if="get_milestone_names.length === 0"-->
+	    		{{task_is_null}}
+	    	</span>
+      	</div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+</div>           
+           
+    

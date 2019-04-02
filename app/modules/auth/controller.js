@@ -18,6 +18,8 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		//$scope.loading = true;
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
 			.then(function(r){
+				var get_email = $scope.email;
+				sessionStorage.setItem("login_email",get_email);
 				$scope.error = "";
 				if(!r.data.token){
 					$scope.error = M.E500;

@@ -1,23 +1,52 @@
 <td>
-	<a href=#!/{{currentRoute}}/{{item.id}}> {{item.first_name}}</a> 
+	<a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')"
+	href="#!/{{currentRoute}}/{{item.id}}">{{item.project_name}}</a>
+	<!--<span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.organizationName}}</span>-->
 </td>
 <td>
-	{{item.last_name}} 
+    <span>{{item.project_description}}</span>
 </td>
 <td>
-	{{item.contact_number}}
+    <span>{{item.estimated_start_date}}</span>
 </td>
 <td>
-	{{item.primary_email}}
+    <span>{{item.estimated_hours}}</span>
 </td>
 <td>
-	{{item.departments.title}} 
+    <span>{{item.daily_estimated_hours}}</span>
 </td>
 <td>
-	{{item.designations.title}}
+    <span>{{item.estimated_end_date}}</span>
 </td>
 <td>
-	{{item.roles.title}}
+    <span>{{item.dev_url}}</span>
+</td>
+<td>
+    <span>{{item.qa_url}}</span>
+</td>
+<td>
+    <span>{{item.po_url}}</span>
+</td>
+<td>
+    <span>{{item.demo_url}}</span>
+</td>
+<td>
+    <span>{{item.live_url}}</span>
+</td>
+<td>
+    <span>{{item.version}}</span>
+</td>
+<td>
+    <span>{{item.type}}</span>
+</td>
+<td>
+    <span>{{item.is_active == 1 ? 'Yes' : 'No'}}</span>
+</td>
+<!--<td>-->
+<!--    <span>{{item.companies.organization_name}}</span>-->
+<!--</td>-->
+<td>
+    <span>{{item.clients.name}}</span>
 </td>
 <td>
 	<span>

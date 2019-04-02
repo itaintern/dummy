@@ -12,8 +12,7 @@ function RegisterRoutes() {
             //////////////////////////////////////////////////////////////////////////////
             {route: 'companies', template: 'auth/companies', controller: 'companies'},
             
-             {route: 'manage_projects', template: 'auth/manage_projects', controller: 'manage_projects'},
-            
+            {route: 'projects', template: 'manage_projects/list', controller: 'manage_projects'},
             {route: 'company_holidays', template: 'auth/company_holidays', controller: 'company_holidays'},
             {route: 'company_modules', template: 'auth/company_modules', controller: 'company_modules'},
             {route: 'add_questions', template: 'auth/add_questions', controller: 'add_questions'},
@@ -21,9 +20,9 @@ function RegisterRoutes() {
             {route: 'assign_projects', template: 'auth/assign_projects', controller: 'assign_projects'},
             {route: 'clients', template: 'auth/clients', controller: 'clients'},
             {route: 'course_modules', template: 'auth/course_modules', controller: 'course_modules'},
-            {route: 'departments', template: 'auth/departments', controller: 'departments'},
+            {route: 'departments', template: 'departments/single', controller: 'departments'},
             {route: 'designations', template: 'auth/designations', controller: 'designations'},
-            {route: 'projects', template: 'auth/projects', controller: 'projects'},
+           
             {route: 'releases', template: 'auth/releases', controller: 'releases'},
             {route: 'test_cases', template: 'auth/test_cases', controller: 'test_cases'},
             {route: 'test_plans', template: 'auth/test_plans', controller: 'test_plans'},
@@ -32,6 +31,7 @@ function RegisterRoutes() {
             {route: 'documents', template: 'auth/documents', controller: 'documents'},
             {route: 'employees', template: 'auth/employees', controller: 'employees'},
             {route: 'question_banks', template: 'auth/question_banks', controller: 'question_banks'},
+            {route: 'profiles', template: 'profiles/single', controller: 'profiles'},
             {route: 'leave_requests', template: 'auth/leave_requests', controller: 'leave_requests'},
             {route: 'modules', template: 'auth/modules', controller: 'modules'},
             {route: 'manage_courses', template: 'auth/manage_courses', controller: 'manage_courses'},
@@ -41,13 +41,15 @@ function RegisterRoutes() {
             {route: 'schedule_quizes', template: 'auth/schedule_quizes', controller: 'schedule_quizes'},
             {route: 'search', template: 'auth/search', controller: 'search'},
             {route: 'reports', template: 'auth/reports', controller: 'reports'},
-            {route: 'alerts', template: 'auth/alerts', controller: 'alerts'}
+            {route: 'tasks', template: 'tasks/list', controller: 'tasks'},
+            {route: 'alerts', template: 'auth/alerts', controller: 'alerts'},
+            {route: 'users', template: 'users/list-item', controller: 'users'}
         ],
-        easyRoutes: ['organizations', 'users', 'groups', 'categories', 'tasks',
-        			'profiles', 'departments','projects','companies','company_holidays','company_modules',
+        easyRoutes: ['organizations', 'groups', 'categories',
+        			'companies','company_holidays','company_modules',
         			'add_questions','appreciations','assign_projects','clients','course_modules','designations','releases',
         			'test_cases','test_plans','test_executions','user_stories','documents','employees','question_banks',
         			'leave_requests','modules','manage_courses','manage_batches','question_sets','manage_quizes',
-        			'schedule_quizes','search','reports','alerts','members','manage_projects']
+        			'schedule_quizes','search','reports','alerts','members']
     };
 }

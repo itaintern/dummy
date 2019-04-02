@@ -1,78 +1,153 @@
-/*global app*/
-//The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
-//Example: your API is http://localhost:8080/api/tasks then the name of the controller is tasksControllerExtension.
-//To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' array.
-app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M, R) {
-	     $rootScope.hideButton = false;
+/*global angular, app*/
 
-	$scope.removeListHeaders = function(){
-    	return ['is_deleted']
-    }
+app.config(function($routeProvider) {
+    $routeProvider
 
-    //This function is called when you need to make changes to the new single object.
-    $scope.onInit = function(obj){
-        //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'tasks' resource that matches the structure of your 'tasks' API.
-    };
-    
-    //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/tasks/1
-    $scope.onLoad = function(obj){
-        //$scope.data.single is available here. 'obj' refers to the same. It represents the object you are trying to edit.
-    };
-    
-    //This function is called when you are in list mode. i.e. before a call has been placed to one of your API that returns a the paginated list of all objects matching your API.
-    $scope.beforeLoadAll = function(query){
-        //This is where you can modify your query parameters.    
-        //query.is_active = 1;
-        //return query;
-    };
+    .when("/load_milestones", {
+        templateUrl : "/load_milestones.html",
+        controller : "load_milestonesCtrl"
+    });
+});
+app.controller("load_milestonesCtrl", function ($scope) {
+  
+    $scope.msg = "Data has been added!!";
+});
 
-    //This function is called when you are in list mode. i.e. after a call has returned from one of your API that returns a the paginated list of all objects matching your API.
-    $scope.onLoadAll = function(obj){
-        //$scope.data.list is available here. 'obj' refers to the same. It represents the object you are trying to edit.
-        
-        //You can call $scope.setListHeaders(['column1','column2',...]) in case the auto generated column names are not what you wish to display.
-        //or You can call $scope.changeListHeaders('current column name', 'new column name') to change the display text of the headers;
-    };
-    
-    //This function is called before the create (POST) request goes to API
-    $scope.beforeSave = function(obj, next){
-        //You can choose not to call next(), thus rejecting the save request. This can be used for extra validations.
-        next();
-    };
+app.controller('tasksController', function($scope, $controller, $rootScope, $http, $location,$mdSidenav, $mdDialog, H, M,$route)
+{
+	$scope.getarray = [];
+	
+	$scope.load_all_pro_mile_tasks = function()
+	{
+		var get_data_id;
+		var get_login_email = sessionStorage.getItem("login_email");
+		
+		$http({
+			method:'GET', 
+			url:H.SETTINGS.baseUrl+'/profiles?primary_email='+get_login_email+'',
+			header:'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+			$scope.get_pr = response.data;
+			get_data_id = response.data[0].id;
+			
+		/*console.log("id is:");
+		console.log(get_data_id);*/
+		$http({
+			method:'GET',
+			url:H.SETTINGS.baseUrl+'/tasks?assignee_id='+get_data_id+'',
+			header:'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response){
+			$scope.all_tasks = response.data;
+			var tsk = response.data;
+			/*console.log("tasks are");
+			console.log(tsk);*/
+			if($scope.all_tasks.length>1)
+			{
+				$scope.show_all_tasks = "true";
+			}
+			else{
+				$scope.show_all_tasks = "true";
+			}
+		});
+		
+		$http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl+'/projects?profile_id='+get_data_id+'',
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+        	$scope.all_projects  = response.data;
+        	var prjct = response.data;
+        	//console.log(response.data);
+         });
+		});
+         
+         $http({
+          method : 'GET',
+          url : H.SETTINGS.baseUrl+'/milestones',
+          header : 'Content-Type: application/json; charset=UTF-8'
+        }).then(function(response){
+        	$scope.all_milestones  = response.data;
+        	var mlstne = response.data;
+         });
+	};
+	
+	
+	
+	$scope.get_milestone = function(){
+		var get_project_id = $scope.project_dd_id;	
+			$scope.get_milestone_names='';
+		$http({
+			method:'GET',
+			url: H.SETTINGS.baseUrl+'/milestones?pid='+get_project_id+'', 
+		}).then(function(response){
+			$scope.get_milestone_names = response.data;
+			//console.log($scope.get_milestone_names);
+			if($scope.get_milestone_names.length === 0)
+			{
+			    $scope.milestone_is_null = "No Milestones for this Project";
+			}
+			else{
+			    $scope.milestone_is_null = "";
+			}
+		});
+	};
+	
+	
+		//GET PROJECT NAME
+		$scope.get_project_name = function(){
+		var get_project_id = $scope.project_dd_id;	
+		
+		/*console.log(get_project_id);*/
+			$scope.get_milestone_names='';
+		$http({
+			method:'GET',
+			url: H.SETTINGS.baseUrl+'/projects?id='+get_project_id+'', 
+		}).then(function(response){
+		//console.log(response.data.length);
+		if(response !== null && response.data.length > 0)
+		{
+			var ac = response.data[response.data.length - 1].project_name;
+			$scope.getarray.push(ac);
+		}
+	});
+	
+	};
+	
+	
+	$scope.get_milestone_name = function(){
+		var get_milestone_id = $scope.milestone_dd_id;	
+		$http({
+			method:'GET',
+			url: H.SETTINGS.baseUrl+'/milestones?id='+get_milestone_id+'', 
+		}).then(function(response){
+			$scope.mname = response.data[0];
+		});
+	};
+	
+	
+	
+	$scope.get_tasks = function(){
+		var get_milestone_id = $scope.milestone_dd_id;
+		$http({
+			method:"GET",
+			url:H.SETTINGS.baseUrl+'/tasks?MID='+get_milestone_id+'',
+		}).then(function(response){
+		
+			$scope.all_data_tasks = response.data;
+			console.log($scope.all_data_tasks);
+			if($scope.all_data_tasks.length === 0)
+			{
+			    $scope.task_is_null = "No Tasks for this Milestone";
+			}
+			else{
+			    $scope.task_is_null = "";
+			}
+		});
+		
+	};
+	
 
-    //This function is called after the create (POST) request is returned from API
-    $scope.onSave = function (obj, next){
-        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been created.
-        next();
-    };
-    
-    //This function is called before the update (PUT) request goes to API
-    $scope.beforeUpdate = function(obj, next){
-        //You can choose not to call next(), thus rejecting the update request. This can be used for extra validations.
-        next();
-    };
+	
 
-    //This function is called after the update (PUT) request is returned from API
-    $scope.onUpdate = function (obj, next){
-        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been updated.
-        next();
-    };
-    
-    //This function will be called whenever there is an error during save/update operations.
-    $scope.onError = function (obj, next){
-        //You can choose not to call next(), thus preventing the page to display the popup that confirms there has been an error.
-        next();
-    };
-    
-    // If the singular of your title is having different spelling then you can define it as shown below.
-    // $scope.getSingularTitle = function(){
-    //     return "TASK";
-    // }
-
-    // If you want don't want to display certain columns in the list view you can remove them by defining the function below.
-    // $scope.removeListHeaders = function(){
-    //     return ['is_active'];
-    // }
-
-
+	
 });

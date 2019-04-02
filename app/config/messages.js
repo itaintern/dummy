@@ -14,6 +14,13 @@ app.service('M', function($http) {
 		"INVALID_EMAIL": "Invalid email!",
 		"UNAUTHORIZED_AREA": "You are not authorized to access this area!",
 		"NA": "N/A",
+		"VALIDATE_ALPHANUMERIC" : "Special characters are not allowed!(Except - _ , . /)",
+		"VALIDATE_NUMERIC" : "Only numbers are allowed!",
+		"VALIDATE_CONTACT" : "Invalid phone number",
+		"VALIDATE_ALPHABETS" : "Only alphabets are allowed!",
+		"VAIDATE_ZIPCODE" : "Invalid zipcode",
+		"ERR_END_DATE" : 'End date should be greater than start date.',
+		"ERR_START_DATE" : 'Start date should be greater than today date.',
 		
 		"DELETE_TITLE": "Item Delete!",
 		"DELETE_MESSAGE" : "Are you sure you want delete the item?",
@@ -163,6 +170,7 @@ app.service('M', function($http) {
 		"COURSE_MODULES_FIELD_MODULEID":"Module",
 		"COURSE_MODULES_FIELD_IS_ACTIVE":"Is Active",
 		
+		"DEPARTMENTS_FIELD":"Departments",
 		"DEPARTMENTS_FIELD_TITLE":"Title",
 		"DEPARTMENTS_FIELD_CONTACTNUMBER":"Contact Number",
 		"DEPARTMENTS_FIELD_DESCRIPTION":"Description",
@@ -172,6 +180,7 @@ app.service('M', function($http) {
 		"DESIGNATION_FIELD_COMPANY":"Company",
 		"DESIGNATION_FIELD_IS_ACTIVE":"Is Active",
 		
+		"PROJECTS_FIELD":"Projects",
 		"PROJECTS_FIELD_COMPANY":"Company",
 		"PROJECTS_FIELD_PROJECTNAME":"Project Name",
 		"PROJECTS_FIELD_PROJECTDESCRIPTION":"Project Description",
@@ -335,8 +344,9 @@ app.service('M', function($http) {
 		"SCHEDULE_QUIZES_FIELD_USERID":"User",
 		"SCHEDULE_QUIZES_FIELD_IS_ACTIVE":"Is Active",
 		
-		"PROFILES_FIELD_USER":"User",
-		"PROFILES_FIELD_EMPLOYEENUMBER":"Employe Number",
+		
+		"PROFILES_FIELD_USER":"Username",
+		"PROFILES_FIELD_EMPLOYEENUMBER":"Employee Number",
 		"PROFILES_FIELD_FIRSTNAME":"First Name",
 		"PROFILES_FIELD_LASTNAME":"Last Name",
 		"PROFILES_FIELD_DISPLAYNAME":"Display Name",
@@ -360,6 +370,8 @@ app.service('M', function($http) {
 		"PROFILES_FIELD_ISPRIMARY":"Is Primary",
 		"PROFILES_FIELD_PROFILEPICTURE":"Profile Picture",
 		"PROFILES_FIELD_IS_ACTIVE":"Is Active",
+		"PROFILES_FIELD":"Profiles",
+		"PROFILES_FIELD_STATUS" : "Status",
 		
 		"ALERTS_FIELD_MODULES_ID":"Modules",
 		"ALERTS_TO_EMAIL":"To Email",

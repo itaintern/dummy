@@ -1,20 +1,208 @@
-<td><a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')" href="#!/{{currentRoute}}/{{item.id}}">{{item.username}}</a><span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.username}}</span></td>
-<td>
-    <span>{{item.email}}</span>
-</td>
-<td>
-    <span>{{item.lease}}</span>
-</td>
-<td>
-    <span>{{item.role}}</span>
-</td>
-<td>
-    <div layout="row" flex>
-    <md-button ng-if="((['admin', 'superadmin'].indexOf(currentUser.role)  > -1) && item.role != 'superadmin') || (item.role == 'superadmin' && currentUser.role == 'superadmin') " class="btn md-raised md-primary green" ng-click="showSetPasswordDialog($event, item)" >
-        {{M.BTN_SET_PASSWORD}}
-    </md-button>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-md5/0.1.10/angular-md5.js"></script>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!--<style>
+	
+	#add_user_button{
+		background-color: #00bfff;	
+		border: none;
+		padding: 20px;
+		display: inline-block;
+    	font-size: 14px;
+    	color: white;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	cursor: pointer;
+    	border-radius: 50%;
+    	margin-left: 108%;
+    	margin-top: 4%;	
+	}
+</style>
+-->
+	<h5>USERS</h5>
+	<table>
+      			<tr>
+	      			<th>Username</th>
+	      			<th>Email</th>
+	      			<th>Last Lease</th>
+	      			<th>Role</th>
+	      			<th>Actions</th>
+	      		</tr>	
+	      		<tr ng-repeat="user in get_all_users">	
+      				<td>{{user.username}}</td>
+      				<td>{{user.email}}</td>
+      				<td>{{user.lease}}</td>
+      				<td>{{user.role}}</td>
+      				<td>
+      					<md-button ng-if="((['admin', 'superadmin'].indexOf(currentUser.role)  > -1) && user.role != 'superadmin') || (user.role == 'superadmin' && currentUser.role == 'superadmin') " 
+      					class="btn md-raised md-primary green" ng-click="setPassword(user.id); open_set_password();" >
+        					Set Password
+    					</md-button>
+    					<md-button ng-if="user.role == 'superadmin' && currentUser.role !== 'superadmin'" class="btn md-raised md-primary blue darken-4" >
+        					NA
+    					</md-button>
+      				</td>
+      				
+      			</tr>	
+      		</table>
+      <!--<button class="feedback glyphicon glyphicon-plus" ng-click="newProject()" title="Add Project" id="add_user_button"> </button>-->
+      		
+<div id="mybutton">
+        <button class="btnfeedback  glyphicon-plus" ng-click="newUser()" title="Add Project" id="add_user_button"> </button> 
     </div>
-    <md-button ng-if="item.role == 'superadmin' && currentUser.role !== 'superadmin'" class="btn md-raised md-primary blue darken-4" >
-        {{M.NA}}
-    </md-button>
-</td>
+
+
+
+
+
+
+
+
+   <form name="forms.userForm" id="myProject" style="margin-left:10px" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+
+   <md-sidenav md-component-id = "add_user" class = "md-sidenav-right" style="width:600px;position:fixed">
+  
+      <md-toolbar class="md-theme-indigo">
+              <h1 class="md-toolbar-tools">Add User</h1>
+            </md-toolbar>
+           
+          <md-input-container class="md-block" >
+            <label for="username" class="active">{{M.FIELD_USERNAME}}</label>
+            <input id="username" name="username" type="text" class="validate" ng-model="addUser.username" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required >
+            <span style="color:red" ng-if="forms.userForm.username.$invalid  && forms.userForm.username.$touched && forms.userForm.username.$dirty">Enter Username</span>
+            <div ng-messages="add_user.username.$error" ng-show="add_user.username.$dirty">
+              <div ng-message="required">{{M.REQUIRED}}</div>
+            </div>
+          </md-input-container>
+
+          
+          <md-input-container class="md-block" >
+            <label for="email" class="active">{{M.FIELD_EMAIL}}</label>
+            <input name="email" type="email" class="validate" ng-model="addUser.email" required >
+             <span style="color:red" ng-if="forms.userForm.email.$invalid  && forms.userForm.email.$touched && forms.userForm.email.$dirty">Enter Proper Email</span>
+            <div ng-messages="add_user.email.$error" ng-show="add_user.email.$dirty">
+              <div ng-message="required">{{M.REQUIRED}}</div>
+            </div>
+          </md-input-container>
+          
+          <md-input-container class="md-block" >
+            <label for="password" class="active">{{M.FIELD_PASSWORD}}</label>
+            <input id="password" name="password" type="text" class="validate" ng-model="addUser.password" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required >
+            <span style="color:red" ng-if="forms.userForm.password.$invalid  && forms.userForm.password.$touched && forms.password.username.$dirty">Enter Username</span>
+            <div ng-messages="add_user.password.$error" ng-show="add_user.password.$dirty">
+              <div ng-message="required">{{M.REQUIRED}}</div>
+            </div>
+          </md-input-container>
+
+          
+        <md-input-container ng-if="data.single.role != 'superadmin'" class="md-block" >
+		    <label for="role" class="adtive">{{M.FIELD_ROLE}}:</label>
+		    <span style="color:red" ng-if="forms.userForm.role.$invalid  && forms.userForm.role.$touched && forms.userForm.role.$dirty">Select Role</span>
+		    <md-select id="role" ng-model="addUser.role" ng-disabled="locked" required>
+		      <md-option ng-repeat="role in set_user_roles" ng-value="role.value">
+		        {{role.value}}
+		      </md-option>		
+    		</md-select>
+		</md-input-container>
+        
+        <md-dialog-actions layout="row" >
+            
+            <md-button  class = "md-primary md-raised"  ng-click = "add_user(addUser)"
+                      ng-disabled="forms.userForm.$invalid">
+                     Add 
+             </md-button>
+           <md-button  class = "md-primary md-raised"  ng-click = "close_user_sidebar()">
+                     Cancel 
+             </md-button>
+          </md-dialog-actions>
+               
+            
+               </md-sidenav>
+</form>
+
+
+
+
+
+
+
+
+   <form name="forms.setPasswordForm" id="mysetPassword" style="margin-left:10px" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+
+   <md-sidenav md-component-id = "set_password" class = "md-sidenav-right" style="width:600px;position:fixed;height:auto;">
+  
+      <md-toolbar class="md-theme-indigo">
+              <h1 class="md-toolbar-tools">Set Password</h1>
+            </md-toolbar>
+           
+          <md-input-container class="md-block" >
+            <label for="adminpassword" class="active">{{M.FIELD_ADMIN_PASSWORD}}</label>
+            <input id="adminpassword" name="adminpassword" type="password" class="validate" ng-model="setPass.adminpassword"  required >
+            <span style="color:red" ng-if="forms.setPasswordForm.username.$invalid  && forms.setPasswordForm.username.$touched && forms.setPasswordForm.username.$dirty">Enter Username</span>
+            <div ng-messages="set_password.username.$error" ng-show="set_password.username.$dirty">
+              <div ng-message="required">{{M.REQUIRED}}</div>
+            </div>
+          </md-input-container>
+
+          
+          <md-input-container class="md-block" >
+            <label for="password" class="active">{{M.FIELD_PASSWORD}}</label>
+            <input name="password" type="password" class="validate" ng-model="setPass.password" required id="password1">
+             <span style="color:red" ng-if="forms.setPasswordForm.password.$invalid  && forms.setPasswordForm.password.$touched && forms.setPasswordForm.password.$dirty"></span>
+            <div ng-messages="set_password.email.$error" ng-show="set_password.email.$dirty">
+              <div ng-message="required">{{M.REQUIRED}}</div>
+            </div>
+          </md-input-container>
+          
+          <md-input-container class="md-block" >
+            <label for="confirmpassword" class="active">{{M.FIELD_CONFIRM_PASSWORD}}</label>
+            <input id="confirmpassword" name="confirmpassword" type="password" class="validate" ng-model="setPass.confirmpassword"  required ng-change="validatePassword()">
+            <span style="color:red" ng-if="forms.setPasswordForm.confirmpassword.$invalid  && forms.setPasswordForm.confirmpassword.$touched && forms.setPasswordForm.confirmpassword.$dirty">
+            
+            </span>
+            <span style="color:red" id="password_alert"></span>
+            <div ng-messages="set_password.confirmpassword.$error" ng-show="set_password.confirmpassword.$dirty">
+              <div ng-message="required">{{M.REQUIRED}}</div>
+            </div>
+          </md-input-container>
+
+          
+        <input type="hidden" value=""/>
+        
+        <md-dialog-actions layout="row" >
+            
+            <md-button  class = "md-primary md-raised"  ng-click = "set_password_function(setPass); validatePassword();"
+                      ng-disabled="forms.setPasswordForm.$invalid">
+                     Set 
+             </md-button>
+           <md-button  class = "md-primary md-raised"  ng-click = "close_set_password()">
+                     Cancel 
+             </md-button>
+          </md-dialog-actions>
+               
+            
+               </md-sidenav>
+</form>
+
+
+<script>
+	function isPasswordMatch() {
+    var password = $("#password1").val();
+    var confirmPassword = $("#confirmpassword").val();
+
+    if (password != confirmPassword) $("#password_alert").html("Password does not match!");
+    else $("#password_alert").html("");
+}
+
+$(document).ready(function () {
+    $("#confirmpassword").keyup(isPasswordMatch);
+});
+</script>
+
+
+
+
+
