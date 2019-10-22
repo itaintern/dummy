@@ -1,6 +1,6 @@
-<form name="forms.manage_quizesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+<form name="forms.quizzesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
    <md-input-container  class="md-block">
-          <label for="question_sets_id" class="active">{{M.MANAGE_QUIZES_FIELD_QUESETID}}:</label>
+          <label for="question_sets_id" class="active">{{M.QUIZZES_FIELD_QUESETID}}:</label>
           <md-select ng-model="data.single.question_sets_id" id="question_sets_id" name="question_sets_id" class="validate" ng-disabled="locked">
             <md-option><em>None</em></md-option>
             <md-option ng-repeat="qsdata in questionSetsdata" ng-selected="{{data.single.question_sets.title === qsdata.title}}"
@@ -8,19 +8,19 @@
               {{qsdata.title}}
             </md-option>
         </md-select>
-          <div ng-messages="forms.manage_quizesForm.question_sets_id.$error" ng-show="forms.manage_quizesForm.question_sets_id.$dirty">
+          <div ng-messages="forms.quizzesForm.question_sets_id.$error" ng-show="forms.quizzesForm.question_sets_id.$dirty">
       <div ng-message="required">{{M.REQUIRED}}</div>     
     </div>
   </md-input-container>
   <md-input-container class="md-block">
-  	   <label for="date" class="active">{{M.MANAGE_QUIZES_FIELD_DATE}}:</label>
+  	   <label for="date" class="active">{{M.QUIZZES_FIELD_DATE}}:</label>
 	 <md-datepicker ng-model="data.single.date" ng-change="newdate(data.single.date)" id="date" name="date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
-	     <div ng-messages="forms.manage_quizesForm.date.$error" ng-show="forms.manage_quizesForm.date.$dirty">
+	     <div ng-messages="forms.quizzesForm.date.$error" ng-show="forms.quizzesForm.date.$dirty">
       <div ng-message="required">{{M.REQUIRED}}</div>
     </div>
  </md-input-container>
   <md-input-container  class="md-block">
-          <label for="users_id" class="active">{{M.MANAGE_QUIZES_FIELD_USERID}}:</label>
+          <label for="users_id" class="active">{{M.QUIZZES_FIELD_USERID}}:</label>
           <md-select ng-model="data.single.users_id" id="users_id" name="users_id" class="validate" ng-disabled="locked">
             <md-option><em>None</em></md-option>
             <md-option ng-repeat="udata in usersdata" ng-selected="{{data.single.users.email === udata.email}}"
@@ -34,7 +34,7 @@
   </md-input-container>
   <md-input-container class="md-block">
   <md-checkbox class="validate" ng-model="data.single.isActive" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isActive" id="isActive" name="isActive" ng-disabled="locked">
-		{{M.MANAGE_QUIZES_FIELD_IS_ACTIVE}} 
+		{{M.QUIZZES_FIELD_IS_ACTIVE}} 
           </md-checkbox>
    </md-input-container>
 </form>

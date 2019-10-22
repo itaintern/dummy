@@ -1,5 +1,6 @@
 /*global angular, app*/
 app.controller('departmentsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+
     $rootScope.hideButton = false;
     var url = H.SETTINGS.baseUrl + '/companies';
     	$http.get(url)

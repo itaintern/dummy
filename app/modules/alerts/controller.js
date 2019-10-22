@@ -1,4 +1,5 @@
-app.controller('alertsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+app.controller('alertsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
+{
     
     $scope.removeListHeaders = function(){
     	return ['is_deleted']
@@ -135,4 +136,5 @@ app.controller('alertsControllerExtension', function($scope, $controller, $rootS
 	 		next();
 	 	}
 	 }
+	 
 });

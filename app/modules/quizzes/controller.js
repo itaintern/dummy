@@ -1,5 +1,5 @@
 /*global angular, app*/
-app.controller('manage_quizesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+app.controller('quizzesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
      $scope.removeListHeaders = function(){
 		return ['is_deleted'];
@@ -29,4 +29,5 @@ app.controller('manage_quizesControllerExtension', function($scope, $controller,
        $scope.newdate = function(Date){
        		$scope.data.single.date = H.toMySQLDateTime(Date);
     	};
+    	
 });

@@ -5,7 +5,7 @@
 
 app.controller('projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
 { 
-	alert('project cotroller!!');
+	//alert('project cotroller!!');
 	
 	 $scope.removeListHeaders = function(){
     	return ['is_deleted']

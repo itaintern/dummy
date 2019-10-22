@@ -9,8 +9,6 @@ app.controller('add_questionsControllerExtension', function($scope, $controller,
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
-        	
-        	
      var urlQuestionSet = H.SETTINGS.baseUrl + '/question_sets';
     	$http.get(urlQuestionSet)
         	.then(function(r){

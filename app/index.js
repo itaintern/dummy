@@ -1096,7 +1096,7 @@ app.service('M', function($http) {
 		"FIELD_ACTIVE": "Active",
 		"FIELD_CATEGORY": "Category",
 		"FIELD_ASSIGN_BY":"Assign by",
-			"RELEASES_FIELD_STATUS":"status",
+		"RELEASES_FIELD_STATUS":"status",
 		
 		
 		"COMPANIES_FIELD_ORGANIZATIONNAME": "Organization Name",
@@ -1318,13 +1318,21 @@ app.service('M', function($http) {
 		"MILESTONES_FIELD_FLAG":"Milestone Flag",
 		"MILESTONES_FIELD_PID":" ENTER Pid",
 		
-		"MANAGE_COURSES_FIELD_TITLE":"Title",
-		"MANAGE_COURSES_FIELD_DESCRIPTION":"Description",
-		"MANAGE_COURSES_FIELD_MODULEID":"Module",
-		"MANAGE_COURSES_FIELD_DURATION":"Duration",
-		"MANAGE_COURSES_FIELD_DURATIONTYPEID":"Duration Type",
-		"MANAGE_COURSES_FIELD_STATUSID":"Status",
-		"MANAGE_COURSES_FIELD_IS_ACTIVE":"Is Active",
+		// "MANAGE_COURSES_FIELD_TITLE":"Title",
+		// "MANAGE_COURSES_FIELD_DESCRIPTION":"Description",
+		// "MANAGE_COURSES_FIELD_MODULEID":"Module",
+		// "MANAGE_COURSES_FIELD_DURATION":"Duration",
+		// "MANAGE_COURSES_FIELD_DURATIONTYPEID":"Duration Type",
+		// "MANAGE_COURSES_FIELD_STATUSID":"Status",
+		// "MANAGE_COURSES_FIELD_IS_ACTIVE":"Is Active",
+	
+		"COURSES_FIELD_TITLE":"Title",
+		"COURSES_FIELD_DESCRIPTION":"Description",
+		"COURSES_FIELD_MODULEID":"Module",
+		"COURSES_FIELD_DURATION":"Duration",
+		"COURSES_FIELD_DURATIONTYPEID":"Duration Type",
+		"COURSES_FIELD_STATUSID":"Status",
+		"COURSES_FIELD_IS_ACTIVE":"Is Active",	
 		
 		"MANAGE_BATCHS_FIELD_TITLE":"Title",
 		"MANAGE_BATCHS_FIELD_STARTDATE":"Start Date",
@@ -1336,10 +1344,10 @@ app.service('M', function($http) {
 		"QUESTION_SETS_FIELD_TITLE":"Title",
 		"QUESTION_SETS_FIELD_IS_ACTIVE":"Is Active",
 		
-		"MANAGE_QUIZES_FIELD_QUESETID":"Question set",
-		"MANAGE_QUIZES_FIELD_DATE":"Date",
-		"MANAGE_QUIZES_FIELD_USERID":"User",
-		"MANAGE_QUIZES_FIELD_IS_ACTIVE":"Is Active",
+		"QUIZZES_FIELD_QUESETID":"Question set",
+		"QUIZZES_FIELD_DATE":"Date",
+		"QUIZZES_FIELD_USERID":"User",
+		"QUIZZES_FIELD_IS_ACTIVE":"Is Active",
 		
 		"SCHEDULE_QUIZES_FIELD_QUESETID":"Question set",
 		"SCHEDULE_QUIZES_FIELD_DATE":"Date",
@@ -1392,7 +1400,8 @@ app.service('M', function($http) {
             {route: 'out-of-service', template: 'auth/out-of-service', controller: 'outOfService', auth: false},
             {route: 'settings', template: 'settings/template', controller: 'settings'}
         ],
-        easyRoutes: ['alerts','add_questions','departments','organizations', 'users', 'groups', 'categories', 'company_holidays','tasks','projects',
+        easyRoutes: ['alerts','add_questions','departments','organizations', 'users', 
+        'groups', 'categories', 'company_holidays','tasks','projects',
         'releases','schedule_quizes','test_cases','test_plans','test_executions',
         'course_modules','modules','courses','batches','question_banks',
         'question_sets','quizzes','leave_requests']
@@ -1724,8 +1733,6 @@ app.controller('timeController', function($scope){
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
-        	
-        	
      var urlQuestionSet = H.SETTINGS.baseUrl + '/question_sets';
     	$http.get(urlQuestionSet)
         	.then(function(r){
@@ -1735,7 +1742,8 @@ app.controller('timeController', function($scope){
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
-});app.controller('alertsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+});app.controller('alertsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
+{
     
     $scope.removeListHeaders = function(){
     	return ['is_deleted']
@@ -1872,6 +1880,7 @@ app.controller('timeController', function($scope){
 	 		next();
 	 	}
 	 }
+	 
 });/*global app*/
 app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, H, M, S) 
 {
@@ -2096,9 +2105,11 @@ app.controller('unauthorizedController', function($scope, H){
 	$scope.M = H.M;
 });
 /*global angular, app*/
-app.controller('batchesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+app.controller('batchesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
+{
+	alert('hello batches ');
     $rootScope.hideButton = false;
-    var urlmanageCourses = H.SETTINGS.baseUrl + '/manage_courses';
+    var urlmanageCourses = H.SETTINGS.baseUrl + '/courses';
     	$http.get(urlmanageCourses)
         	.then(function(r){
             	$scope.manageCoursesdata = r.data;
@@ -2122,10 +2133,76 @@ app.controller('batchesControllerExtension', function($scope, $controller, $root
        $scope.newstartDate = function(Date){
        		$scope.data.single.start_date = H.toMySQLDateTime(Date);
     	};
-    $scope.newendDate = function(Date){
+    	
+       $scope.newendDate = function(Date){
        		$scope.data.single.end_date = H.toMySQLDateTime(Date);
     	};
+    	 $scope.onInit = function(obj){
+        //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'tasks' resource that matches the structure of your 'tasks' API.
+             obj.is_active = 1;
+           
+       // $scope.loadEmployee();
+      //  $scope.loadUsers();
+        
+    };
+    
+    //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/tasks/1
+    $scope.onLoad = function(obj){
+        //$scope.data.single is aavailable here. 'obj' refers to the same. It represents the object you are trying to edit.
+    
+    //	 $scope.loadUsers();
     	
+    };
+    
+    //This function is called when you are in list mode. i.e. before a call has been placed to one of your API that returns a the paginated list of all objects matching your API.
+    $scope.beforeLoadAll = function(query){
+        //This is where you can modify your query parameters.    
+        //query.is_active = 1;
+        //return query;
+    };
+
+    //This function is called when you are in list mode. i.e. after a call has returned from one of your API that returns a the paginated list of all objects matching your API.
+    $scope.onLoadAll = function(obj){
+        //$scope.data.list is available here. 'obj' refers to the same. It represents the object you are trying to edit.
+        //You can call $scope.setListHeaders(['column1','column2',...]) in case the auto generated column names are not what you wish to display.
+        //or You can call $scope.changeListHeaders('current column name', 'new column name') to change the display text of the headers;
+    };
+    
+    //This function is called before the create (POST) request goes to API
+    $scope.beforeSave = function(obj, next){
+        //You can choose not to call next(), thus rejecting the save request. This can be used for extra validations.
+      // $scope.loadEmployee(obj,function(){
+       	 alert(JSON.stringify(obj));
+        next();
+      // });
+       
+    };
+
+    //This function is called after the create (POST) request is returned from API
+    $scope.onSave = function (obj, next)
+    {
+        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been created.
+        next();
+    };
+    
+    //This function is called before the update (PUT) request goes to API
+    $scope.beforeUpdate = function(obj, next)
+    {
+        //You can choose not to call next(), thus rejecting the update request. This can be used for extra validations.
+        next();
+    };
+    //This function is called after the update (PUT) request is returned from API
+    $scope.onUpdate = function (obj, next)
+    {
+        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been updated.
+        next();
+    };
+    //This function will be called whenever there is an error during save/update operations.
+    $scope.onError = function (obj, next)
+    {
+        //You can choose not to call next(), thus preventing the page to display the popup that confirms there has been an error.
+        next();
+    };
 });/*global app*/
 //The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
 //Example: your API is http://localhost:8080/api/categories then the name of the controller is categoriesControllerExtension.
@@ -2254,12 +2331,14 @@ app.controller('company_holidaysControllerExtension', function($scope, $controll
     	// };
 });
 /*global angular, app*/
-app.controller('manage_coursesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+app.controller('coursesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M)
+{
     
     $scope.removeListHeaders = function(){
 		return ['is_deleted'];
     }
-         $rootScope.hideButton = false;
+    
+    $rootScope.hideButton = false;
     var urllearningModules = H.SETTINGS.baseUrl + '/learning_modules';
     	$http.get(urllearningModules)
         	.then(function(r){
@@ -2269,6 +2348,7 @@ app.controller('manage_coursesControllerExtension', function($scope, $controller
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
+        	
         	
     var urlstatus = H.SETTINGS.baseUrl + '/status';
     	$http.get(urlstatus)
@@ -2280,6 +2360,7 @@ app.controller('manage_coursesControllerExtension', function($scope, $controller
         		}
         	});
         	
+        	
     var urldurationTypes = H.SETTINGS.baseUrl + '/duration_types';
     	$http.get(urldurationTypes)
         	.then(function(r){
@@ -2289,6 +2370,29 @@ app.controller('manage_coursesControllerExtension', function($scope, $controller
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
+        	
+});/*global angular, app*/
+app.controller('departmentsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+
+    $rootScope.hideButton = false;
+    var url = H.SETTINGS.baseUrl + '/companies';
+    	$http.get(url)
+        	.then(function(r){
+            	$scope.companyname = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+    
+    $scope.removeListHeaders = function(){
+		return ['is_deleted'];
+    }
+    	
+    // $scope.onLoadAll = function(obj){
+    // 	$scope.setListHeaders(['Title','Contact Number','Description','Companies','Status']);
+    // };
+    
 });/*global angular, app, $*/
 app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, $mdDialog, H, M) 
 {
@@ -2747,14 +2851,71 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         $mdDialog.cancel();            
     };
 });
-/* global app */
+/*global angular, app*/
+app.controller('profilesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+    
+    $scope.removeListHeaders = function(){
+    	return ['users','companies','employee_number','display_name','join_date','leave_date','birth_date','emergency_number',
+    	'secondary_email','address','password','state','country','zipCode','city','is_primary','profile_picture','status','is_deleted']
+	}
+         $rootScope.hideButton = false;
+    var urlCompany = H.SETTINGS.baseUrl + '/companies';
+    	$http.get(urlCompany)
+        	.then(function(r){
+            	$scope.Companydata = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+    
+    var urlDepartment = H.SETTINGS.baseUrl + '/departments';
+    	$http.get(urlDepartment)
+        	.then(function(r){
+            	$scope.Departmentdata = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+    
+    var urlRole = H.SETTINGS.baseUrl + '/roles';
+    	$http.get(urlRole)
+        	.then(function(r){
+            	$scope.Roledata = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+    
+    var urlDesignation = H.SETTINGS.baseUrl + '/designations';
+    	$http.get(urlDesignation)
+        	.then(function(r){
+            	$scope.Designationdata = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+    
+       $scope.newjoinDate = function(Date){
+       		$scope.data.single.joinDate = H.toMySQLDateTime(Date);
+    	};
+    	$scope.newleaveDate = function(Date){
+       		$scope.data.single.leaveDate = H.toMySQLDateTime(Date);
+    	};
+    	$scope.newbirthDate = function(Date){
+    		$scope.data.single.birthDate = H.toMySQLDateTime(Date);
+    	};
+});/* global app */
 //The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
 //Example: your API is http://localhost:8080/api/tasks then the name of the controller is tasksControllerExtension.
 //To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' array.
 
 app.controller('projectsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
 { 
-	alert('project cotroller!!');
+	//alert('project cotroller!!');
 	
 	 $scope.removeListHeaders = function(){
     	return ['is_deleted']
@@ -3049,7 +3210,7 @@ app.controller('question_banksControllerExtension', function($scope, $controller
     	return ['is_deleted']
     }
          $rootScope.hideButton = false;
-    var urlManageCourse = H.SETTINGS.baseUrl + '/manage_courses';
+    var urlManageCourse = H.SETTINGS.baseUrl + '/courses';
     	$http.get(urlManageCourse)
         	.then(function(r){
             	$scope.ManageCoursedata = r.data;
@@ -3067,7 +3228,7 @@ app.controller('question_setsControllerExtension', function($scope, $controller,
          $rootScope.hideButton = false;
 
 });/*global angular, app*/
-app.controller('manage_quizesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+app.controller('quizzesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
      $scope.removeListHeaders = function(){
 		return ['is_deleted'];
@@ -3097,6 +3258,7 @@ app.controller('manage_quizesControllerExtension', function($scope, $controller,
        $scope.newdate = function(Date){
        		$scope.data.single.date = H.toMySQLDateTime(Date);
     	};
+    	
 });
 /*global angular, app*/
 app.controller('releasesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
@@ -3128,7 +3290,38 @@ app.controller('releasesControllerExtension', function($scope, $controller, $roo
        };
        
 });
-/*global app*/
+/*global angular, app*/
+app.controller('schedule_quizesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+    
+    $scope.removeListHeaders = function(){
+    	return ['is_deleted']
+    }
+         $rootScope.hideButton = false;
+    var urlquestionSets = H.SETTINGS.baseUrl + '/question_sets';
+    	$http.get(urlquestionSets)
+        	.then(function(r){
+            	$scope.questionSetsdata = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+    
+    var urlusers = H.SETTINGS.baseUrl + '/users';
+    	$http.get(urlusers)
+        	.then(function(r){
+            	$scope.usersdata = r.data;
+        	},function(e){
+        		if(e && e.data && e.data.error && e.data.error.status){
+        			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
+        		}
+        	});
+       
+    
+       $scope.newdate = function(Date){
+       		$scope.data.single.date = H.toMySQLDateTime(Date);
+    	};
+});/*global app*/
 app.controller('settingsController', function($scope, $rootScope, $http, $cookies, H, M){
 	$scope.H = H;
 	$scope.M = H.M;

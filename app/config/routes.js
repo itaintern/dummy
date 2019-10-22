@@ -10,7 +10,8 @@ function RegisterRoutes() {
             {route: 'out-of-service', template: 'auth/out-of-service', controller: 'outOfService', auth: false},
             {route: 'settings', template: 'settings/template', controller: 'settings'}
         ],
-        easyRoutes: ['alerts','add_questions','departments','organizations', 'users', 'groups', 'categories', 'company_holidays','tasks','projects',
+        easyRoutes: ['alerts','add_questions','departments','organizations', 'users', 
+        'groups', 'categories', 'company_holidays','tasks','projects',
         'releases','schedule_quizes','test_cases','test_plans','test_executions',
         'course_modules','modules','courses','batches','question_banks',
         'question_sets','quizzes','leave_requests']

@@ -5,7 +5,7 @@ app.controller('question_banksControllerExtension', function($scope, $controller
     	return ['is_deleted']
     }
          $rootScope.hideButton = false;
-    var urlManageCourse = H.SETTINGS.baseUrl + '/manage_courses';
+    var urlManageCourse = H.SETTINGS.baseUrl + '/courses';
     	$http.get(urlManageCourse)
         	.then(function(r){
             	$scope.ManageCoursedata = r.data;

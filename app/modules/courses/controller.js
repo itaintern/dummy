@@ -1,11 +1,13 @@
 
 /*global angular, app*/
-app.controller('manage_coursesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+app.controller('coursesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M)
+{
     
     $scope.removeListHeaders = function(){
 		return ['is_deleted'];
     }
-         $rootScope.hideButton = false;
+    
+    $rootScope.hideButton = false;
     var urllearningModules = H.SETTINGS.baseUrl + '/learning_modules';
     	$http.get(urllearningModules)
         	.then(function(r){
@@ -15,6 +17,7 @@ app.controller('manage_coursesControllerExtension', function($scope, $controller
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
+        	
         	
     var urlstatus = H.SETTINGS.baseUrl + '/status';
     	$http.get(urlstatus)
@@ -26,6 +29,7 @@ app.controller('manage_coursesControllerExtension', function($scope, $controller
         		}
         	});
         	
+        	
     var urldurationTypes = H.SETTINGS.baseUrl + '/duration_types';
     	$http.get(urldurationTypes)
         	.then(function(r){
@@ -35,4 +39,5 @@ app.controller('manage_coursesControllerExtension', function($scope, $controller
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
+        	
 });

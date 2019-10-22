@@ -1,4 +1,6 @@
+
 <form name="forms.batchesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+   
    <md-input-container class="md-block">
     <label for="title" class="active">{{M.MANAGE_BATCHS_FIELD_TITLE}}:</label>
     <input id="title" name="title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
@@ -6,20 +8,23 @@
       <div ng-message="required">{{M.REQUIRED}}</div>
     </div>
   </md-input-container>
+  
   <md-input-container class="md-block">
   	   <label for="start_date" class="active">{{M.MANAGE_BATCHS_FIELD_STARTDATE}}:</label>
 	 <md-datepicker ng-model="data.single.start_date" ng-change="newstartDate(data.single.start_date)" id="start_date" name="start_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
 	     <div ng-messages="forms.batchesForm.start_date.$error" ng-show="forms.batchesForm.start_date.$dirty">
       <div ng-message="required">{{M.REQUIRED}}</div>
     </div>
- </md-input-container>
- <md-input-container class="md-block">
+  </md-input-container>
+  
+  <md-input-container class="md-block">
   	   <label for="end_date" class="active">{{M.MANAGE_BATCHS_FIELD_ENDDATE}}:</label>
 	 <md-datepicker ng-model="data.single.end_date" ng-change="newendDate(data.single.end_date)" id="end_date" name="end_date" class="validate" md-open-on-focus ng-disabled="locked"></md-datepicker>
 	     <div ng-messages="forms.batchesForm.end_date.$error" ng-show="forms.batchesForm.end_date.$dirty">
       <div ng-message="required">{{M.REQUIRED}}</div>
     </div>
- </md-input-container>
+  </md-input-container>
+ 
   <md-input-container  class="md-block">
           <label for="manage_courses_id" class="active">{{M.MANAGE_BATCHS_FIELD_COURSEID}}:</label>
           <md-select ng-model="data.single.manage_courses_id" id="manage_courses_id" name="manage_courses_id" class="validate" ng-disabled="locked">
@@ -33,6 +38,7 @@
       <div ng-message="required">{{M.REQUIRED}}</div>     
     </div>
   </md-input-container>
+ 
  <md-input-container  class="md-block">
           <label for="status_id" class="active">{{M.MANAGE_BATCHS_FIELD_STATUSID}}:</label>
           <md-select ng-model="data.single.status_id" id="status_id" name="status_id" class="validate" ng-disabled="locked">
@@ -45,12 +51,14 @@
           <div ng-messages="forms.manageCoursesForm.status_id.$error" ng-show="forms.manageCoursesForm.status_id.$dirty">
       <div ng-message="required">{{M.REQUIRED}}</div>     
     </div>
-  </md-input-container>
-  <md-input-container class="md-block">
-  <md-checkbox class="validate" ng-model="data.single.isActive" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isActive" id="isActive" name="isActive" ng-disabled="locked">
+ </md-input-container>
+ 
+ <md-input-container class="md-block">
+   <md-checkbox class="validate" ng-model="data.single.isActive" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isActive" id="isActive" name="isActive" ng-disabled="locked">
 		{{M.MANAGE_BATCHS_FIELD_IS_ACTIVE}} 
-          </md-checkbox>
-   </md-input-container>
+   </md-checkbox>
+ </md-input-container>
+
 </form>
 
 <div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
@@ -65,3 +73,7 @@
       }
   </style>
 </div>
+
+
+
+
