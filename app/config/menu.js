@@ -19,9 +19,10 @@ function RegisterMenuItems(){
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
         	    	items : [
-        	    		{action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
-        	    		{action: 'projects', icon: '',text: 'Manage Projects (Old)'},
-        	    		{action: 'releases', icon: '',text: 'Manage Release (Old)'},
+        	    	//	{action: 'manage_projects', icon: 'event_note', color: 'green', text: 'Manage Projects (New)'},
+        	    		{action: 'projects', icon: 'event_note', color: 'green', text: ' Projects (New)'},
+        	    		{action: 'projects', icon: '',text: ' Projects (Old)'},
+        	    		{action: 'releases', icon: '',text: ' Release (Old)'},
         	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
         	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
         	    		{action: 'test_executions', icon: '',text: 'Test Executions (Old)'}
@@ -32,8 +33,8 @@ function RegisterMenuItems(){
         	    {action: '', icon: 'grid_on', color:'orange',text: 'Courses',
         	    	items : [
         	    		{action: 'modules', icon: '',text: 'Module'},
-        	    		{action: 'manage_courses', icon: '',text: 'Manage Course'},
-        	    		{action: 'manage_batches', icon: '',text: 'Manage Batches'}
+        	    		{action: 'courses', icon: '',text: 'Course'},
+        	    		{action: 'batches', icon: '',text: 'Batches'}
         	    	]
         	    },
         	    
@@ -42,7 +43,7 @@ function RegisterMenuItems(){
         	    		{action: 'question_banks', icon: '',text: 'Question Bank'},
         	    		{action: 'question_sets', icon: '',text: 'Question Sets'},
         	    		{action: 'add_questions', icon: '',text: 'Add Question'},
-						{action: 'manage_quizes', icon: '',text: 'Manage Quizes'},
+						{action: 'quizzes', icon: '',text: 'Quizes'},
 						{action: 'schedule_quizes', icon: '',text: 'Schedule Quizes'}
         	    	]
         	    },
@@ -68,6 +69,7 @@ function RegisterMenuItems(){
 	        ],
 	        allowedRoles: ['user', 'admin']
         },
+        
         {
             header: 'Administration',
             showHeader: true,
@@ -81,6 +83,7 @@ function RegisterMenuItems(){
 	        ],
 	        allowedRoles: ['admin']
         },
+        
         {
             header: 'Customer Management',
             showHeader: false,

@@ -1,0 +1,90 @@
+<form name="forms.manage_coursesForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	
+   <md-input-container class="md-block">
+    <label for="title" class="active">{{M.MANAGE_COURSES_FIELD_TITLE}}:</label>
+    <input id="title" name="title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
+    <div ng-messages="forms.manage_coursesForm.title.$error" ng-show="forms.manage_coursesForm.title.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  
+  <md-input-container class="md-block">
+    <label for="description" class="active">{{M.MANAGE_COURSES_FIELD_DESCRIPTION}}:</label>
+    <input id="description" name="description" type="text" class="validate" ng-model="data.single.description" required ng-disabled="locked">
+    <div ng-messages="forms.manage_coursesForm.description.$error" ng-show="forms.manage_coursesForm.description.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  
+  <md-input-container  class="md-block">
+          <label for="learning_modules_id" class="active">{{M.MANAGE_COURSES_FIELD_MODULEID}}:</label>
+          <md-select ng-model="data.single.learning_modules_id" id="learning_modules_id" name="learning_modules_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="lmdata in learningModulesdata" ng-selected="{{data.single.learning_modules.title === lmdata.title}}"
+            ng-value="lmdata.id">
+              {{lmdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.manage_coursesForm.learning_modules_id.$error" ng-show="forms.manage_coursesForm.learning_modules_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  
+  <md-input-container class="md-block">
+    <label for="duration" class="active">{{M.MANAGE_COURSES_FIELD_DURATION}}:</label>
+    <input id="duration" name="duration" class="validate" ng-model="data.single.duration" type="number"	maxlength="3" required ng-disabled="locked">
+    <div ng-messages="forms.manage_coursesForm.duration.$error" ng-show="forms.manage_coursesForm.duration.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  
+  <md-input-container  class="md-block">
+          <label for="duration_types_id" class="active">{{M.MANAGE_COURSES_FIELD_DURATIONTYPEID}}:</label>
+          <md-select ng-model="data.single.duration_types_id" id="duration_types_id" name="duration_types_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="dtdata in durationTypesdata" ng-selected="{{data.single.duration_types.title === dtdata.title}}"
+            ng-value="dtdata.id">
+              {{dtdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.manage_coursesForm.duration_types_id.$error" ng-show="forms.manage_coursesForm.duration_types_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  
+  <md-input-container  class="md-block">
+          <label for="status_id" class="active">{{M.MANAGE_COURSES_FIELD_STATUSID}}:</label>
+          <md-select ng-model="data.single.status_id" id="status_id" name="status_id" class="validate" ng-disabled="locked">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="sdata in statusdata" ng-selected="{{data.single.status.title === sdata.title}}"
+            ng-value="sdata.id">
+              {{sdata.title}}
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.manage_coursesForm.status_id.$error" ng-show="forms.manage_coursesForm.status_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+    </div>
+  </md-input-container>
+  
+  <md-input-container class="md-block">
+  <md-checkbox class="validate" ng-model="data.single.isActive" ng-true-value="1" ng-false-value="0" ng-checked="data.single.isActive" id="isActive" name="isActive" ng-disabled="locked">
+		{{M.MANAGE_COURSES_FIELD_IS_ACTIVE}} 
+          </md-checkbox>
+  </md-input-container>
+   
+</form>
+
+	<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+	  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+	  <style type="text/css">
+	      .middle-center-heading{
+	              left: 50%;
+	              position: absolute;
+	              top: 50%;
+	              margin-left: -300px;
+	              font-size: xx-large;
+	      }
+	  </style>
+	</div>
+	
+	

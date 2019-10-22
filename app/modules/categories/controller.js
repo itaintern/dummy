@@ -4,7 +4,7 @@
 //To register this controller, just go to app/config/routes.js and add 'categories' in 'easyRoutes' array.
 app.controller('categoriesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
-         $rootScope.hideButton = false;
+    
     //This function is called when you need to make changes to the new single object.
     $scope.onInit = function(obj){
         //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'categories' resource that matches the structure of your 'categories' API.

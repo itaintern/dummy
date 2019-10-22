@@ -1,10 +1,12 @@
-//ControllerFactory helps wrap basic CRUD operations for any API resource
-function ControllerFactory(resourceName, options, extras) {
-	return function($scope, $rootScope, $http, $routeParams, $location, $mdDialog, H, M, S, R) {
-		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
-		
-		var Resource = H.R.get(resourceName);
 
+// ControllerFactory helps wrap basic CRUD operations for any API resource
+
+function ControllerFactory(resourceName, options, extras) {
+	
+	return function($scope, $rootScope, $http, $routeParams, $location, $mdDialog, H, M, S, R) {
+
+		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
+		var Resource = H.R.get(resourceName);
 		//Scope variables
 		$scope.data = {};
 		$scope.data.single = new Resource();
@@ -23,7 +25,6 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.forms = {};
 		$scope.H = H;
 		$scope.M = M;
-
 		//Set currentRoute
 		$scope.currentRoute = (function(){
 			var route = $location.path().substring(1);
@@ -33,11 +34,9 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 			return route;
 		})();
-		
 		$scope.currentRouteHref = "#!" + $scope.currentRoute;
 		$scope.newRouteHref = "#!" + $scope.currentRoute + "/new";
 		$scope.editRouteHref = "#!" + $scope.currentRoute + "/:id";
-
 		//Default error handler
 		var errorHandler = function(error) {
 			if (error && error.status) {
@@ -80,7 +79,7 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 		};
 
-		//Initializa new single objetc
+		//Initializa new single object
 		$scope.initSingle = function() {
 			$scope.data.single = new Resource();
 		};
@@ -193,9 +192,11 @@ function ControllerFactory(resourceName, options, extras) {
 						url = url + obj.id;	
 					}
 				}
-				if(H.S.legacyMode){
+				if(H.S.legacyMode)
+				{
 					return $http.post(url, []).then(function(r){
-						if(callback){
+						if(callback)
+						{
 							callback(r.data);
 						}
 						return r.data;
@@ -221,9 +222,7 @@ function ControllerFactory(resourceName, options, extras) {
 					});
 				}
 			}
-
 		}
-		
 		//Save a record
 		$scope.save = function(obj, callback) {
 			if (obj && obj.$save) {
@@ -276,7 +275,6 @@ function ControllerFactory(resourceName, options, extras) {
 					return e.data;
 				}));					
 			}
-		
 		}
 		
 		$scope.update = function(obj, callback) {
@@ -366,7 +364,7 @@ function ControllerFactory(resourceName, options, extras) {
 				    	$scope.data.listHeadersRaw = headers;
 				    	if(headers.indexOf("id") > -1) headers.splice(headers.indexOf("id"), 1);
 				    	if(headers.indexOf("secret") > -1) headers.splice(headers.indexOf("secret"), 1);
-				    	headers = headers.filter(p => (p.slice(-3) !== "_id"));
+				    	headers = headers.filter(function(p){ return (p.slice(-3) !== "_id")});
 				    	if($scope.removeListHeaders){
 				    		var removeHeaders = $scope.removeListHeaders();
 				    		for (var i = 0; i < removeHeaders.length; i++) {
@@ -375,7 +373,7 @@ function ControllerFactory(resourceName, options, extras) {
 				    		}
 				    	}
 				    	$scope.data.listKeys = headers;
-				    	headers = headers.map(p => H.toTitleCase(H.replaceAll(p, '_', ' ')));
+				    	headers = headers.map(function(p){ return H.toTitleCase(H.replaceAll(p, '_', ' '))});
 				    	$scope.setListHeaders(headers);
 			    	}
 			    	if($scope.onLoadAll) $scope.onLoadAll(r);
@@ -479,7 +477,6 @@ function ControllerFactory(resourceName, options, extras) {
 	    };	    
 	    //Initialize a single record
 	    $scope.newSingle = function(callback){
-	    	
 	    	$scope.locked = false;
 	    	$scope.initSingle();
 	    	if($scope.onInit) $scope.onInit($scope.data.single);
@@ -701,7 +698,6 @@ function ControllerFactory(resourceName, options, extras) {
 		    });
 		  };
 		  
-		
 		$scope.onErrorBase = function(obj){
 	        $scope.showDialog(null, M.ERROR_TITLE, M.SAVED_ERROR, M.SAVED_OK, M.SAVED_CANCEL, function(){$scope.locked = false;}, function(){$location.path($scope.currentRoute)});			
 		};
@@ -725,26 +721,5 @@ function ControllerFactory(resourceName, options, extras) {
 	    $scope.goToNew = function(){
 	    	$location.path($scope.currentRoute + "/" + "new");
 	    };
-	    
-	    //// PROJECT SPECIFIC FUNCTIONS START ////
-	    
-	    // message dialog for softDelete().
-	    $scope.softDeleteDialog = function(obj){
-	        $scope.showDialog(null, M.DELETE_TITLE, M.DELETE_MESSAGE, M.DELETE_YES, M.DELETE_NO, function(){ $scope.update(obj); }, function(){$location.path($scope.currentRoute)});			
-		};
-		
-		// this function is use for delete data when is_delete field in db table.
-    	$scope.softDelete = function(obj){
-       		obj.is_deleted = 1;
-    		$scope.softDeleteDialog(obj);
-    	}
-    	
-    	// display only is_deleted=0 data (means not delete data).
-    	$scope.beforeLoadAll = function(query){
-    		query.is_deleted=0;
-    		return query;
-    	};
-	    
-	    //// PROJECT SPECIFIC FUNCTIONS END ////
 	};
 }

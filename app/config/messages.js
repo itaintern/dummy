@@ -14,12 +14,6 @@ app.service('M', function($http) {
 		"INVALID_EMAIL": "Invalid email!",
 		"UNAUTHORIZED_AREA": "You are not authorized to access this area!",
 		"NA": "N/A",
-		
-		"DELETE_TITLE": "Item Delete!",
-		"DELETE_MESSAGE" : "Are you sure you want delete the item?",
-		"DELETE_YES" : "Yes",
-		"DELETE_NO" : "No",
-		
 		"SAVED_TITLE": "Item Saved!",
 		"SAVED_MESSAGE": "You have successfully saved this record!",
 		"SAVED_OK": "Stay Here",
@@ -87,6 +81,9 @@ app.service('M', function($http) {
 		"FIELD_GENDER": "Gender",
 		"FIELD_ACTIVE": "Active",
 		"FIELD_CATEGORY": "Category",
+		"FIELD_ASSIGN_BY":"Assign by",
+			"RELEASES_FIELD_STATUS":"status",
+		
 		
 		"COMPANIES_FIELD_ORGANIZATIONNAME": "Organization Name",
 		"COMPANIES_FIELD_DOMAINCODE":"Domain Code",

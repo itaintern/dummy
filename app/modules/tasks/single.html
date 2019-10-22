@@ -1,6 +1,7 @@
 <!--This is the template that will be used in new/edit screens. It should be in <form></form> tag. The name of the form should be matching the name of your API route, prefixed with 'froms.' and suffixed by 'Form'. e.g. in this case, it would be 'forms.tasksForm'-->
 <!--Example-->
 <form name="forms.tasksForm">
+
     <md-input-container class="md-block">
       <label for="task_title" class="active">{{M.FIELD_TITLE}}:</label>
       <input id="task_title" name="task_title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
@@ -8,6 +9,60 @@
         <div ng-message="required">{{M.REQUIRED}}</div>
       </div>
     </md-input-container>
+    
+    <md-input-container  class="md-block">
+          <label for="assignee_id" class="active">{{M.FIELD_ASSIGN_BY}}:</label>
+          <md-select ng-model="data.single.assignee_id" id="username" name="username" class="validate" ng-disabled="locked">
+             <md-option><em>None</em></md-option>
+             <md-option ng-repeat="eddata in userEmployees" ng-selected="{{data.single.assignee_id}}" ng-value="eddata.emp_id">
+              {{eddata.username}} 
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.leave_requestsForm.from_id.$error" ng-show="forms.leave_requestsForm.from_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+     </div>
+    </md-input-container>
+    
+    <md-input-container class="md-block">
+		 <!--<label for="reporter_id" class="active" ng-model="data.single.reporter_id" ng-repeat="a in currentUser">{{a.email}} 
+		</label>-->
+		<label for="reporter_id" class="active" ng-model="data.single.reporter_id">{{currentUser.id}} 
+		</label>
+	</md-input-container>
+    
+    <!--<span>{{$scope.currentUser}}</span>
+		<ul>
+  			<li ng-repeat="a in currentUser">{{a.email}}
+  		
+  			</li>
+		</ul>-->
+  
+   <!-- <md-input-container  class="md-block">
+          <label for="reporter_id" class="active">{{M.FIELD_ASSIGN_BY}}:</label>
+          <md-select ng-model="data.single.reporter_id" id="username" name="username" class="validate" ng-disabled="locked">
+             <md-option><em>None</em></md-option>
+             <md-option ng-repeat="eddata in userEmployees" ng-selected="{{data.single.reporter_id}}" ng-value="eddata.emp_id">
+              {{eddata.username}} 
+            </md-option>
+        </md-select>
+          <div ng-messages="forms.leave_requestsForm.from_id.$error" ng-show="forms.leave_requestsForm.from_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+     </div>
+    </md-input-container> -->
+    
+    <!--<md-input-container  class="md-block">
+          <label for="assign_by" class="active">{{M.FIELD_ASSIGN_BY}}:</label>
+          <md-select >
+             <md-option><em>None</em></md-option>
+             <md-option ng-repeat="u in UserData" >
+              	{{JSON.stringify(u.username)}}
+            </md-option>
+         </md-select>
+          <div ng-messages="forms.leave_requestsForm.from_id.$error" ng-show="forms.leave_requestsForm.from_id.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>     
+     </div>
+    </md-input-container>-->
+    
     <md-input-container class="md-block">
         <label for="task_is_active" class="active">{{M.FIELD_ACTIVE}}:</label>
         <br>

@@ -5,5 +5,4 @@ app.controller('modulesControllerExtension', function($scope, $controller, $root
 		return ['is_deleted'];
     }
          $rootScope.hideButton = false;
-
 });

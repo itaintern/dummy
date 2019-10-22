@@ -1,38 +1,49 @@
 /*global angular, app, $*/
-app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, $mdDialog, H, M) {
-    if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
+app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, $mdDialog, H, M) 
+{
+    if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1))
+    {
         $location.path('unauthorized');
     }
-         $rootScope.hideButton = false;
+    $rootScope.hideButton = false;
 
     $scope.UserGroups = H.R.get('user_groups');
+    
     $scope.Users = H.R.get('users');
-    $scope.loadUsers = function(){
-        $scope.Users.query({}, function(r){
+    $scope.loadUsers = function()
+    {
+        $scope.Users.query({}, function(r)
+        {
             $scope.users = r;    
             var usersList = {};
-            $scope.users.map(function(p){
+            $scope.users.map(function(p)
+            {
                 usersList[p.username] = "images/user.png";
             });
             $scope.data.usersList = usersList;
         });
     };
-    $scope.loadUserGroups = function(groupId, callback){
-        $scope.UserGroups.query({group_id: groupId}, function(r){
+    $scope.loadUserGroups = function(groupId, callback)
+    {
+        $scope.UserGroups.query({group_id: groupId}, function(r)
+        {
             $scope.data.groupUsers = r;
             if(callback) callback();
         });
     };
     
-    $scope.getUsers = function(searchText){
+    $scope.getUsers = function(searchText)
+    {
         return $http.get(H.S.baseUrl + '/users?username[in]=' + searchText)
-            .then(function(r){
+            .then(function(r)
+            {
                 return r.data;
             });
         //return $scope.data.users.filter(p => p.username.includes(searchText));
     };
 
-    $scope.onInit = function(obj){
+    $scope.onInit = function(obj)
+    {
         obj.is_active = 1;
         $scope.loadUsers();
     };

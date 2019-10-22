@@ -4,20 +4,22 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 	// $controller('homeControllerBase', {
 	// 	$rootScope:$rootScope
 	// });
-	$('.collapsible').collapsible();
+
+    $('.collapsible').collapsible();
+   // $scope('.collapsible').collapsible();
 	$scope.H = H;
 	$scope.M = H.M;
 
 	$scope.data = {
 		counters: {
-			organizationsCounter: {
-				title: 'Organizations',
+			tasksCounter: {
+				title: 'Tasks',
 				value: '...',
-				icon: 'people_outline',
+				icon: 'assignment_turned_in',
 				background: 'bg-green',
 				color: 'white-text',
-				action: 'organizations',
-				allowedRoles: ['superadmin']
+				action: 'tasks',
+				allowedRoles: ['user', 'admin']
 			},
 			usersCounter: {
 				title: 'Users',
@@ -37,41 +39,14 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 				action: 'groups',
 				allowedRoles: ['admin']
 			},
-			departmentsCounter: {
-				title: 'Departments',
+			organizationsCounter: {
+				title: 'Organizations',
 				value: '...',
-				icon: 'view_comfy',
-				background: '',
-				color: '',
-				action: 'departments',
-				allowedRoles: ['admin']
-			},
-			profilesCounter: {
-				title: 'Profiles',
-				value: '...',
-				icon: 'account_circle',
-				background: 'bg-orange',
-				color: 'white-text',
-				action: 'profiles',
-				allowedRoles: ['admin']
-			},
-			tasksCounter: {
-				title: 'Tasks',
-				value: '...',
-				icon: 'assignment_turned_in',
+				icon: 'people_outline',
 				background: 'bg-green',
 				color: 'white-text',
-				action: 'tasks',
-				allowedRoles: ['user', 'admin']
-			},
-			projectsCounter: {
-				title: 'Projects',
-				value: '...',
-				icon: 'event_note',
-				background: 'bg-brown',
-				color: 'white-text',
-				action: 'projects',
-				allowedRoles: ['user', 'admin']
+				action: 'organizations',
+				allowedRoles: ['superadmin']
 			}
 		},
 		bgColors: [

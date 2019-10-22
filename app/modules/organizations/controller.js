@@ -4,14 +4,14 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
     if(!(['superadmin'].indexOf($rootScope.currentUser.role) > -1)){
         $location.path('unauthorized');
     }
-         $rootScope.hideButton = false;
+    
     $scope.checkLicenceValidity = function(item){return H.checkLicenseValidity(item) == 'valid' ? true : false };
 
     $scope.onInit = function(){
         //$scope.newSingle(function(){
             $scope.data.single.org_secret = H.getUUID();  
             $scope.data.single.license = 'basic';
-            $scope.data.single.validity = '0001-01-01 00:00:00';
+            $scope.data.single.validity = '0000-01-01 00:00:00';
         //})
     };
     

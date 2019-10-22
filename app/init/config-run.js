@@ -5,12 +5,16 @@ app.factory('httpRequestInterceptor', function ($rootScope, $q) {
             $rootScope.loading = true;
             if ($rootScope.currentUser) {
                 config.headers['api-key'] = $rootScope.currentUser.token;
-                
+                //  alert(config.url);
                 if($rootScope.SETTINGS.enableSaaS){
+                //	 alert(config.url);
                     if(config.method == "GET" || config.method == "DELETE" || config.method == "PUT"){
+                    //	 alert(config.url);
                     	var m = config.url.match(/\.[0-9a-z]+$/i);
                     	var bypassedKeywords = ['ui-grid'];
-                    	var bypassedKeywordsMatches = bypassedKeywords.filter(p => config.url.indexOf(p) > -1);
+                    	var bypassedKeywordsMatches = bypassedKeywords.filter(function(p){ return config.url.indexOf(p) > -1});
+                    	//	 alert(config.url);
+                    		 //alert(JSON.stringify(m));
                         if((m && m.length > 0) || bypassedKeywordsMatches.length > 0){
                         }else{
                         	var idx = config.url.lastIndexOf("/");
@@ -22,6 +26,7 @@ app.factory('httpRequestInterceptor', function ($rootScope, $q) {
 	                            if(config.url.endsWith('/')) secret = '?secret=';
 	                            if(config.url.indexOf('?') > -1) secret = '&secret=';
 	                            config.url = config.url + secret + $rootScope.currentUser.secret;
+	                          
 	                        }
                         }
                     }
@@ -74,6 +79,8 @@ app.config(function ($routeProvider, $resourceProvider, $httpProvider, customRou
         routes.push({route: r + '/new', template: 'common/templates/new', controller: r});
         routes.push({route: r + '/:id', template: 'common/templates/edit', controller: r});
     }
+    
+    console.log(routes);
 
     for (var i = 0; i < routes.length; i++) {
         var r = routes[i];

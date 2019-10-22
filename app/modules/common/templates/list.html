@@ -21,7 +21,7 @@
     <li class="{{setActive(i)}}" ng-repeat="i in data.pages"><a ng-click="listAll(i)">{{i}}</a></li>
     <!--<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>-->
 </ul>
-<div class="fixed-action-btn " ng-if="!hideButton">
+<div class="fixed-action-btn ">
       <a class="btn-floating btn-large blue" href="{{newRouteHref}}"><i class="material-icons">add</i></a>
 </div>
 <div ng-include src="getTemplate('list-footer')"></div>

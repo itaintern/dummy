@@ -1,8 +1,7 @@
 /*global angular, app*/
 app.controller('usersControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
-         $rootScope.hideButton = false;
-
+    
     if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
         $location.path('unauthorized');
     }

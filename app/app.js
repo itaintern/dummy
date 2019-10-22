@@ -14,5 +14,5 @@ var app = angular.module('app', [
 							'ngMessages',
 							'angular-md5',
 							'zingchart-angularjs',
-							'ui.router'
+							'720kb.datepicker'
 							]);
