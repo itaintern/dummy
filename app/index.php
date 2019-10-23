@@ -15,6 +15,7 @@ function getAllSubDirectories( $directory, $directory_seperator)
 }
 
 function getAllFiles($directory, $excludedFiles = array()){
+	
 	$finalFiles = array();
 	$subDirectories = getAllSubDirectories($directory,'/');
 	array_push($subDirectories, $directory);

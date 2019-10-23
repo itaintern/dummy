@@ -1,7 +1,7 @@
 /*global angular, app*/
 app.controller('batchesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) 
 {
-	alert('hello batches ');
+
     $rootScope.hideButton = false;
     var urlmanageCourses = H.SETTINGS.baseUrl + '/courses';
     	$http.get(urlmanageCourses)

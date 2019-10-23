@@ -18,21 +18,16 @@ app.controller('projectsControllerExtension', function($scope, $controller, $roo
             	$scope.Clientdata = r.data;
         	},function(e){
         		if(e && e.data && e.data.error && e.data.error.status){
+        			alert(e.data.status);
         			newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
         		}
         	});
-       
-    
-       $scope.newestimatedStartDate = function(Date){
+         $scope.newestimatedStartDate = function(Date){
        		$scope.data.single.estimated_start_date = H.toMySQLDateTime(Date);
     	};
     	$scope.newestimatedEndDate = function(Date){
        		$scope.data.single.estimated_end_date = H.toMySQLDateTime(Date);
     	};
-	
-	
-	
-	
    //$scope.UserGroups = H.R.get('user_groups');
    // $scope.Users = H.R.get('users');
    // $scope.users_employees=H.R.get('views/users_employees');

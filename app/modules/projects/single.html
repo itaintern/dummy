@@ -75,21 +75,24 @@
     <!--  <div ng-message="required">{{M.REQUIRED}}</div>     -->
     <!--</div>-->
   </md-input-container>
- <md-input-container class="md-block">
+  
+  <md-input-container class="md-block">
     <label for="demo_url" class="active">{{M.PROJECTS_FIELD_DEMOURL}}:</label>
     <input id="demo_url" name="demo_url" type="text" class="validate" ng-model="data.single.demo_url"  ng-disabled="locked">
     <!--<div ng-messages="forms.projectsForm.demo_url.$error" ng-show="forms.projectsForm.demo_url.$dirty">-->
     <!--  <div ng-message="required">{{M.REQUIRED}}</div>-->
     <!--</div>-->
   </md-input-container>
- <md-input-container class="md-block">
+  
+   <md-input-container class="md-block">
     <label for="live_url" class="active">{{M.PROJECTS_FIELD_LIVEURL}}:</label>
     <input id="live_url" name="live_url" type="text" class="validate" ng-model="data.single.live_url"  ng-disabled="locked">
     <!--<div ng-messages="forms.projectsForm.live_url.$error" ng-show="forms.projectsForm.live_url.$dirty">-->
     <!--  <div ng-message="required">{{M.REQUIRED}}</div>     -->
     <!--</div>-->
   </md-input-container>
-  <md-input-container  class="md-block">
+  
+   <md-input-container  class="md-block">
           <label for="clients_id" class="active">{{M.PROJECTS_FIELD_CLIENT}}:</label>
           <md-select ng-model="data.single.clients_id" id="clients_id" name="clients_id" class="validate" ng-disabled="locked">
             <md-option><em>None</em></md-option>
@@ -101,12 +104,15 @@
     <!-- <div ng-messages="forms.projectsForm.clients_id.$error" ng-show="forms.projectsForm.clients_id.$dirty">-->
     <!--  <div ng-message="required">{{M.REQUIRED}}</div>     -->
     <!--</div>-->
+    
   </md-input-container>
-  <md-input-container class="md-block">
+  
+   <md-input-container class="md-block">
   <md-checkbox class="validate" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0" ng-checked="data.single.is_active" id="is_active" name="is_active" required ng-disabled="locked">
 		{{M.PROJECTS_FIELD_IS_ACTIVE}} 
           </md-checkbox>
    </md-input-container>
+   
    <md-input-container class="md-block">
     <label for="version" class="active">{{M.PROJECTS_FIELD_VERSION}}:</label>
     <input id="version" name="version" type="number" maxlength="10" class="validate" ng-model="data.single.version" required ng-disabled="locked">
@@ -114,13 +120,15 @@
       <div ng-message="required">{{M.REQUIRED}}</div>
     </div>
   </md-input-container>
- <md-input-container class="md-block">
+  
+   <md-input-container class="md-block">
     <label for="type" class="active">{{M.PROJECTS_FIELD_TYPE}}:</label>
     <input id="type" name="type" type="text" class="validate" ng-model="data.single.type" required ng-disabled="locked">
     <div ng-messages="forms.projectsForm.type.$error" ng-show="forms.projectsForm.type.$dirty">
       <div ng-message="required">{{M.REQUIRED}}</div>     
     </div>
   </md-input-container>
+  
 </form>
 
 <div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">

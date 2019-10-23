@@ -14,6 +14,6 @@ function RegisterRoutes() {
         'groups', 'categories', 'company_holidays','tasks','projects',
         'releases','schedule_quizes','test_cases','test_plans','test_executions',
         'course_modules','modules','courses','batches','question_banks',
-        'question_sets','quizzes','leave_requests']
+        'question_sets','quizzes','leave_requests','milestones']
     };
 }
