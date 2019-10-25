@@ -15,6 +15,9 @@ function RegisterMenuItems(){
             showSeparator: false,
             items: [
         	    {action: 'tasks', icon: 'assignment_turned_in', color: 'green', text: 'Tasks'},
+        	    {action: 'dummy', icon: 'grid_on', color: 'red', text: 'Dummy'},
+
+        	   // {action:'milestones', icon:'grid_on', color:'red'  text: 'milestones'},
         	    {action: 'members', icon: 'people', color: 'green', text: 'Members'},
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
@@ -26,6 +29,7 @@ function RegisterMenuItems(){
         	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
         	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
         	    		{action: 'test_executions', icon: '',text: 'Test Executions (Old)'}
+        	    		
         	    	]
         	    },
         	    
@@ -35,8 +39,14 @@ function RegisterMenuItems(){
         	    		{action: 'modules', icon: '',text: 'Module'},
         	    		{action: 'courses', icon: '',text: 'Course'},
         	    		{action: 'batches', icon: '',text: 'Batches'}
+        	    	
         	    	]
         	    },
+        	    // {action: '', icon:'grid_on', color:'red' ,text :'Milestones',
+        	    // 	items : [
+        	    // 		{action:'milestones', icon: '',text: 'milestones'}
+        	    // 		]
+        	    // },
         	    
         	    {action: '', icon: 'question_answer', color:'brown',text: 'Quizzes',
         	    	items : [

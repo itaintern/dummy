@@ -10,30 +10,27 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
     $scope.users_employees=H.R.get('views/users_employees');
     //$scope.Get_login_user=H.R.get('views/Get_login_user');
     //employees/?id
-    
      $scope.loadEmployee=function(obj,callback)
      {
      		$http.get(H.S.baseUrl + '/employees/?primary_email='+$rootScope.currentUser.email+'&').then(function(r)
         	{
       		//alert('avi');
-      			//alert(JSON.stringify($scope.data.single));
-        		$scope.data.single.reporter_id=r.data[0].id;
-      	
+      		//alert(JSON.stringify($scope.data.single));
+        	$scope.data.single.reporter_id=r.data[0].id;
       		if(callback)
       		{
       			callback();
       		}
-      		
         	//alert(r.data.username);
 	     	//$scope.currentUser=$rootScope.currentUser.id;
 		    //alert($rootScope.currentUser.id);
-    //	alert(JSON.stringify(r));
+    		//alert(JSON.stringify(r));
     		//if(Array.isArray(r.data)){
     		//$scope.currentUser.id;
     		//get id
-    	//	$scope.data.obj.reporter_id=r[0].id;
-    //	alert(r);
-    	//	$scope.currentUser=$rootScope.currentUser.id;
+    		//$scope.data.obj.reporter_id=r[0].id;
+    		//alert(r);
+    		//$scope.currentUser=$rootScope.currentUser.id;
         	//	$scope.currentUser = $rootScope.currentUser;
             //else
             //{
@@ -41,15 +38,11 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
             //}
         	//alert(JSON.stringify($scope.users));
     	});
-    
      }
      $scope.loadEmployee($scope.data.single);
     	//$http.get(H.S.baseUrl + '/employees/?id').then(function(r)
-    	  //	$http.get(H.S.baseUrl + '/employees').then(function(r)
     	//$http.get(H.S.baseUrl + '/employees').then(function(r)
-    
-    
-    
+    	//$http.get(H.S.baseUrl + '/employees').then(function(r)
         //$http.get(H.S.baseUrl + 'users').then(function(r){
     	//alert(r.data.username);
 		//testing purpose..
@@ -58,75 +51,67 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
     	//alert(JSON.stringify(r));
     	if(Array.isArray(r.data)){
         $scope.userEmployees = r.data;
-        	}
-        	else
-        	{
-        		$scope.userEmployees = [r.data];
-        	}
-        	//alert(JSON.stringify($scope.users));
+        }
+        else
+        {
+        $scope.userEmployees = [r.data];
+        }
+        //alert(JSON.stringify($scope.users));
     	});
-    	
     	*/
-
-//$scope.Users=H.R.get('/views/Get_login_user');
-//$rootScope.test = "TEST";
-//alert(	$rootScope.username);
-//alert($rootScope.Users);
-//$scope.login = function(){
-//$scope.loading = true;
-//$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
-//.then(function(r)
-//{
-//alert(email);
-//$scope.error = "";
-//alert(r.data.username);
-//if(!r.data.token)
-//{
-//$scope.error = M.E500;
-//$scope.loading = false;
-//return;
-//}
-//$rootScope.currentUser = r.data;
-//alert($rootScope.currentUser);
-//alert($rootScope.username);
-//		$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
-//		$location.path('/');
-//	},
-//alert("Hello");
-//alert($scope.users_employees);
-    	
-//	$http.get(H.S.baseUrl + '/views/Get_login_user').then(function(r){
-//		if(Array.isArray(r.data))
-//		{
-			
-//   if (window.sessionStorage["userInfo"])
-//{
-
-//      $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
-            //  }
-			 //console.log($rootScope.userInfo);
-			 
-			   //  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
-			 
-		//	 alert('user info');
-		    //alert($rootScope.userInfo);
-		  //  alert($rootScope.userInfo); 
-		//	alert('task');
-		//	var s=$rootScope.username;
-		//	alert(s);
-		//	alert('username using root scope');
-		//	alert($rootScope.userInfo);
-			//	$rootScope.currentUser
-		//	alert('task over');
-
-						//$scope.currentlogin=$rootScope.username;
-					//	alert($scope.currentlogin);
-			//		}
-			//		else
-			//		{
-			//			$scope.currentlogin=[r.data];
-			//		}
-			//	})
+		//$scope.Users=H.R.get('/views/Get_login_user');
+		//$rootScope.test = "TEST";
+		//alert(	$rootScope.username);
+		//alert($rootScope.Users);
+		//$scope.login = function(){
+		//$scope.loading = true;
+		//$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
+		//.then(function(r)
+		//{
+		//alert(email);
+		//$scope.error = "";
+		//alert(r.data.username);
+		//if(!r.data.token)
+		//{
+		//$scope.error = M.E500;
+		//$scope.loading = false;
+		//return;
+		//}
+		//$rootScope.currentUser = r.data;
+		//alert($rootScope.currentUser);
+		//alert($rootScope.username);
+		//$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
+		//$location.path('/');
+		//},
+		//alert("Hello");
+		//alert($scope.users_employees);
+		//$http.get(H.S.baseUrl + '/views/Get_login_user').then(function(r){
+		//if(Array.isArray(r.data))
+		//{
+		//if (window.sessionStorage["userInfo"])
+		//{
+		//$rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+        //  }
+	    //console.log($rootScope.userInfo);
+	    //$rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+		//alert('user info');
+		//alert($rootScope.userInfo);
+		//alert($rootScope.userInfo); 
+		//alert('task');
+		//var s=$rootScope.username;
+		//alert(s);
+		//alert('username using root scope');
+		//alert($rootScope.userInfo);
+		//$rootScope.currentUser
+		//alert('task over');
+		//$scope.currentlogin=$rootScope.username;
+		//alert($scope.currentlogin);
+		//}
+		//else
+		//{
+		//$scope.currentlogin=[r.data];
+		//}
+		//})
 				
     $scope.loadUserEmployees = function(){
     	$http.get(H.S.baseUrl + '/views/users_employees').then(function(r){

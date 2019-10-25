@@ -932,6 +932,9 @@ function RegisterEasyController(route, headers, controller){
             showSeparator: false,
             items: [
         	    {action: 'tasks', icon: 'assignment_turned_in', color: 'green', text: 'Tasks'},
+        	    {action: 'dummy', icon: 'grid_on', color: 'red', text: 'Dummy'},
+
+        	   // {action:'milestones', icon:'grid_on', color:'red'  text: 'milestones'},
         	    {action: 'members', icon: 'people', color: 'green', text: 'Members'},
         	    //{action: 'search', icon: 'search', color: 'brown', text: 'Search'},
         	     {action: '', icon: 'event_note', color:'green',text: 'Projects',
@@ -943,6 +946,7 @@ function RegisterEasyController(route, headers, controller){
         	    		{action: 'test_cases', icon: '',text: 'Test Cases (Old)'},
         	    		{action: 'test_plans', icon: '',text: 'Test Plans (Old)'},
         	    		{action: 'test_executions', icon: '',text: 'Test Executions (Old)'}
+        	    		
         	    	]
         	    },
         	    
@@ -952,8 +956,14 @@ function RegisterEasyController(route, headers, controller){
         	    		{action: 'modules', icon: '',text: 'Module'},
         	    		{action: 'courses', icon: '',text: 'Course'},
         	    		{action: 'batches', icon: '',text: 'Batches'}
+        	    	
         	    	]
         	    },
+        	    // {action: '', icon:'grid_on', color:'red' ,text :'Milestones',
+        	    // 	items : [
+        	    // 		{action:'milestones', icon: '',text: 'milestones'}
+        	    // 		]
+        	    // },
         	    
         	    {action: '', icon: 'question_answer', color:'brown',text: 'Quizzes',
         	    	items : [
@@ -1340,6 +1350,18 @@ app.service('M', function($http) {
 		"MANAGE_BATCHS_FIELD_COURSEID":"Course",
 		"MANAGE_BATCHS_FIELD_STATUSID":"Status",
 		"MANAGE_BATCHS_FIELD_IS_ACTIVE":"Is Active",
+	//	"MODULES_FIELD_TITLE":"Title",
+	//	"MODULES_FIELD_STATUS":"Status",
+		
+	
+		
+		"MANAGE_COURSES_FIELD_TITLE":"Title",
+		"MANAGE_COURSES_FIELD_DESCRIPTION":"Description",
+		"MANAGE_COURSES_FIELD_MODULEID":"Module",
+		"MANAGE_COURSES_FIELD_DURATION":"Duration",
+		"MANAGE_COURSES_FIELD_DURATIONTYPEID":"Duration Type",
+		"MANAGE_COURSES_FIELD_STATUSID":"Status",
+		"MANAGE_COURSES_FIELD_IS_ACTIVE":"Is Active",
 		
 		"QUESTION_SETS_FIELD_TITLE":"Title",
 		"QUESTION_SETS_FIELD_IS_ACTIVE":"Is Active",
@@ -1398,7 +1420,8 @@ app.service('M', function($http) {
             {route: 'profile', template: 'auth/profile', controller: 'profile'},
             {route: 'unauthorized', template: 'auth/unauthorized', controller: 'unauthorized'},
             {route: 'out-of-service', template: 'auth/out-of-service', controller: 'outOfService', auth: false},
-            {route: 'settings', template: 'settings/template', controller: 'settings'}
+            {route: 'settings', template: 'settings/template', controller: 'settings'},
+             {route: 'dummy', template: 'dummy/template', controller: 'dummy'}
         ],
         easyRoutes: ['alerts','add_questions','departments','organizations', 'users', 
         'groups', 'categories', 'company_holidays','tasks','projects',
@@ -2459,6 +2482,777 @@ app.controller('departmentsControllerExtension', function($scope, $controller, $
     // 	$scope.setListHeaders(['Title','Contact Number','Description','Companies','Status']);
     // };
     
+});app.controller('dummyController', function($scope,$route ,$controller, $rootScope, $http, $location,$mdSidenav, $mdDialog,$window, H, M) 
+{
+	//newTask()
+	$scope.getDetails = function(v)
+	{
+		//console.log("india " + v)
+		//alert(v);
+		$scope.milestones = null;
+		$scope.show_tasks = false;
+		$scope.row_data = false;
+		var id = event.target.id;
+		$scope.myproject_Id = id;
+			if ($scope.project_Id != id)
+	        {
+				$scope.project_Id = id;
+			    $http.get(H.SETTINGS.baseUrl + '/milestones?pid=' + v).then(function successCallback(response)
+	    	    //$http.get(H.SETTINGS.baseUrl + '/milestones?pid=' + v + '&is_deleted=0').then(function successCallback(response) 
+			    {
+					$scope.milestones = response.data;
+			    }, 
+				function errorCallback(response) 
+				{
+					$scope.project = response.data;
+				    console.log(response);
+				});
+			}
+	        else 
+	        {
+				$scope.project_Id = 0;
+	        }
+	}
+	
+   $scope.newMilestone = function(evnt) {
+	//	var tl = $rootScope.task_list;
+		// if (tl == null) {
+		// 	$rootScope.task_list = 0;
+		// }
+		// var data = {};
+		// data = {
+		// 	title: $rootScope.task_title,
+		// 	assignee_id: $rootScope.assignee_id,
+		// 	reporter_id: $rootScope.reporter_id,
+		// 	project_lists_id: $rootScope.task_list,
+		// 	task_details: $rootScope.task_details,
+		// 	task_status: $rootScope.task_status,
+		// 	priority: $rootScope.priority,
+		// 	MID: $scope.MID,
+		// }
+		// $http.post(H.SETTINGS.baseUrl + '/tasks', data).then(function successCallback(response) {
+		// 	document.getElementById('myTask').reset()
+		// 	$mdDialog.show(
+		// 		$mdDialog.alert()
+		// 		.parent(angular.element(document.querySelector('#popupContainer')))
+		// 		.clickOutsideToClose(true)
+		// 		.title('Task Adding')
+		// 		.textContent('Task was added Succesfully!')
+		// 		.ariaLabel('New Task')
+		// 		.ok('OK')
+
+		// 	);
+
+		// 	//Automatically display the recently added task
+
+		// 	var string = "" + $scope.task_value;
+		// 	if (string.localeCompare("undefined") != 0) {
+		// 		$http.get(H.SETTINGS.baseUrl + '/tasks?MID=' + $scope.MID + '&project_lists_id=' + $scope.task_value).then(function successCallback(response) {
+		// 			$scope.tasks = response.data;
+		// 			//console.log($scope.tasks.length)
+		// 		}, function errorCallback(response) {
+		// 			//console.log("Not added")
+		// 			$scope.project = response.data;
+		// 		});
+		// 	} else {
+		// 		$http.get(H.SETTINGS.baseUrl + '/tasks?MID=' + $scope.MID).then(function successCallback(response) {
+		// 			$scope.tasks = response.data;
+		// 			//console.log($scope.tasks.length)
+		// 		}, function errorCallback(response) {
+		// 			//console.log("Not added")
+		// 			$scope.project = response.data;
+		// 		});
+		// 	}
+
+		// }, function errorCallback(response) {});
+
+		// $mdSidenav('task').close();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	$scope.addMilestone = function(evnt)
+	{
+		var mydata =
+		{
+			milestone_name: $rootScope.milestone_name,
+			estimated_start_date: $rootScope.estimated_start_date,
+			estimated_end_date: $rootScope.estimated_end_date,
+			status_value: $rootScope.status_value,
+			eid: $scope.user_id,
+			flag: $rootScope.flag
+		}
+		
+		$http.post(H.SETTINGS.baseUrl + '/milestones', mydata).then(function successCallback(response)
+		{
+			$http.get(H.SETTINGS.baseUrl + '/milestones?pid=' + $scope.myproject_Id).then(function successCallback(response)
+			{
+				$scope.milestones = response.data;
+			}, 
+			function errorCallback(response) 
+			{
+				
+			});
+			
+			var tabs = $scope.milestones;
+			$scope.tabs = tabs;
+			tabs.push(mydata)
+
+			$mdDialog.show(
+				$mdDialog.alert()
+				.parent(angular.element(document.querySelector('#popupContainer')))
+				.clickOutsideToClose(true)
+				.title('Milestone Adding')
+				.textContent('Milestone added Succesfully!')
+				.ariaLabel('New Milestone')
+				.ok('OK')
+				.openFrom({
+					top: -50,
+					width: 30,
+					height: 80
+				})
+				.closeTo
+				({
+					left: 1500
+				})
+			);
+			document.getElementById('myMilestone').reset();
+		}, 
+		function errorCallback(response) 
+		{
+			console.log('Milestone was not added Succesfully')
+		});
+		$mdSidenav('milestone').close();
+    	}
+		$scope.updateTask = function(update_id) 
+		
+		{
+		/*console.log(update_id);*/
+			$mdSidenav('update_task').open();
+			$http({
+				method: "GET",
+				url: H.SETTINGS.baseUrl + '/tasks?id=' + update_id + '',
+				header: 'Content-Type: application/json; charset=UTF-8'
+			}).then(function(response) {
+				/*var data1 = JSON.stringify(response.data);*/
+				var data1 = response.data[0];
+				console.log(data1);
+			/*console.log(response.data[0].reporter.display_name);
+			console.log(response.data[0].assignee.display_name);*/
+			/*var get_title = data1.title;
+			var get_task_details = data1.task_details;
+			var get_start_date = data1.start_date;	
+			var get_end_date = data1.end_date;
+			var get_priority = data1.priority;
+			var get_task_status = data1.task_status;
+			var get_in_charge = data1.display_name;
+			var get_reporter_display_name = response.data[0].reporter.display_name;
+			var get_assignee_display_name = response.data[0].assignee.display_name;*/
+
+			/*console.log(get_title);
+			console.log(get_task_details);
+			console.log(get_start_date);
+			console.log(get_end_date);
+			console.log(get_priority);
+			console.log(get_task_status);
+			console.log(get_reporter_display_name);
+			console.log(get_assignee_display_name);*/
+
+
+			// $scope.update_data.get_title = data1.title;
+			// $scope.update_data.get_task_details = data1.task_details;
+
+			// $scope.update_data.get_priority = data1.priority;
+			// $scope.update_data.get_task_status = data1.task_status;
+			// $scope.update_data.get_in_charge = data1.display_name;
+
+			// $scope.update_data.get_reporter_id = response.data[0].reporter.id;
+			// $scope.update_data.get_reporter_display_name = response.data[0].reporter.display_name;
+
+			// $scope.update_data.get_assignee_id = response.data[0].assignee.id;
+			// $scope.update_data.get_assignee_display_name = response.data[0].assignee.display_name;
+			// $scope.update_data.get_start_date = data1.start_date;
+			// $scope.update_data.get_end_date = data1.end_date;
+
+			/*var get_start_date = data1.start_date;
+			var convert_start_date = new Date(get_start_date);	
+        	
+			var get_end_date = data1.end_date;
+			var convert_end_date = new Date(get_end_date);	*/
+
+
+			/*console.log(response.data[0].assignee.id);
+			console.log(response.data[0].reporter.id);*/
+			/*$scope.get_start_date =  convert_start_date;	
+			$scope.get_end_date = convert_end_date;*/
+		});
+
+		$scope.save_updated_task = function(insert_data) {
+
+			console.log(insert_data.get_title);
+			console.log(insert_data.get_task_details);
+			console.log(insert_data.get_reporter_id);
+			console.log(insert_data.get_assignee_id);
+			console.log(insert_data.get_start_date);
+			console.log(insert_data.get_end_date);
+			console.log(insert_data.get_priority);
+			console.log(insert_data.get_task_status);
+
+			$http({
+				method: "PUT",
+				url: H.SETTINGS.baseUrl + '/tasks/' + update_id + '',
+				/*api_key=a0f16ffb39162569c38ab644efd4300d*/
+				data: {
+					"title": insert_data.get_title,
+					"task_details": insert_data.get_task_details,
+					"reporter_id": insert_data.get_reporter_id,
+					"assignee_id": insert_data.get_assignee_id,
+					"start_date": insert_data.get_start_date,
+					"end_date": insert_data.get_end_date,
+					"priority": insert_data.get_priority,
+					"task_status": insert_data.get_task_status
+				},
+				header: 'Content-Type: application/json; charset=UTF-8'
+			}).then(function(response) {
+				var isdelete = response.status;
+				if (isdelete == 200) {
+					console.log("Task Updated");
+					$route.reload();
+				} else {
+					console.log("Task Not Updated");
+				}
+			});
+		};
+	};
+
+	$scope.delete_milestone = function(id) {
+		$http({
+			method: "PUT",
+			url: H.SETTINGS.baseUrl + '/milestones',
+			data: {
+				"id": id,
+				"is_deleted": "1"
+			},
+			header: 'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response) {
+			var isdelete = response.status;
+			if (isdelete == 200) {
+				console.log("Milestone Deleted");
+				$route.reload();
+			} else {
+				console.log("Milestone Not Deleted");
+			}
+		});
+	};
+
+
+	//update projects
+	$scope.updateProject = function(id) {
+		$mdSidenav('updateProject').open();
+		/*     $scope.closeUpdateSlieder = function(){
+		      $mdSidenav('updateProject').close();
+		      document.getElementById('update_form_id').reset(); */
+		//}
+		//console.log("Update id"+id);
+		$http({
+			method: 'GET',
+			url: H.SETTINGS.baseUrl + '/projects/' + id,
+			header: 'Content-Type: application/json; charset=UTF-8'
+		}).then(function(response) {
+			//console.log("Updated Data"+JSON.stringify(response.data));
+			$rootScope.project_name_update = response.data.project_name;
+			$rootScope.clients_id_update = response.data.clients_id;
+			$rootScope.project_description_update = response.data.project_description;
+			$rootScope.estimated_start_date_update = response.data.estimated_start_date;
+			$rootScope.estimated_end_date_update = response.data.estimated_end_date;
+			$rootScope.version_update = response.data.version;
+			$rootScope.flag_update = response.data.type;
+		});
+
+		//to save updated records of projects
+		$scope.saveProject = function() {
+			$http({
+				method: 'put',
+				url: H.SETTINGS.baseUrl + '/projects/' + id,
+				header: 'Content-Type: application/json; charset=UTF-8',
+				data: {
+					"project_name": $rootScope.project_name_update,
+					"clients_id": $rootScope.clients_id_update,
+					"project_description": $rootScope.project_description_update,
+					"estimated_start_date": $rootScope.estimated_start_date_update,
+					"estimated_end_date": $rootScope.estimated_end_date_update,
+					"version": $rootScope.version_update,
+					"type": $rootScope.flag_update,
+				}
+			}).then(function(response) {
+				var isvalid = response.status;
+				if (isvalid == 200) {
+					//alert("Updated");
+					$route.reload();
+
+				} else {
+					alert("Something went wrong");
+				}
+			});
+		}
+	}
+	
+	$scope.addTask = function(evnt) {
+		var tl = $rootScope.task_list;
+		if (tl == null) {
+			$rootScope.task_list = 0;
+		}
+		var data = {};
+		data = {
+			title: $rootScope.task_title,
+			assignee_id: $rootScope.assignee_id,
+			reporter_id: $rootScope.reporter_id,
+			project_lists_id: $rootScope.task_list,
+			task_details: $rootScope.task_details,
+			task_status: $rootScope.task_status,
+			priority: $rootScope.priority,
+			MID: $scope.MID,
+		}
+		$http.post(H.SETTINGS.baseUrl + '/tasks', data).then(function successCallback(response) {
+			document.getElementById('myTask').reset()
+			$mdDialog.show(
+				$mdDialog.alert()
+				.parent(angular.element(document.querySelector('#popupContainer')))
+				.clickOutsideToClose(true)
+				.title('Task Adding')
+				.textContent('Task was added Succesfully!')
+				.ariaLabel('New Task')
+				.ok('OK')
+
+			);
+
+			//Automatically display the recently added task
+
+			var string = "" + $scope.task_value;
+			if (string.localeCompare("undefined") != 0) {
+				$http.get(H.SETTINGS.baseUrl + '/tasks?MID=' + $scope.MID + '&project_lists_id=' + $scope.task_value).then(function successCallback(response) {
+					$scope.tasks = response.data;
+					//console.log($scope.tasks.length)
+				}, function errorCallback(response) {
+					//console.log("Not added")
+					$scope.project = response.data;
+				});
+			} else {
+				$http.get(H.SETTINGS.baseUrl + '/tasks?MID=' + $scope.MID).then(function successCallback(response) {
+					$scope.tasks = response.data;
+					//console.log($scope.tasks.length)
+				}, function errorCallback(response) {
+					//console.log("Not added")
+					$scope.project = response.data;
+				});
+			}
+
+		}, function errorCallback(response) {});
+
+		$mdSidenav('task').close();
+	}
+	
+	$scope.addTaskList = function(evnt) {
+		var data = {
+			pid: $scope.myproject_Id,
+			name: $rootScope.task_list,
+			mid: $scope.mid
+		}
+		$http.post(H.SETTINGS.baseUrl + '/project_lists', data).then(function successCallback(response) {
+
+			$mdDialog.show(
+				$mdDialog.alert()
+				.parent(angular.element(document.querySelector('#popupContainer')))
+				.clickOutsideToClose(true)
+				.title('Task List Adding')
+				.textContent('Task List added Succesfully!')
+				.ariaLabel('New Task List')
+				.ok('OK')
+			);
+
+
+		}, function errorCallback(response) {});
+	}
+
+	$scope.addTask = function(evnt) {
+		var tl = $rootScope.task_list;
+		if (tl == null) {
+			$rootScope.task_list = 0;
+		}
+		var data = {};
+		data = {
+			title: $rootScope.task_title,
+			assignee_id: $rootScope.assignee_id,
+			reporter_id: $rootScope.reporter_id,
+			project_lists_id: $rootScope.task_list,
+			task_details: $rootScope.task_details,
+			task_status: $rootScope.task_status,
+			priority: $rootScope.priority,
+			MID: $scope.MID,
+		}
+		$http.post(H.SETTINGS.baseUrl + '/tasks', data).then(function successCallback(response) {
+			document.getElementById('myTask').reset()
+			$mdDialog.show(
+				$mdDialog.alert()
+				.parent(angular.element(document.querySelector('#popupContainer')))
+				.clickOutsideToClose(true)
+				.title('Task Adding')
+				.textContent('Task was added Succesfully!')
+				.ariaLabel('New Task')
+				.ok('OK')
+
+			);
+
+			//Automatically display the recently added task
+
+			var string = "" + $scope.task_value;
+			if (string.localeCompare("undefined") != 0) {
+				$http.get(H.SETTINGS.baseUrl + '/tasks?mid=' + $scope.mid + '&project_lists_id=' + $scope.task_value).then(function successCallback(response) {
+					$scope.tasks = response.data;
+					//console.log($scope.tasks.length)
+				}, function errorCallback(response) {
+					//console.log("Not added")
+					$scope.project = response.data;
+				});
+			} else {
+				$http.get(H.SETTINGS.baseUrl + '/tasks?mid=' + $scope.mid).then(function successCallback(response) {
+					$scope.tasks = response.data;
+					//console.log($scope.tasks.length)
+				}, function errorCallback(response) {
+					//console.log("Not added")
+					$scope.project = response.data;
+				});
+			}
+
+		}, function errorCallback(response) {});
+
+		$mdSidenav('task').close();
+	}
+
+	$scope.newTaskList = function(evnt) {
+
+		//console.log($scope.MID)
+		$mdDialog.show({
+			clickOutsideToClose: true,
+
+			scope: $scope,
+			preserveScope: true,
+			templateUrl: 'add_task_list.html',
+			controller: function DialogController($scope, $mdDialog) {
+				$scope.closeDialog = function() {
+					$mdDialog.hide();
+				}
+			}
+		});
+	};
+
+	$scope.cancel = function() {
+		$mdDialog.cancel();
+
+	}
+
+	$scope.getTasks = function(mile, pl) {
+
+		$scope.show_tasks = true;
+		$scope.task_list_id = pl;
+		//console.log('MID is '+mile+' task list id is '+pl)
+	    var id = event.target.id;
+		//$scope.data.single.reporter_id=r.data[0].id;
+   //var id=mile.id;
+   //alert("simple get id".id);
+   //alert("mileston id: ".$scope.milestone_Id);
+	if ($scope.milestone_Id == id) {
+		$scope.milestone_Id = id;
+			$scope.show_tasks = false;
+			$scope.task_value = pl;
+			$scope.mid = mile;
+			var string = "" + pl;
+         //   alert(JSON.stringify(string));
+			if (string.localeCompare('undefined') != 0) {
+				$http.get(H.SETTINGS.baseUrl + '/tasks?mid=' + mile + '&project_lists_id=' + pl).then(function successCallback(response) {
+					
+				//$http.get(H.SETTINGS.baseUrl + '/tasks?is_deleted=0&mid=' + mile + '&project_lists_id=' + pl).then(function successCallback(response) {
+					$scope.tasks = response.data;
+					$scope.show_tasks = true;
+
+					//console.log($scope.tasks.length)
+				}, function errorCallback(response) {
+
+					$scope.project = response.data;
+				});
+			} else {
+				$http.get(H.SETTINGS.baseUrl + '/tasks?mid=' + mile).then(function successCallback(response) {
+					//	$http.get(H.SETTINGS.baseUrl + '/tasks?is_deleted=0&mid=' + mile).then(function successCallback(response) {
+					$scope.tasks = response.data;
+					$scope.show_tasks = true;
+
+					//console.log($scope.tasks.length)
+				}, function errorCallback(response) {
+
+					$scope.project = response.data;
+				});
+			}
+
+	} else {
+		$scope.milestone_Id = 0;
+			$scope.show_tasks = false;
+		}
+		$scope.checked = $scope.milestone_Id;
+		//console.log('mid is '+id)
+
+
+
+	}
+
+	$scope.getReleases = function(v) {
+		$scope.milestonesSelectedIndex = -1;
+		$scope.show_tasks = false;
+		$scope.getTasks(v, "undefined")
+		$scope.newtask = true;
+
+		//var id = event.target.id;
+		console.log(v + " is id")
+
+
+		$scope.MID = v;
+
+		$http.get(H.SETTINGS.baseUrl + '/project_lists?mid=' + v).then(function successCallback(response) {
+			$scope.Releases = response.data;
+			//console.log($scope.Releases)
+			$scope.show_tasks = true;
+
+		}, function errorCallback(response) {
+
+			$scope.project = response.data;
+		});
+
+
+	}
+
+		   
+		   
+	
+		        $scope.Clientdata=[
+		        	{
+		        		id: 1,
+		        		"project_name":"Project 1",
+		    			
+		        	},
+		        	{
+		        		id: 2,
+		        		"project_name":" Project 2"
+		        		
+		        	},
+		        	{
+		        		id: 3,
+		        		"project_name":" Project 3",
+		        		
+		        	},
+		        	{
+		        		id: 4,"project_name":" Project 4"
+		        		
+		        	},
+		        	{
+		        		id: 5,
+		        		"project_name":" Project 5"
+		        		
+		        	},
+		        	{
+		        		id: 6,
+		        		"project_name":" Project 6"
+		        	},
+		        	{
+		        		id: 7,"project_name":" Project 7"
+		        		
+		        	},
+		        	{
+		        		id: 8,
+		        		"project_name":"Project 8"
+		        		
+		        	},
+		        	{
+		        		id: 9,
+		        		"project_name":" Project 9"
+		        	},
+		        	{
+		        		id: 10,"project_name":" Project 10"
+		        		
+		        	},
+		        	{
+		        		id: 11,
+		        		"project_name":"Project 11"
+		        		
+		        	},
+		        	{
+		        		id: 12,
+		        		"project_name":"Project 12"
+		        	}
+		        	];
+			 
+				// $scope.Users1[
+				// 	{
+				// 		id:1,"display_name":"Hello"
+						
+				// 	},
+				// 	{
+				// 		id:2,
+				// 		"display_name":"Hello"
+						
+				// 	},
+				// 	{
+				// 		id:3,
+				// 		"display_name":"demo"
+						
+				// 	},
+				// 	{
+				// 		id:4,
+				// 		"display_name":"dummy"
+						
+				// 	}
+				// 	];
+				
+				$scope.milestones = [ 
+					{
+	   		
+						myproject_Id: 1,
+						"milestone_name": "Milestone"
+					   //$scope.delete_milestone();
+					},
+					{
+						myproject_Id:2,
+						"milestone_name":"second"
+					},
+					{
+						myproject_Id:3,
+						"milestone_name":"treju"
+					}
+					
+				
+				];
+				
+				$scope.Releases=[
+						{
+							id:1,
+                           "name":"priya"
+						},
+					{
+							id:2,
+							"name":"sdsd"
+						},
+						{
+							id:3,
+							"name":"xxxx"
+						},
+						{
+							id:4,
+							 "name":"aaa"
+						},
+					];
+				$scope.tasks=[
+						{
+						 	"id":1,
+							"title":"helloqq",
+							"assignee":{
+								"display_name":"task_details"
+							 },
+						//	'display_name':'task_details',
+							"task_details":"hello this is a task_details  1",
+							"task_status":1
+						},
+						
+						{
+					 	"id":2,
+						"title":"pppqq",
+							"assignee":{
+								"display_name":"task_details"
+							},
+					//	'display_name':'task_details',
+						"task_details":"this is a task_details 2",
+						"task_status":"1"
+			     		},
+					
+						{
+					 	"id":3,
+						"title":"helloqq",
+							"assignee":{
+								"display_name":"task_details"
+							},
+					//	'display_name':'task_details',
+						"task_details":"hello, this is a task_details 3",
+						"task_status":1
+						},
+					
+						{
+					 	"id":4,
+						"title":"aaa",
+						"assignee":{
+							"display_name":"aaaa"
+						},
+					//	'display_name':'task_details',
+						"task_details":"aaaa this is a task_details 4",
+						"task_status":1
+					}
+				]; 
+				//dummy to check
+					$scope.closeUpdateMilestone = function() {
+		$mdSidenav('updateMilestone').close();
+		document.getElementById('updateMilestone_form_id').reset();
+	}
+
+	$scope.newTask = function() {
+		$rootScope.task_list = $scope.task_list_id;
+		$scope.blocked_value = "true";
+		//console.log($scope.task_list_id+ " is my value")
+		$mdSidenav('task').toggle();
+	};
+	$scope.addMilestone=function()
+	{
+		$rootScope.task_list = $scope.task_list_id;
+		$scope.blocked_value = "true";
+		//console.log($scope.task_list_id+ " is my value")
+		$mdSidenav('task').toggle();
+	}
+
+	$scope.newTaskAdd = function() {
+		$rootScope.task_list = null;
+		$scope.blocked_value = "false";
+		$mdSidenav('task').toggle();
+	};
+
+	$scope.closeTask = function() {
+		$mdSidenav('task').close();
+		document.getElementById('myTask').reset();
+	}
+
+	$scope.closeTask1 = function() {
+		$mdSidenav('update_task').close();
+		document.getElementById('myTask').reset()
+	}
+
+	$scope.newProject = function() {
+		$mdSidenav('project').toggle();
+	};
+
+	$scope.closeProject = function() {
+		$mdSidenav('project').close();
+		// document.getElementById('myProject').reset();
+		document.getElementById('password').reset();
+	}
+
+	$scope.closeUpdateSlieder = function() {
+		$mdSidenav('updateProject').close();
+		document.getElementById('update_form_id').reset();
+	}
 });/*global angular, app, $*/
 app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, $mdDialog, H, M) 
 {
@@ -2787,7 +3581,257 @@ app.controller('leave_requestsControllerExtension', function($scope, $controller
     };
 });app.controller('milestonesControllerExtension', function($scope,$route ,$controller, $rootScope, $http, $location,$mdSidenav, $mdDialog,$window, H, M) {
 
-  alert('milestones proje');
+// $scope.UserGroups = H.R.get('user_groups');
+//     $scope.Users = H.R.get('users');
+//     $scope.users_employees=H.R.get('views/users_employees');
+    //$scope.Get_login_user=H.R.get('views/Get_login_user');
+    //employees/?id
+    
+     //$scope.loadEmployee=function(obj,callback)
+     //{
+     //		$http.get(H.S.baseUrl + '/employees/?primary_email='+$rootScope.currentUser.email+'&').then(function(r)
+     //   	{
+     // 		//alert('avi');
+     // 			//alert(JSON.stringify($scope.data.single));
+     //   		$scope.data.single.reporter_id=r.data[0].id;
+      	
+     // 		if(callback)
+     // 		{
+     // 			callback();
+     // 		}
+      		
+        	//alert(r.data.username);
+	     	//$scope.currentUser=$rootScope.currentUser.id;
+		    //alert($rootScope.currentUser.id);
+    //	alert(JSON.stringify(r));
+    		//if(Array.isArray(r.data)){
+    		//$scope.currentUser.id;
+    		//get id
+    	//	$scope.data.obj.reporter_id=r[0].id;
+    //	alert(r);
+    	//	$scope.currentUser=$rootScope.currentUser.id;
+        	//	$scope.currentUser = $rootScope.currentUser;
+            //else
+            //{
+            //$scope.currentUser = [r.data];
+            //}
+        	//alert(JSON.stringify($scope.users));
+    	// });
+    
+     //}
+     //$scope.loadEmployee($scope.data.single);
+    	//$http.get(H.S.baseUrl + '/employees/?id').then(function(r)
+    	  //	$http.get(H.S.baseUrl + '/employees').then(function(r)
+    	//$http.get(H.S.baseUrl + '/employees').then(function(r)
+    
+    
+    
+        //$http.get(H.S.baseUrl + 'users').then(function(r){
+    	//alert(r.data.username);
+		//testing purpose..
+		/*$scope.currentUser=$rootScope.currentUser.email	;
+		alert($rootScope.currentUser.email);
+    	//alert(JSON.stringify(r));
+    	if(Array.isArray(r.data)){
+        $scope.userEmployees = r.data;
+        	}
+        	else
+        	{
+        		$scope.userEmployees = [r.data];
+        	}
+        	//alert(JSON.stringify($scope.users));
+    	});
+    	
+    	*/
+
+//$scope.Users=H.R.get('/views/Get_login_user');
+//$rootScope.test = "TEST";
+//alert(	$rootScope.username);
+//alert($rootScope.Users);
+//$scope.login = function(){
+//$scope.loading = true;
+//$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
+//.then(function(r)
+//{
+//alert(email);
+//$scope.error = "";
+//alert(r.data.username);
+//if(!r.data.token)
+//{
+//$scope.error = M.E500;
+//$scope.loading = false;
+//return;
+//}
+//$rootScope.currentUser = r.data;
+//alert($rootScope.currentUser);
+//alert($rootScope.username);
+//		$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
+//		$location.path('/');
+//	},
+//alert("Hello");
+//alert($scope.users_employees);
+    	
+//	$http.get(H.S.baseUrl + '/views/Get_login_user').then(function(r){
+//		if(Array.isArray(r.data))
+//		{
+			
+//   if (window.sessionStorage["userInfo"])
+//{
+
+//      $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+            //  }
+			 //console.log($rootScope.userInfo);
+			 
+			   //  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+			 
+		//	 alert('user info');
+		    //alert($rootScope.userInfo);
+		  //  alert($rootScope.userInfo); 
+		//	alert('task');
+		//	var s=$rootScope.username;
+		//	alert(s);
+		//	alert('username using root scope');
+		//	alert($rootScope.userInfo);
+			//	$rootScope.currentUser
+		//	alert('task over');
+
+						//$scope.currentlogin=$rootScope.username;
+					//	alert($scope.currentlogin);
+			//		}
+			//		else
+			//		{
+			//			$scope.currentlogin=[r.data];
+			//		}
+			//	})
+				
+  //  $scope.loadUserEmployees = function(){
+  //  	$http.get(H.S.baseUrl + '/views/users_employees').then(function(r){
+  //  	//	alert(r.data.username);
+		
+		// //	$scope.currentUser=$rootScope.currentUser.id;
+		// //	alert($rootScope.currentUser.id);
+  //  		//alert(JSON.stringify(r));
+  //  				if(Array.isArray(r.data)){
+  //      		$scope.userEmployees = r.data;
+  //      	}
+  //      	else
+  //      	{
+  //      		$scope.userEmployees = [r.data];
+  //      	}
+  //      	//alert(JSON.stringify($scope.users));
+  //  	});
+  //  }
+    
+    //  $scope.loadUsers = function(){
+    //  	$scope.loadUserEmployees();
+     	
+    //     $scope.Users.query({}, function(r){
+    //         $scope.users = r;
+    //         //alert($scope.users.username);
+    //         //alert(JSON.stringify($scope.users));
+    //         var usersList = {};
+    //         $scope.users.map(function(p){
+    //             usersList[p.username] = "images/user.png";
+    //         });
+    //         $scope.data.usersList = usersList;
+    //     });
+        
+    // };
+    	
+    //  $scope.loadUserGroups = function(groupId, callback){
+    //     $scope.UserGroups.query({group_id: groupId}, function(r){
+    //         $scope.data.groupUsers = r;
+    //         if(callback) callback();
+    //     });
+    // };
+    
+    // $scope.getUsers = function(searchText){
+    //     return $http.get(H.S.baseUrl + '/users?username[in]=' + searchText)
+    //         .then(function(r){
+    //         	//alert('Hello');
+            
+    //             return r.data;
+    //         });
+    //     //return $scope.data.users.filter(p => p.username.includes(searchText));
+    // };
+    
+    //This function is called when you need to make changes to the new single object.
+    $scope.onInit = function(obj){
+        //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'tasks' resource that matches the structure of your 'tasks' API.
+             obj.is_active = 1;
+           
+        // $scope.loadEmployee();
+        // $scope.loadUsers();
+        
+    };
+    
+    //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/tasks/1
+    $scope.onLoad = function(obj){
+      //  //$scope.data.single is aavailable here. 'obj' refers to the same. It represents the object you are trying to edit.
+    
+    	 //$scope.loadUsers();
+    	
+    };
+    
+    //This function is called when you are in list mode. i.e. before a call has been placed to one of your API that returns a the paginated list of all objects matching your API.
+    $scope.beforeLoadAll = function(query){
+        //This is where you can modify your query parameters.    
+        //query.is_active = 1;
+        //return query;
+    };
+
+    //This function is called when you are in list mode. i.e. after a call has returned from one of your API that returns a the paginated list of all objects matching your API.
+    $scope.onLoadAll = function(obj){
+        //$scope.data.list is available here. 'obj' refers to the same. It represents the object you are trying to edit.
+        //You can call $scope.setListHeaders(['column1','column2',...]) in case the auto generated column names are not what you wish to display.
+        //or You can call $scope.changeListHeaders('current column name', 'new column name') to change the display text of the headers;
+    };
+    
+    //This function is called before the create (POST) request goes to API
+    $scope.beforeSave = function(obj, next){
+        //You can choose not to call next(), thus rejecting the save request. This can be used for extra validations.
+      // $scope.loadEmployee(obj,function(){
+       	 alert(JSON.stringify(obj));
+        next();
+      // });
+       
+    };
+
+    //This function is called after the create (POST) request is returned from API
+    $scope.onSave = function (obj, next)
+    {
+        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been created.
+        next();
+    };
+    
+    //This function is called before the update (PUT) request goes to API
+    $scope.beforeUpdate = function(obj, next)
+    {
+        //You can choose not to call next(), thus rejecting the update request. This can be used for extra validations.
+        next();
+    };
+    //This function is called after the update (PUT) request is returned from API
+    $scope.onUpdate = function (obj, next)
+    {
+        //You can choose not to call next(), thus preventing the page to display the popup that confirms the object has been updated.
+        next();
+    };
+    //This function will be called whenever there is an error during save/update operations.
+    $scope.onError = function (obj, next)
+    {
+        //You can choose not to call next(), thus preventing the page to display the popup that confirms there has been an error.
+        next();
+    };
+    // If the singular of your title is having different spelling then you can define it as shown below.
+    // $scope.getSingularTitle = function(){
+    //     return "TASK";
+    // }
+    // If you want don't want to display certain columns in the list view you can remove them by defining the function below.
+    // $scope.removeListHeaders = function(){
+    //     return ['is_active'];
+    // }
+    // If you want to refresh the data loaded in grid, you can call the following method
+    // $scope.refreshData();
 
 	
 });
@@ -3421,30 +4465,27 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
     $scope.users_employees=H.R.get('views/users_employees');
     //$scope.Get_login_user=H.R.get('views/Get_login_user');
     //employees/?id
-    
      $scope.loadEmployee=function(obj,callback)
      {
      		$http.get(H.S.baseUrl + '/employees/?primary_email='+$rootScope.currentUser.email+'&').then(function(r)
         	{
       		//alert('avi');
-      			//alert(JSON.stringify($scope.data.single));
-        		$scope.data.single.reporter_id=r.data[0].id;
-      	
+      		//alert(JSON.stringify($scope.data.single));
+        	$scope.data.single.reporter_id=r.data[0].id;
       		if(callback)
       		{
       			callback();
       		}
-      		
         	//alert(r.data.username);
 	     	//$scope.currentUser=$rootScope.currentUser.id;
 		    //alert($rootScope.currentUser.id);
-    //	alert(JSON.stringify(r));
+    		//alert(JSON.stringify(r));
     		//if(Array.isArray(r.data)){
     		//$scope.currentUser.id;
     		//get id
-    	//	$scope.data.obj.reporter_id=r[0].id;
-    //	alert(r);
-    	//	$scope.currentUser=$rootScope.currentUser.id;
+    		//$scope.data.obj.reporter_id=r[0].id;
+    		//alert(r);
+    		//$scope.currentUser=$rootScope.currentUser.id;
         	//	$scope.currentUser = $rootScope.currentUser;
             //else
             //{
@@ -3452,15 +4493,11 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
             //}
         	//alert(JSON.stringify($scope.users));
     	});
-    
      }
      $scope.loadEmployee($scope.data.single);
     	//$http.get(H.S.baseUrl + '/employees/?id').then(function(r)
-    	  //	$http.get(H.S.baseUrl + '/employees').then(function(r)
     	//$http.get(H.S.baseUrl + '/employees').then(function(r)
-    
-    
-    
+    	//$http.get(H.S.baseUrl + '/employees').then(function(r)
         //$http.get(H.S.baseUrl + 'users').then(function(r){
     	//alert(r.data.username);
 		//testing purpose..
@@ -3469,75 +4506,67 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
     	//alert(JSON.stringify(r));
     	if(Array.isArray(r.data)){
         $scope.userEmployees = r.data;
-        	}
-        	else
-        	{
-        		$scope.userEmployees = [r.data];
-        	}
-        	//alert(JSON.stringify($scope.users));
+        }
+        else
+        {
+        $scope.userEmployees = [r.data];
+        }
+        //alert(JSON.stringify($scope.users));
     	});
-    	
     	*/
-
-//$scope.Users=H.R.get('/views/Get_login_user');
-//$rootScope.test = "TEST";
-//alert(	$rootScope.username);
-//alert($rootScope.Users);
-//$scope.login = function(){
-//$scope.loading = true;
-//$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
-//.then(function(r)
-//{
-//alert(email);
-//$scope.error = "";
-//alert(r.data.username);
-//if(!r.data.token)
-//{
-//$scope.error = M.E500;
-//$scope.loading = false;
-//return;
-//}
-//$rootScope.currentUser = r.data;
-//alert($rootScope.currentUser);
-//alert($rootScope.username);
-//		$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
-//		$location.path('/');
-//	},
-//alert("Hello");
-//alert($scope.users_employees);
-    	
-//	$http.get(H.S.baseUrl + '/views/Get_login_user').then(function(r){
-//		if(Array.isArray(r.data))
-//		{
-			
-//   if (window.sessionStorage["userInfo"])
-//{
-
-//      $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
-            //  }
-			 //console.log($rootScope.userInfo);
-			 
-			   //  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
-			 
-		//	 alert('user info');
-		    //alert($rootScope.userInfo);
-		  //  alert($rootScope.userInfo); 
-		//	alert('task');
-		//	var s=$rootScope.username;
-		//	alert(s);
-		//	alert('username using root scope');
-		//	alert($rootScope.userInfo);
-			//	$rootScope.currentUser
-		//	alert('task over');
-
-						//$scope.currentlogin=$rootScope.username;
-					//	alert($scope.currentlogin);
-			//		}
-			//		else
-			//		{
-			//			$scope.currentlogin=[r.data];
-			//		}
-			//	})
+		//$scope.Users=H.R.get('/views/Get_login_user');
+		//$rootScope.test = "TEST";
+		//alert(	$rootScope.username);
+		//alert($rootScope.Users);
+		//$scope.login = function(){
+		//$scope.loading = true;
+		//$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
+		//.then(function(r)
+		//{
+		//alert(email);
+		//$scope.error = "";
+		//alert(r.data.username);
+		//if(!r.data.token)
+		//{
+		//$scope.error = M.E500;
+		//$scope.loading = false;
+		//return;
+		//}
+		//$rootScope.currentUser = r.data;
+		//alert($rootScope.currentUser);
+		//alert($rootScope.username);
+		//$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
+		//$location.path('/');
+		//},
+		//alert("Hello");
+		//alert($scope.users_employees);
+		//$http.get(H.S.baseUrl + '/views/Get_login_user').then(function(r){
+		//if(Array.isArray(r.data))
+		//{
+		//if (window.sessionStorage["userInfo"])
+		//{
+		//$rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+        //  }
+	    //console.log($rootScope.userInfo);
+	    //$rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+		//alert('user info');
+		//alert($rootScope.userInfo);
+		//alert($rootScope.userInfo); 
+		//alert('task');
+		//var s=$rootScope.username;
+		//alert(s);
+		//alert('username using root scope');
+		//alert($rootScope.userInfo);
+		//$rootScope.currentUser
+		//alert('task over');
+		//$scope.currentlogin=$rootScope.username;
+		//alert($scope.currentlogin);
+		//}
+		//else
+		//{
+		//$scope.currentlogin=[r.data];
+		//}
+		//})
 				
     $scope.loadUserEmployees = function(){
     	$http.get(H.S.baseUrl + '/views/users_employees').then(function(r){

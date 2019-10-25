@@ -8,7 +8,8 @@ function RegisterRoutes() {
             {route: 'profile', template: 'auth/profile', controller: 'profile'},
             {route: 'unauthorized', template: 'auth/unauthorized', controller: 'unauthorized'},
             {route: 'out-of-service', template: 'auth/out-of-service', controller: 'outOfService', auth: false},
-            {route: 'settings', template: 'settings/template', controller: 'settings'}
+            {route: 'settings', template: 'settings/template', controller: 'settings'},
+             {route: 'dummy', template: 'dummy/template', controller: 'dummy'}
         ],
         easyRoutes: ['alerts','add_questions','departments','organizations', 'users', 
         'groups', 'categories', 'company_holidays','tasks','projects',
